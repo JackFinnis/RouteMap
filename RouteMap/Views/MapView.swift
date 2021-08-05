@@ -35,8 +35,8 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
         // Pan to polyline
-        if mapVM.selectedWorkout != routesVM.selectedRoute {
-            mapVM.selectedWorkout = routesVM.selectedRoute
+        if mapVM.selectedRoute != routesVM.selectedRoute {
+            mapVM.selectedRoute = routesVM.selectedRoute
             let region = mapVM.getSelectedWorkoutRegion()
             if region != nil {
                 mapView.setRegion(region!, animated: true)
@@ -47,8 +47,7 @@ struct MapView: UIViewRepresentable {
         // Pan to all routes
         if mapVM.loading != routesVM.loading {
             mapVM.loading = routesVM.loading
-            let region = routesVM.getRoutesRegion()
-            mapView.setRegion(region, animated: true)
+            mapView.setRegion(routesVM.routesRegion, animated: true)
             mapVM.userTrackingMode = .none
         }
         
@@ -68,7 +67,7 @@ struct MapView: UIViewRepresentable {
             if mapVM.searchState == .found && routesVM.selectedRoute != nil {
                 mapView.addOverlay(routesVM.selectedRoute!.polyline)
             } else {
-                mapView.addOverlays(routesVM.getFilteredRoutesPolylines())
+                mapView.addOverlays(routesVM.filteredPolylines)
             }
         }
     }

@@ -15,7 +15,7 @@ class MapVM: NSObject, ObservableObject {
     @Published var searchState: RoutesSearchState = .none
     
     var parent: MapView?
-    var selectedWorkout: Route?
+    var selectedRoute: Route?
     var loading: Bool = true
     
     // Display image names
@@ -75,7 +75,7 @@ class MapVM: NSObject, ObservableObject {
     
     // Get map region
     public func getSelectedWorkoutRegion() -> MKCoordinateRegion? {
-        if selectedWorkout == nil {
+        if selectedRoute == nil {
             return nil
         }
         
@@ -84,7 +84,7 @@ class MapVM: NSObject, ObservableObject {
         var minLong: Double = 180
         var maxLong: Double = -180
         
-        for coord in selectedWorkout!.coords {
+        for coord in selectedRoute!.coords {
             if coord.lat < minLat {
                 minLat = coord.lat
             }

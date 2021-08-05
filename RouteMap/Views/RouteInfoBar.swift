@@ -24,7 +24,7 @@ struct RouteInfoBar: View {
                         .frame(width: 40, height: 40)
                 }
                 
-                Text(routesVM.selectedWorkoutDistanceString)
+                Text(routesVM.selectedRouteDistanceString)
                     .font(.headline)
                 Spacer()
                 

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreLocation
 import MapKit
 
 class RoutesVM: NSObject, ObservableObject {
@@ -16,18 +15,18 @@ class RoutesVM: NSObject, ObservableObject {
     @Published var selectedRoute: Route?
     @Published var loading: Bool = true
     
-    // MARK: - Workout Filters
-    @Published var sortBy: RoutesSortBy = .longest // { didSet { updateWorkoutFilters() } }
-    @Published var numberShown: RoutesShown = .all // { didSet { updateWorkoutFilters() } }
-    @Published var distanceFilter = RouteFilter(type: .distance) { didSet { print(distanceFilter.summary) } }
-    
-    var polylines: [Polyline] {
+    public var filteredPolylines: [Polyline] {
         var polylines = [Polyline]()
-        for route in routes {
+        for route in filteredRoutes {
             polylines.append(route.polyline)
         }
         return polylines
     }
+    
+    // MARK: - Workout Filters
+    @Published var sortBy: RoutesSortBy = .longest { didSet { updateRouteFilters() } }
+    @Published var numberShown: RoutesShown = .all { didSet { updateRouteFilters() } }
+    @Published var distanceFilter = RouteFilter(type: .distance) { didSet { updateRouteFilters() } }
     
     // MARK: - Initialiser
     override init() {
@@ -35,6 +34,27 @@ class RoutesVM: NSObject, ObservableObject {
         // Load routes from the api
         loadRoutes()
     }
+    
+    // MARK: - Private Functions
+    // Load routes from the api
+    private func loadRoutes() {
+        let url = URL(string: "https://ncct-api.finnisjack.repl.co/routes")!
+        let request = URLRequest(url: url)
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                if let response = try? JSONDecoder().decode([Route].self, from: data) {
+                    DispatchQueue.main.async {
+                        self.routes = response
+                        self.updateRouteFilters()
+                        self.loading = false
+                    }
+                    return
+                }
+            }
+            print("\(error?.localizedDescription ?? "Unknown error")")
+        }.resume()
+    }
+    
     
     // MARK: - Public Functions
     // Find the closest filtered route to the center coordinate
@@ -55,25 +75,13 @@ class RoutesVM: NSObject, ObservableObject {
         }
         
         DispatchQueue.main.async {
-//            self.resetSelectedColour()
+            self.resetSelectedColour()
             self.selectedRoute = closestRoute
-//            self.setSelectedColour()
+            self.setSelectedColour()
         }
     }
     
-    // Return the filtered workouts multi polyline
-    public func getFilteredRoutesPolylines() -> [Polyline] {
-        return polylines
-//        var polylines: [Polyline] = []
-//
-//        for route in filteredRoutes {
-//            polylines.append(route.polyline)
-//        }
-//
-//        return polylines
-    }
-    
-    func getRoutesRegion() -> MKCoordinateRegion {
+    var routesRegion: MKCoordinateRegion {
         var minLat: Double = 90
         var maxLat: Double = -90
         var minLong: Double = 180
@@ -104,8 +112,16 @@ class RoutesVM: NSObject, ObservableObject {
         return region
     }
     
-    // MARK: - Selected Workout
-    // Reset selected workout polyline colour
+    // MARK: - Selected Route
+    // Select the first filtered route to highlight
+    public func selectFirstWorkout() {
+        // Reset selected colour
+        resetSelectedColour()
+        selectedRoute = filteredRoutes.first
+        setSelectedColour()
+    }
+    
+    // Reset selected route polyline colour
     private func resetSelectedColour() {
         selectedRoute?.polyline.selected = false
         DispatchQueue.main.async {
@@ -113,7 +129,7 @@ class RoutesVM: NSObject, ObservableObject {
         }
     }
     
-    // Set selected workout polyline colour
+    // Set selected route polyline colour
     private func setSelectedColour() {
         selectedRoute?.polyline.selected = true
         DispatchQueue.main.async {
@@ -121,7 +137,7 @@ class RoutesVM: NSObject, ObservableObject {
         }
     }
     
-    // Highlight next workout
+    // Highlight next route
     public func nextRoute() {
         // Reset selected colour
         resetSelectedColour()
@@ -144,7 +160,7 @@ class RoutesVM: NSObject, ObservableObject {
         setSelectedColour()
     }
     
-    // Highlight previous workout
+    // Highlight previous route
     public func previousRoute() {
         // Reset selected colour
         resetSelectedColour()
@@ -167,26 +183,84 @@ class RoutesVM: NSObject, ObservableObject {
         setSelectedColour()
     }
     
-    // MARK: - Private Functions
-    // Load routes from the api
-    func loadRoutes() {
-        let url = URL(string: "https://ncct-api.finnisjack.repl.co/routes")!
-        let request = URLRequest(url: url)
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
-                if let response = try? JSONDecoder().decode([Route].self, from: data) {
-                    DispatchQueue.main.async {
-                        self.routes = response
-                        self.loading = false
-                    }
-                }
+    // MARK: - Filter Routes
+    // Update route filters
+    public func updateRouteFilters() {
+        // Filter and sort routes
+        let filtered = filterRoutes()
+        let sorted = sortRoutes(routes: filtered)
+        let numberFiltered = filterNumber(routes: sorted)
+        
+        // Update published
+        DispatchQueue.main.async {
+            self.filteredRoutes = numberFiltered
+            self.selectFirstWorkout()
+        }
+    }
+    
+    // Filter routes
+    private func filterRoutes() -> [Route] {
+        // Filter routes
+        routes.filter { route in
+            // Filter by distance
+//            if distanceFilter.filter {
+//                if workout.distance <= distanceFilter.minimum {
+//                    return false
+//                }
+//                if distanceFilter.minimum < distanceFilter.maximum && workout.distance >= distanceFilter.maximum {
+//                    return false
+//                }
+//            }
+            
+            // Passed filter criteria!
+            return true
+        }
+    }
+    
+    // Filter and sort all workouts based on previous properties
+    private func sortRoutes(routes: [Route]) -> [Route] {
+        // Sort workouts
+        routes.sorted { (route1, route2) in
+//            switch sortBy {
+//            case .shortest:
+//                if route1.date == nil || route2.date == nil {
+//                    return false
+//                }
+//                return route1.date! > route2.date!
+//            case .longest:
+//                if route1.date == nil || route2.date == nil {
+//                    return false
+//                }
+//                return route1.date! < route2.date!
+//            }
+            return route1.id < route2.id
+        }
+    }
+    
+    // Filter the number of routes
+    private func filterNumber(routes: [Route]) -> [Route] {
+        switch numberShown {
+        case .none:
+            return []
+        case .five:
+            if routes.count < 5 {
+                return routes
+            } else {
+                return Array(routes[..<5])
             }
-            print("\(error?.localizedDescription ?? "Unknown error")")
-        }.resume()
+        case .ten:
+            if routes.count < 10 {
+                return routes
+            } else {
+                return Array(routes[..<10])
+            }
+        case .all:
+            return routes
+        }
     }
     
     // MARK: - String Formatting
-    var selectedWorkoutDistanceString: String {
+    var selectedRouteDistanceString: String {
         if selectedRoute == nil {
             return ""
         } else {
