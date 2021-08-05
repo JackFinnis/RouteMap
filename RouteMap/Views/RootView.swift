@@ -23,7 +23,7 @@ struct RootView: View {
                 .ignoresSafeArea()
             FindRoutePointer(centreCoord: $centreCoord)
             FloatingMapButtons(centreCoord: $centreCoord)
-//            RouteInfoBar()
+            RouteInfoBar()
         }
         .environmentObject(routesVM)
         .environmentObject(mapVM)

@@ -13,6 +13,8 @@
 		BEB8F0AA26BC61B100702BB5 /* DistanceFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0A926BC61B100702BB5 /* DistanceFilterView.swift */; };
 		BEB8F0AC26BC627800702BB5 /* RouteFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AB26BC627800702BB5 /* RouteFilter.swift */; };
 		BEB8F0AE26BC628900702BB5 /* RouteFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AD26BC628900702BB5 /* RouteFilterType.swift */; };
+		BEB8F0B026BC7CB800702BB5 /* RouteInfoBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AF26BC7CB800702BB5 /* RouteInfoBar.swift */; };
+		BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0B126BC7DB500702BB5 /* RouteView.swift */; };
 		BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */; };
 		BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BECFC09626BAC4AA005CC3AE /* Assets.xcassets */; };
 		BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */; };
@@ -37,6 +39,8 @@
 		BEB8F0A926BC61B100702BB5 /* DistanceFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceFilterView.swift; sourceTree = "<group>"; };
 		BEB8F0AB26BC627800702BB5 /* RouteFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFilter.swift; sourceTree = "<group>"; };
 		BEB8F0AD26BC628900702BB5 /* RouteFilterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFilterType.swift; sourceTree = "<group>"; };
+		BEB8F0AF26BC7CB800702BB5 /* RouteInfoBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteInfoBar.swift; sourceTree = "<group>"; };
+		BEB8F0B126BC7DB500702BB5 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		BECFC08F26BAC4A7005CC3AE /* RouteMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapApp.swift; sourceTree = "<group>"; };
 		BECFC09626BAC4AA005CC3AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 				BEB8F09F26BC370C00702BB5 /* FloatingMapButtons.swift */,
 				BEB8F0A726BC607500702BB5 /* FilterWorkouts.swift */,
 				BEB8F0A926BC61B100702BB5 /* DistanceFilterView.swift */,
+				BEB8F0AF26BC7CB800702BB5 /* RouteInfoBar.swift */,
+				BEB8F0B126BC7DB500702BB5 /* RouteView.swift */,
 				BEB8F0A426BC383600702BB5 /* Blur.swift */,
 			);
 			path = Views;
@@ -219,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */,
 				BECFC0C926BC1E49005CC3AE /* Polyline.swift in Sources */,
 				BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */,
 				BECFC0C726BC1E00005CC3AE /* RoutesSearchState.swift in Sources */,
@@ -227,6 +234,7 @@
 				BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */,
 				BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */,
 				BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */,
+				BEB8F0B026BC7CB800702BB5 /* RouteInfoBar.swift in Sources */,
 				BECFC0D326BC2CAC005CC3AE /* FindRoutePointer.swift in Sources */,
 				BECFC0CD26BC20B9005CC3AE /* RoutesSortBy.swift in Sources */,
 				BECFC0C426BC1DBC005CC3AE /* MapVM.swift in Sources */,

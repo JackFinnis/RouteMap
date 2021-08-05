@@ -13,14 +13,14 @@ struct RouteFilter {
     var maximum: Double = 0
     var minimum: Double = 0
     var summary: String {
-        if !filter {
+        if !filter || (minimum == 0 && maximum == 0) {
             return ""
         } else if minimum >= maximum {
-            return "> \(Int(minimum)) \(type.rawValue)"
+            return "> " + String(format: "%.1f ", minimum) + type.rawValue
         } else if minimum == 0 {
-            return "< \(Int(maximum)) \(type.rawValue)"
+            return "< " + String(format: "%.1f ", maximum) + type.rawValue
         } else {
-            return "\(Int(minimum))-\(Int(maximum)) \(type.rawValue)"
+            return String(format: "%.1f", minimum) + "-" + String(format: "%.1f ", maximum) + type.rawValue
         }
     }
 }

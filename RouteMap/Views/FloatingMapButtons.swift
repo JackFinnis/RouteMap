@@ -21,42 +21,42 @@ struct FloatingMapButtons: View {
             HStack(spacing: 0) {
                 Spacer()
                 VStack(spacing: 0) {
-                    Button(action: {
+                    Button {
                         mapVM.updateMapType()
-                    }, label: {
+                    } label: {
                         Image(systemName: mapVM.mapTypeImageName)
                             .frame(width: 40, height: 40)
-                    })
+                    }
                     .padding(3)
                     
                     Divider()
                         .frame(width: 46)
-                    Button(action: {
+                    Button {
                         mapVM.updateUserTrackingMode()
-                    }, label: {
+                    } label: {
                         Image(systemName: mapVM.userTrackingModeImageName)
                             .frame(width: 40, height: 40)
-                    })
+                    }
                     .padding(3)
                     
                     Divider()
                         .frame(width: 46)
-                    Button(action: {
+                    Button {
                         showFilterWorkoutsSheet = true
-                    }, label: {
+                    } label: {
                         Image(systemName: "figure.walk")
                             .frame(width: 40, height: 40)
-                    })
+                    }
                     .padding(3)
                     
                     Divider()
                         .frame(width: 46)
-                    Button(action: {
+                    Button {
                         updateSearchState()
-                    }, label: {
+                    } label: {
                         Image(systemName: mapVM.searchStateImageName)
                             .frame(width: 40, height: 40)
-                    })
+                    }
                     .padding(3)
                 }
                 .background(Blur())

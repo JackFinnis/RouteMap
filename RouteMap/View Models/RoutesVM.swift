@@ -19,8 +19,7 @@ class RoutesVM: NSObject, ObservableObject {
     // MARK: - Workout Filters
     @Published var sortBy: RoutesSortBy = .longest // { didSet { updateWorkoutFilters() } }
     @Published var numberShown: RoutesShown = .all // { didSet { updateWorkoutFilters() } }
-    
-    @Published var distanceFilter = RouteFilter(type: .distance) // { didSet { updateWorkoutFilters() } }
+    @Published var distanceFilter = RouteFilter(type: .distance) { didSet { print(distanceFilter.summary) } }
     
     var polylines: [Polyline] {
         var polylines = [Polyline]()
@@ -105,6 +104,70 @@ class RoutesVM: NSObject, ObservableObject {
         return region
     }
     
+    // MARK: - Selected Workout
+    // Reset selected workout polyline colour
+    private func resetSelectedColour() {
+        selectedRoute?.polyline.selected = false
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
+    }
+    
+    // Set selected workout polyline colour
+    private func setSelectedColour() {
+        selectedRoute?.polyline.selected = true
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
+    }
+    
+    // Highlight next workout
+    public func nextRoute() {
+        // Reset selected colour
+        resetSelectedColour()
+        if filteredRoutes.isEmpty {
+            selectedRoute = nil
+        } else if selectedRoute == nil {
+            selectedRoute = filteredRoutes.first
+        } else {
+            let index = filteredRoutes.firstIndex(of: selectedRoute!)
+            if index == nil {
+                selectedRoute = filteredRoutes.first
+            } else {
+                if index == filteredRoutes.count-1 {
+                    selectedRoute = filteredRoutes.first
+                } else {
+                    selectedRoute = filteredRoutes[index!+1]
+                }
+            }
+        }
+        setSelectedColour()
+    }
+    
+    // Highlight previous workout
+    public func previousRoute() {
+        // Reset selected colour
+        resetSelectedColour()
+        if filteredRoutes.isEmpty {
+            selectedRoute = nil
+        } else if selectedRoute == nil {
+            selectedRoute = filteredRoutes.first
+        } else {
+            let index = filteredRoutes.firstIndex(of: selectedRoute!)
+            if index == nil {
+                selectedRoute = filteredRoutes.first
+            } else {
+                if index == 0 {
+                    selectedRoute = filteredRoutes.last
+                } else {
+                    selectedRoute = filteredRoutes[index!-1]
+                }
+            }
+        }
+        setSelectedColour()
+    }
+    
+    // MARK: - Private Functions
     // Load routes from the api
     func loadRoutes() {
         let url = URL(string: "https://ncct-api.finnisjack.repl.co/routes")!
@@ -120,5 +183,14 @@ class RoutesVM: NSObject, ObservableObject {
             }
             print("\(error?.localizedDescription ?? "Unknown error")")
         }.resume()
+    }
+    
+    // MARK: - String Formatting
+    var selectedWorkoutDistanceString: String {
+        if selectedRoute == nil {
+            return ""
+        } else {
+            return selectedRoute!.colourString // selectedRoute!.distanceString
+        }
     }
 }

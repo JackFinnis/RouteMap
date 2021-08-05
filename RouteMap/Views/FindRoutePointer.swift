@@ -16,14 +16,14 @@ struct FindRoutePointer: View {
     
     var body: some View {
         if mapVM.searchState == .finding {
-            Button(action: {
+            Button {
                 mapVM.userTrackingMode = .none
                 mapVM.searchState = .found
                 routesVM.setClosestRoute(center: centreCoord)
-            }, label: {
+            } label: {
                 Image(systemName: "circle")
                     .frame(width: 40, height: 40)
-            })
+            }
         }
     }
 }

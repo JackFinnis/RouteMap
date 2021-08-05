@@ -28,7 +28,6 @@ struct FilterWorkouts: View {
                         if routesVM.loading {
                             HStack {
                                 ProgressView()
-                                    .padding(.trailing, 1)
                                 Text("Loading Routes...")
                             }
                             .font(.subheadline)
@@ -56,12 +55,10 @@ struct FilterWorkouts: View {
             }
             .navigationTitle("Cycling Routes")
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        showFilterWorkoutsSheet = false
-                    } label: {
-                        Text("Done")
-                    }
+                Button {
+                    showFilterWorkoutsSheet = false
+                } label: {
+                    Text("Done")
                 }
             }
         }
