@@ -7,14 +7,20 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
-@MainActor
-class RoutesVM: ObservableObject {
+class RoutesVM: NSObject, ObservableObject {
     // MARK: - Routes
     @Published var routes = [Route]()
     @Published var filteredRoutes = [Route]()
     @Published var selectedRoute: Route?
-    @Published var loading: Bool = false
+    @Published var loading: Bool = true
+    
+    // MARK: - Workout Filters
+    @Published var sortBy: RoutesSortBy = .longest // { didSet { updateWorkoutFilters() } }
+    @Published var numberShown: RoutesShown = .all // { didSet { updateWorkoutFilters() } }
+    
+    @Published var distanceFilter = RouteFilter(type: .distance) // { didSet { updateWorkoutFilters() } }
     
     var polylines: [Polyline] {
         var polylines = [Polyline]()
@@ -25,7 +31,8 @@ class RoutesVM: ObservableObject {
     }
     
     // MARK: - Initialiser
-    init() {
+    override init() {
+        super.init()
         // Load routes from the api
         loadRoutes()
     }
@@ -49,15 +56,58 @@ class RoutesVM: ObservableObject {
         }
         
         DispatchQueue.main.async {
-            self.resetSelectedColour()
+//            self.resetSelectedColour()
             self.selectedRoute = closestRoute
-            self.setSelectedColour()
+//            self.setSelectedColour()
         }
+    }
+    
+    // Return the filtered workouts multi polyline
+    public func getFilteredRoutesPolylines() -> [Polyline] {
+        return polylines
+//        var polylines: [Polyline] = []
+//
+//        for route in filteredRoutes {
+//            polylines.append(route.polyline)
+//        }
+//
+//        return polylines
+    }
+    
+    func getRoutesRegion() -> MKCoordinateRegion {
+        var minLat: Double = 90
+        var maxLat: Double = -90
+        var minLong: Double = 180
+        var maxLong: Double = -180
+        
+        for route in routes {
+            for coord in route.coords {
+                if coord.lat < minLat {
+                    minLat = coord.lat
+                }
+                if coord.lat > maxLat {
+                    maxLat = coord.lat
+                }
+                if coord.long < minLong {
+                    minLong = coord.long
+                }
+                if coord.long > maxLong {
+                    maxLong = coord.long
+                }
+            }
+        }
+        
+        let latDelta: Double = maxLat - minLat
+        let longDelta: Double = maxLong - minLong
+        let span = MKCoordinateSpan(latitudeDelta: latDelta * 1.4, longitudeDelta: longDelta * 1.4)
+        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat)/2, longitude: (minLong + maxLong)/2)
+        let region = MKCoordinateRegion(center: centre, span: span)
+        return region
     }
     
     // Load routes from the api
     func loadRoutes() {
-        let url = URL(string: "https://ncct-api.finnisjack.repl.co/routes.json")!
+        let url = URL(string: "https://ncct-api.finnisjack.repl.co/routes")!
         let request = URLRequest(url: url)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {

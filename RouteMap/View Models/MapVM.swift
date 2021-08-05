@@ -16,6 +16,7 @@ class MapVM: NSObject, ObservableObject {
     
     var parent: MapView?
     var selectedWorkout: Route?
+    var loading: Bool = true
     
     // Display image names
     public var userTrackingModeImageName: String {
@@ -76,8 +77,6 @@ class MapVM: NSObject, ObservableObject {
     public func getSelectedWorkoutRegion() -> MKCoordinateRegion? {
         if selectedWorkout == nil {
             return nil
-        } else if selectedWorkout!.coords.isEmpty {
-            return nil
         }
         
         var minLat: Double = 90
@@ -135,7 +134,7 @@ extension MapVM: MKMapViewDelegate {
     // Update parent centre coordinate
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         DispatchQueue.main.async {
-            self.parent?.centreCoordinate = mapView.centerCoordinate
+            self.parent?.centreCoord = mapView.centerCoordinate
         }
     }
 }

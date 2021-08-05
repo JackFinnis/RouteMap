@@ -12,18 +12,18 @@ struct FindRoutePointer: View {
     @EnvironmentObject var routesVM: RoutesVM
     @EnvironmentObject var mapVM: MapVM
     
-    @Binding var centreCoordinate: CLLocationCoordinate2D
+    @Binding var centreCoord: CLLocationCoordinate2D
     
     var body: some View {
         if mapVM.searchState == .finding {
             Button(action: {
                 mapVM.userTrackingMode = .none
                 mapVM.searchState = .found
-                routesVM.setClosestRoute(center: centreCoordinate)
+                routesVM.setClosestRoute(center: centreCoord)
             }, label: {
                 Image(systemName: "circle")
+                    .frame(width: 40, height: 40)
             })
-            .buttonStyle(FloatingButtonStyle())
         }
     }
 }

@@ -12,7 +12,7 @@ struct MapView: UIViewRepresentable {
     @EnvironmentObject var routesVM: RoutesVM
     @EnvironmentObject var mapVM: MapVM
     
-    @Binding var centreCoordinate: CLLocationCoordinate2D
+    @Binding var centreCoord: CLLocationCoordinate2D
     
     var mapView = MKMapView()
 
@@ -34,6 +34,24 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
+        // Pan to polyline
+        if mapVM.selectedWorkout != routesVM.selectedRoute {
+            mapVM.selectedWorkout = routesVM.selectedRoute
+            let region = mapVM.getSelectedWorkoutRegion()
+            if region != nil {
+                mapView.setRegion(region!, animated: true)
+                mapVM.userTrackingMode = .none
+            }
+        }
+        
+        // Pan to all routes
+        if mapVM.loading != routesVM.loading {
+            mapVM.loading = routesVM.loading
+            let region = routesVM.getRoutesRegion()
+            mapView.setRegion(region, animated: true)
+            mapVM.userTrackingMode = .none
+        }
+        
         // Set user tracking mode
         if mapView.userTrackingMode != mapVM.userTrackingMode {
             mapView.setUserTrackingMode(mapVM.userTrackingMode, animated: true)
@@ -46,6 +64,12 @@ struct MapView: UIViewRepresentable {
         // Updated polyline overlays
         mapView.removeOverlays(mapView.overlays)
         // Add filtered workouts polylines
-        mapView.addOverlays(routesVM.polylines)
+        if routesVM.numberShown != .none && !routesVM.loading {
+            if mapVM.searchState == .found && routesVM.selectedRoute != nil {
+                mapView.addOverlay(routesVM.selectedRoute!.polyline)
+            } else {
+                mapView.addOverlays(routesVM.getFilteredRoutesPolylines())
+            }
+        }
     }
 }

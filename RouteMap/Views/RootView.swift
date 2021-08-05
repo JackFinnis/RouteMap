@@ -15,13 +15,15 @@ struct RootView: View {
     @StateObject var mapVM = MapVM()
     
     // Map centre coordinate
-    @State var centreCoordinate = CLLocationCoordinate2D()
+    @State var centreCoord = CLLocationCoordinate2D()
     
     var body: some View {
         ZStack {
-            MapView(centreCoordinate: $centreCoordinate)
+            MapView(centreCoord: $centreCoord)
                 .ignoresSafeArea()
-            FindRoutePointer(centreCoordinate: $centreCoordinate)
+            FindRoutePointer(centreCoord: $centreCoord)
+            FloatingMapButtons(centreCoord: $centreCoord)
+//            RouteInfoBar()
         }
         .environmentObject(routesVM)
         .environmentObject(mapVM)
