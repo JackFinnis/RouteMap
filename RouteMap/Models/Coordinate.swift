@@ -15,4 +15,7 @@ struct Coordinate: Decodable {
     var coord2D: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: lat, longitude: long)
     }
+    var coordCLL: CLLocation {
+        CLLocation(latitude: lat, longitude: long)
+    }
 }

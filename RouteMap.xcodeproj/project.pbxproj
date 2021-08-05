@@ -8,27 +8,41 @@
 
 /* Begin PBXBuildFile section */
 		BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */; };
-		BECFC09526BAC4A7005CC3AE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC09426BAC4A7005CC3AE /* ContentView.swift */; };
 		BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BECFC09626BAC4AA005CC3AE /* Assets.xcassets */; };
 		BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */; };
 		BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B026BBEF43005CC3AE /* Church.swift */; };
 		BECFC0B426BBFFF5005CC3AE /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B326BBFFF5005CC3AE /* UIColor.swift */; };
 		BECFC0B626BC0175005CC3AE /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B526BC0175005CC3AE /* Route.swift */; };
 		BECFC0B826BC0355005CC3AE /* RoutesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B726BC0355005CC3AE /* RoutesVM.swift */; };
-		BECFC0BA26BC11FF005CC3AE /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B926BC11FF005CC3AE /* URLSession.swift */; };
+		BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0BD26BC1A7A005CC3AE /* RootView.swift */; };
+		BECFC0C226BC1D22005CC3AE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C126BC1D22005CC3AE /* MapView.swift */; };
+		BECFC0C426BC1DBC005CC3AE /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C326BC1DBC005CC3AE /* MapVM.swift */; };
+		BECFC0C726BC1E00005CC3AE /* RoutesSearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C626BC1E00005CC3AE /* RoutesSearchState.swift */; };
+		BECFC0C926BC1E49005CC3AE /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C826BC1E49005CC3AE /* Polyline.swift */; };
+		BECFC0CD26BC20B9005CC3AE /* RoutesSortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0CC26BC20B9005CC3AE /* RoutesSortBy.swift */; };
+		BECFC0CF26BC20C5005CC3AE /* RoutesShown.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0CE26BC20C5005CC3AE /* RoutesShown.swift */; };
+		BECFC0D326BC2CAC005CC3AE /* FindRoutePointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0D226BC2CAC005CC3AE /* FindRoutePointer.swift */; };
+		BECFC0D526BC2CEE005CC3AE /* FloatingButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0D426BC2CEE005CC3AE /* FloatingButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BECFC08F26BAC4A7005CC3AE /* RouteMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapApp.swift; sourceTree = "<group>"; };
-		BECFC09426BAC4A7005CC3AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BECFC09626BAC4AA005CC3AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		BECFC0B026BBEF43005CC3AE /* Church.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Church.swift; sourceTree = "<group>"; };
 		BECFC0B326BBFFF5005CC3AE /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BECFC0B526BC0175005CC3AE /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		BECFC0B726BC0355005CC3AE /* RoutesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesVM.swift; sourceTree = "<group>"; };
-		BECFC0B926BC11FF005CC3AE /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
+		BECFC0BD26BC1A7A005CC3AE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		BECFC0C126BC1D22005CC3AE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		BECFC0C326BC1DBC005CC3AE /* MapVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
+		BECFC0C626BC1E00005CC3AE /* RoutesSearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesSearchState.swift; sourceTree = "<group>"; };
+		BECFC0C826BC1E49005CC3AE /* Polyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
+		BECFC0CC26BC20B9005CC3AE /* RoutesSortBy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesSortBy.swift; sourceTree = "<group>"; };
+		BECFC0CE26BC20C5005CC3AE /* RoutesShown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesShown.swift; sourceTree = "<group>"; };
+		BECFC0D226BC2CAC005CC3AE /* FindRoutePointer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindRoutePointer.swift; sourceTree = "<group>"; };
+		BECFC0D426BC2CEE005CC3AE /* FloatingButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +80,7 @@
 				BECFC0AB26BBEE57005CC3AE /* Views */,
 				BECFC0AC26BBEE5D005CC3AE /* View Models */,
 				BECFC0AD26BBEE6E005CC3AE /* Models */,
+				BECFC0C526BC1DDC005CC3AE /* Enums */,
 				BECFC0B226BBFFE4005CC3AE /* Extensions */,
 			);
 			path = RouteMap;
@@ -74,7 +89,10 @@
 		BECFC0AB26BBEE57005CC3AE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BECFC09426BAC4A7005CC3AE /* ContentView.swift */,
+				BECFC0BD26BC1A7A005CC3AE /* RootView.swift */,
+				BECFC0C126BC1D22005CC3AE /* MapView.swift */,
+				BECFC0D226BC2CAC005CC3AE /* FindRoutePointer.swift */,
+				BECFC0D426BC2CEE005CC3AE /* FloatingButtonStyle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -83,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				BECFC0B726BC0355005CC3AE /* RoutesVM.swift */,
+				BECFC0C326BC1DBC005CC3AE /* MapVM.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -93,6 +112,7 @@
 				BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */,
 				BECFC0B026BBEF43005CC3AE /* Church.swift */,
 				BECFC0B526BC0175005CC3AE /* Route.swift */,
+				BECFC0C826BC1E49005CC3AE /* Polyline.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -101,9 +121,18 @@
 			isa = PBXGroup;
 			children = (
 				BECFC0B326BBFFF5005CC3AE /* UIColor.swift */,
-				BECFC0B926BC11FF005CC3AE /* URLSession.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BECFC0C526BC1DDC005CC3AE /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				BECFC0C626BC1E00005CC3AE /* RoutesSearchState.swift */,
+				BECFC0CC26BC20B9005CC3AE /* RoutesSortBy.swift */,
+				BECFC0CE26BC20C5005CC3AE /* RoutesShown.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,13 +204,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BECFC0C926BC1E49005CC3AE /* Polyline.swift in Sources */,
 				BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */,
+				BECFC0C726BC1E00005CC3AE /* RoutesSearchState.swift in Sources */,
 				BECFC0B826BC0355005CC3AE /* RoutesVM.swift in Sources */,
-				BECFC0BA26BC11FF005CC3AE /* URLSession.swift in Sources */,
-				BECFC09526BAC4A7005CC3AE /* ContentView.swift in Sources */,
+				BECFC0D526BC2CEE005CC3AE /* FloatingButtonStyle.swift in Sources */,
 				BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */,
+				BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */,
+				BECFC0D326BC2CAC005CC3AE /* FindRoutePointer.swift in Sources */,
+				BECFC0CD26BC20B9005CC3AE /* RoutesSortBy.swift in Sources */,
+				BECFC0C426BC1DBC005CC3AE /* MapVM.swift in Sources */,
 				BECFC0B626BC0175005CC3AE /* Route.swift in Sources */,
+				BECFC0CF26BC20C5005CC3AE /* RoutesShown.swift in Sources */,
 				BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */,
+				BECFC0C226BC1D22005CC3AE /* MapView.swift in Sources */,
 				BECFC0B426BBFFF5005CC3AE /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,7 +276,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -295,7 +331,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -310,6 +346,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -321,7 +358,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -340,6 +377,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -351,7 +389,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
