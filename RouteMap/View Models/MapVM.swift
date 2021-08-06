@@ -10,56 +10,60 @@ import MapKit
 
 class MapVM: NSObject, ObservableObject {
     // MARK: - Properties
-    @Published var userTrackingMode: MKUserTrackingMode = .none
+    @Published var trackingMode: MKUserTrackingMode = .none
     @Published var mapType: MKMapType = .standard
-    @Published var searchState: RoutesSearchState = .none
     
-    var parent: MapView?
-    var selectedRoute: Route?
-    var loading: Bool = true
+    private var parent: MapView?
+    private var selectedRoute: Route?
+    private var loading: Bool = true
     
-    // Display image names
-    public var userTrackingModeImageName: String {
-        switch userTrackingMode {
-        case .none:
-            return "location"
-        case .follow:
-            return "location.fill"
-        default:
-            return "location.north.line.fill"
+    // MARK: - Map Helper Functions
+    // Get map region
+    public func getRegion(routes: [Route]) -> MKCoordinateRegion? {
+        if routes.isEmpty {
+            return nil
         }
+        
+        var minLat: Double = 90
+        var maxLat: Double = -90
+        var minLong: Double = 180
+        var maxLong: Double = -180
+        
+        for route in routes {
+            for coord in route.coords {
+                if coord.lat < minLat {
+                    minLat = coord.lat
+                }
+                if coord.lat > maxLat {
+                    maxLat = coord.lat
+                }
+                if coord.long < minLong {
+                    minLong = coord.long
+                }
+                if coord.long > maxLong {
+                    maxLong = coord.long
+                }
+            }
+        }
+        
+        let latDelta: Double = maxLat - minLat
+        let longDelta: Double = maxLong - minLong
+        let span = MKCoordinateSpan(latitudeDelta: latDelta * 1.4, longitudeDelta: longDelta * 1.4)
+        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat)/2, longitude: (minLong + maxLong)/2)
+        let region = MKCoordinateRegion(center: centre, span: span)
+        return region
     }
     
-    public var searchStateImageName: String {
-        switch searchState {
-        case .none:
-            return "magnifyingglass"
-        case .finding:
-            return "mappin.and.ellipse"
-        case .found:
-            return "xmark"
-        }
-    }
-    
-    public var mapTypeImageName: String {
-        switch mapType {
-        case .standard:
-            return "globe"
-        default:
-            return "map"
-        }
-    }
-    
-    // MARK: - Map Settings Update Methods
+    // MARK: - Update Map Settings
     // User tracking mode button pressed
-    public func updateUserTrackingMode() {
-        switch userTrackingMode {
+    public func updateTrackingMode() {
+        switch trackingMode {
         case .none:
-            userTrackingMode = .follow
+            trackingMode = .follow
         case .follow:
-            userTrackingMode = .followWithHeading
+            trackingMode = .followWithHeading
         default:
-            userTrackingMode = .none
+            trackingMode = .none
         }
     }
     
@@ -73,52 +77,38 @@ class MapVM: NSObject, ObservableObject {
         }
     }
     
-    // Get map region
-    public func getSelectedWorkoutRegion() -> MKCoordinateRegion? {
-        if selectedRoute == nil {
-            return nil
+    // MARK: - Map Settings Images
+    // Display image names
+    public var trackingModeImage: String {
+        switch trackingMode {
+        case .none:
+            return "location"
+        case .follow:
+            return "location.fill"
+        default:
+            return "location.north.line.fill"
         }
-        
-        var minLat: Double = 90
-        var maxLat: Double = -90
-        var minLong: Double = 180
-        var maxLong: Double = -180
-        
-        for coord in selectedRoute!.coords {
-            if coord.lat < minLat {
-                minLat = coord.lat
-            }
-            if coord.lat > maxLat {
-                maxLat = coord.lat
-            }
-            if coord.long < minLong {
-                minLong = coord.long
-            }
-            if coord.long > maxLong {
-                maxLong = coord.long
-            }
+    }
+    
+    public var mapTypeImage: String {
+        switch mapType {
+        case .standard:
+            return "globe"
+        default:
+            return "map"
         }
-        
-        let latDelta: Double = maxLat - minLat
-        let longDelta: Double = maxLong - minLong
-        let span = MKCoordinateSpan(latitudeDelta: latDelta * 1.4, longitudeDelta: longDelta * 1.4)
-        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat)/2, longitude: (minLong + maxLong)/2)
-        let region = MKCoordinateRegion(center: centre, span: span)
-        return region
     }
 }
 
 // MARK: - MKMapView Delegate
 extension MapVM: MKMapViewDelegate {
-    // Render multicolour polyline overlays
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        guard let polyline = overlay as? Polyline else {
+        guard let polyline = overlay as? MKPolyline else {
             return MKOverlayRenderer(overlay: overlay)
         }
         
-        // Set different colour if selected
         var colour: UIColor {
-            if polyline.selected {
+            if selectedRoute?.polyline.pointCount == polyline.pointCount {
                 return .systemOrange
             } else {
                 return .systemBlue
@@ -129,12 +119,5 @@ extension MapVM: MKMapViewDelegate {
         renderer.strokeColor = colour
         renderer.lineWidth = 2
         return renderer
-    }
-    
-    // Update parent centre coordinate
-    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        DispatchQueue.main.async {
-            self.parent?.centreCoord = mapView.centerCoordinate
-        }
     }
 }

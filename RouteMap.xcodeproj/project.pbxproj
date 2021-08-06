@@ -7,56 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BEB8F0A026BC370D00702BB5 /* FloatingMapButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F09F26BC370C00702BB5 /* FloatingMapButtons.swift */; };
+		BEB8F0A026BC370D00702BB5 /* MapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F09F26BC370C00702BB5 /* MapSettings.swift */; };
 		BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0A426BC383600702BB5 /* Blur.swift */; };
-		BEB8F0A826BC607500702BB5 /* FilterWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0A726BC607500702BB5 /* FilterWorkouts.swift */; };
-		BEB8F0AA26BC61B100702BB5 /* DistanceFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0A926BC61B100702BB5 /* DistanceFilterView.swift */; };
-		BEB8F0AC26BC627800702BB5 /* RouteFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AB26BC627800702BB5 /* RouteFilter.swift */; };
-		BEB8F0AE26BC628900702BB5 /* RouteFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AD26BC628900702BB5 /* RouteFilterType.swift */; };
-		BEB8F0B026BC7CB800702BB5 /* RouteInfoBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AF26BC7CB800702BB5 /* RouteInfoBar.swift */; };
+		BEB8F0B026BC7CB800702BB5 /* RouteBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */; };
 		BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0B126BC7DB500702BB5 /* RouteView.swift */; };
 		BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */; };
 		BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BECFC09626BAC4AA005CC3AE /* Assets.xcassets */; };
 		BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */; };
 		BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B026BBEF43005CC3AE /* Church.swift */; };
-		BECFC0B426BBFFF5005CC3AE /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B326BBFFF5005CC3AE /* UIColor.swift */; };
 		BECFC0B626BC0175005CC3AE /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B526BC0175005CC3AE /* Route.swift */; };
 		BECFC0B826BC0355005CC3AE /* RoutesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B726BC0355005CC3AE /* RoutesVM.swift */; };
 		BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0BD26BC1A7A005CC3AE /* RootView.swift */; };
 		BECFC0C226BC1D22005CC3AE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C126BC1D22005CC3AE /* MapView.swift */; };
 		BECFC0C426BC1DBC005CC3AE /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C326BC1DBC005CC3AE /* MapVM.swift */; };
-		BECFC0C726BC1E00005CC3AE /* RoutesSearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C626BC1E00005CC3AE /* RoutesSearchState.swift */; };
-		BECFC0C926BC1E49005CC3AE /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C826BC1E49005CC3AE /* Polyline.swift */; };
-		BECFC0CD26BC20B9005CC3AE /* RoutesSortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0CC26BC20B9005CC3AE /* RoutesSortBy.swift */; };
-		BECFC0CF26BC20C5005CC3AE /* RoutesShown.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0CE26BC20C5005CC3AE /* RoutesShown.swift */; };
-		BECFC0D326BC2CAC005CC3AE /* FindRoutePointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0D226BC2CAC005CC3AE /* FindRoutePointer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BEB8F09F26BC370C00702BB5 /* FloatingMapButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingMapButtons.swift; sourceTree = "<group>"; };
+		BEB8F09F26BC370C00702BB5 /* MapSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSettings.swift; sourceTree = "<group>"; };
 		BEB8F0A426BC383600702BB5 /* Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
-		BEB8F0A726BC607500702BB5 /* FilterWorkouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterWorkouts.swift; sourceTree = "<group>"; };
-		BEB8F0A926BC61B100702BB5 /* DistanceFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceFilterView.swift; sourceTree = "<group>"; };
-		BEB8F0AB26BC627800702BB5 /* RouteFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFilter.swift; sourceTree = "<group>"; };
-		BEB8F0AD26BC628900702BB5 /* RouteFilterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFilterType.swift; sourceTree = "<group>"; };
-		BEB8F0AF26BC7CB800702BB5 /* RouteInfoBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteInfoBar.swift; sourceTree = "<group>"; };
+		BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteBar.swift; sourceTree = "<group>"; };
 		BEB8F0B126BC7DB500702BB5 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		BECFC08F26BAC4A7005CC3AE /* RouteMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapApp.swift; sourceTree = "<group>"; };
 		BECFC09626BAC4AA005CC3AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		BECFC0B026BBEF43005CC3AE /* Church.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Church.swift; sourceTree = "<group>"; };
-		BECFC0B326BBFFF5005CC3AE /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		BECFC0B526BC0175005CC3AE /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		BECFC0B726BC0355005CC3AE /* RoutesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesVM.swift; sourceTree = "<group>"; };
 		BECFC0BD26BC1A7A005CC3AE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BECFC0C126BC1D22005CC3AE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		BECFC0C326BC1DBC005CC3AE /* MapVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
-		BECFC0C626BC1E00005CC3AE /* RoutesSearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesSearchState.swift; sourceTree = "<group>"; };
-		BECFC0C826BC1E49005CC3AE /* Polyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
-		BECFC0CC26BC20B9005CC3AE /* RoutesSortBy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesSortBy.swift; sourceTree = "<group>"; };
-		BECFC0CE26BC20C5005CC3AE /* RoutesShown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesShown.swift; sourceTree = "<group>"; };
-		BECFC0D226BC2CAC005CC3AE /* FindRoutePointer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindRoutePointer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +74,6 @@
 				BECFC0AB26BBEE57005CC3AE /* Views */,
 				BECFC0AC26BBEE5D005CC3AE /* View Models */,
 				BECFC0AD26BBEE6E005CC3AE /* Models */,
-				BECFC0C526BC1DDC005CC3AE /* Enums */,
-				BECFC0B226BBFFE4005CC3AE /* Extensions */,
 			);
 			path = RouteMap;
 			sourceTree = "<group>";
@@ -105,11 +83,8 @@
 			children = (
 				BECFC0BD26BC1A7A005CC3AE /* RootView.swift */,
 				BECFC0C126BC1D22005CC3AE /* MapView.swift */,
-				BECFC0D226BC2CAC005CC3AE /* FindRoutePointer.swift */,
-				BEB8F09F26BC370C00702BB5 /* FloatingMapButtons.swift */,
-				BEB8F0A726BC607500702BB5 /* FilterWorkouts.swift */,
-				BEB8F0A926BC61B100702BB5 /* DistanceFilterView.swift */,
-				BEB8F0AF26BC7CB800702BB5 /* RouteInfoBar.swift */,
+				BEB8F09F26BC370C00702BB5 /* MapSettings.swift */,
+				BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */,
 				BEB8F0B126BC7DB500702BB5 /* RouteView.swift */,
 				BEB8F0A426BC383600702BB5 /* Blur.swift */,
 			);
@@ -131,29 +106,8 @@
 				BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */,
 				BECFC0B026BBEF43005CC3AE /* Church.swift */,
 				BECFC0B526BC0175005CC3AE /* Route.swift */,
-				BECFC0C826BC1E49005CC3AE /* Polyline.swift */,
-				BEB8F0AB26BC627800702BB5 /* RouteFilter.swift */,
-				BEB8F0AD26BC628900702BB5 /* RouteFilterType.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		BECFC0B226BBFFE4005CC3AE /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				BECFC0B326BBFFF5005CC3AE /* UIColor.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		BECFC0C526BC1DDC005CC3AE /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				BECFC0C626BC1E00005CC3AE /* RoutesSearchState.swift */,
-				BECFC0CC26BC20B9005CC3AE /* RoutesSortBy.swift */,
-				BECFC0CE26BC20C5005CC3AE /* RoutesShown.swift */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,27 +180,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */,
-				BECFC0C926BC1E49005CC3AE /* Polyline.swift in Sources */,
 				BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */,
-				BECFC0C726BC1E00005CC3AE /* RoutesSearchState.swift in Sources */,
 				BECFC0B826BC0355005CC3AE /* RoutesVM.swift in Sources */,
-				BEB8F0A026BC370D00702BB5 /* FloatingMapButtons.swift in Sources */,
+				BEB8F0A026BC370D00702BB5 /* MapSettings.swift in Sources */,
 				BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */,
 				BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */,
 				BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */,
-				BEB8F0B026BC7CB800702BB5 /* RouteInfoBar.swift in Sources */,
-				BECFC0D326BC2CAC005CC3AE /* FindRoutePointer.swift in Sources */,
-				BECFC0CD26BC20B9005CC3AE /* RoutesSortBy.swift in Sources */,
+				BEB8F0B026BC7CB800702BB5 /* RouteBar.swift in Sources */,
 				BECFC0C426BC1DBC005CC3AE /* MapVM.swift in Sources */,
-				BEB8F0AA26BC61B100702BB5 /* DistanceFilterView.swift in Sources */,
 				BECFC0B626BC0175005CC3AE /* Route.swift in Sources */,
-				BEB8F0AE26BC628900702BB5 /* RouteFilterType.swift in Sources */,
-				BECFC0CF26BC20C5005CC3AE /* RoutesShown.swift in Sources */,
 				BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */,
 				BECFC0C226BC1D22005CC3AE /* MapView.swift in Sources */,
-				BEB8F0A826BC607500702BB5 /* FilterWorkouts.swift in Sources */,
-				BECFC0B426BBFFF5005CC3AE /* UIColor.swift in Sources */,
-				BEB8F0AC26BC627800702BB5 /* RouteFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

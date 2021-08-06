@@ -1,5 +1,5 @@
 //
-//  RouteInfoBar.swift
+//  RouteBar.swift
 //  MyMap
 //
 //  Created by Finnis on 13/06/2021.
@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-struct RouteInfoBar: View {
+struct RouteBar: View {
     @EnvironmentObject var routesVM: RoutesVM
-    @EnvironmentObject var mapVM: MapVM
     
     @State var showWorkoutDetailSheet: Bool = false
     
@@ -21,25 +20,26 @@ struct RouteInfoBar: View {
                     routesVM.previousRoute()
                 } label: {
                     Image(systemName: "chevron.backward")
-                        .frame(width: 40, height: 40)
+                        .frame(width: 46, height: 46)
                 }
                 
-                Text(routesVM.selectedRouteDistanceString)
+                Text(routesVM.selectedRoute == nil ? "" : routesVM.selectedRoute!.name)
                     .font(.headline)
+                    .lineLimit(1)
                 Spacer()
                 
                 Button {
                     routesVM.nextRoute()
                 } label: {
                     Image(systemName: "chevron.forward")
-                        .frame(width: 40, height: 40)
+                        .frame(width: 46, height: 46)
                 }
             }
-            .frame(height: 70)
+            .font(.system(size: 23))
             .background(Blur())
-            .cornerRadius(12)
+            .cornerRadius(10)
             .compositingGroup()
-            .shadow(radius: 2, y: 2)
+            .shadow(color: Color(UIColor.systemFill), radius: 5)
             .padding(10)
             .onTapGesture {
                 if routesVM.selectedRoute != nil {

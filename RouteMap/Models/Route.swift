@@ -11,12 +11,14 @@ import UIKit
 
 struct Route: Decodable, Identifiable, Equatable {
     let id: Int
-    let colourString: String
+    let start: String
+    let end: String
+    let metres: Int
     let churches: [Church]
     let coords: [Coordinate]
     
-    var colour: UIColor {
-        UIColor(hex: colourString)!
+    var name: String {
+        "\(id): " + start + " to " + end
     }
     
     var coords2D: [CLLocationCoordinate2D] {
@@ -27,8 +29,16 @@ struct Route: Decodable, Identifiable, Equatable {
         return coords2D
     }
     
-    var polyline: Polyline {
-        Polyline(coordinates: coords2D, count: coords2D.count)
+    var coordsCLL: [CLLocation] {
+        var coordsCLL = [CLLocation]()
+        for coord in coords {
+            coordsCLL.append(coord.coordCLL)
+        }
+        return coordsCLL
+    }
+    
+    var polyline: MKPolyline {
+        MKPolyline(coordinates: coords2D, count: coords2D.count)
     }
     
     static func == (lhs: Route, rhs: Route) -> Bool {

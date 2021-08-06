@@ -12,8 +12,6 @@ struct MapView: UIViewRepresentable {
     @EnvironmentObject var routesVM: RoutesVM
     @EnvironmentObject var mapVM: MapVM
     
-    @Binding var centreCoord: CLLocationCoordinate2D
-    
     var mapView = MKMapView()
 
     func makeCoordinator() -> MapVM {
@@ -34,20 +32,22 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
-        // Pan to polyline
-        if mapVM.selectedRoute != routesVM.selectedRoute {
-            mapVM.selectedRoute = routesVM.selectedRoute
-            let region = mapVM.getSelectedWorkoutRegion()
-            if region != nil {
-                mapView.setRegion(region!, animated: true)
-                mapVM.userTrackingMode = .none
-            }
-        }
-        
         // Pan to all routes
         if mapVM.loading != routesVM.loading {
             mapVM.loading = routesVM.loading
-            mapView.setRegion(routesVM.routesRegion, animated: true)
+            let region = mapVM.getRegion(routes: routesVM.filteredRoutes)
+            if region != nil {
+                mapView.setRegion(region!, animated: true)
+            }
+            mapVM.userTrackingMode = .none
+        }
+        // Pan to route
+        if mapVM.selectedRoute != routesVM.selectedRoute {
+            mapVM.selectedRoute = routesVM.selectedRoute
+            let region = mapVM.getRegion(routes: [routesVM.selectedRoute!])
+            if region != nil {
+                mapView.setRegion(region!, animated: true)
+            }
             mapVM.userTrackingMode = .none
         }
         
@@ -63,8 +63,8 @@ struct MapView: UIViewRepresentable {
         // Updated polyline overlays
         mapView.removeOverlays(mapView.overlays)
         // Add filtered workouts polylines
-        if routesVM.numberShown != .none && !routesVM.loading {
-            if mapVM.searchState == .found && routesVM.selectedRoute != nil {
+        if !routesVM.loading {
+            if routesVM.selectedRoute != nil {
                 mapView.addOverlay(routesVM.selectedRoute!.polyline)
             } else {
                 mapView.addOverlays(routesVM.filteredPolylines)

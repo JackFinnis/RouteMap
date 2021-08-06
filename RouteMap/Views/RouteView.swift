@@ -11,6 +11,6 @@ struct RouteView: View {
     var route: Route
     
     var body: some View {
-        Text(route.colourString)
+        Text(route.start)
     }
 }
