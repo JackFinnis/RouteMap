@@ -42,7 +42,7 @@ class RoutesVM: NSObject, ObservableObject {
     
     // MARK: - Filter Routes
     // Filtered Routes
-    private var filteredRoutes: [Route] {
+    public var filteredRoutes: [Route] {
         if searchText.isEmpty {
             return routes
         } else {
@@ -65,6 +65,15 @@ class RoutesVM: NSObject, ObservableObject {
             polylines.append(route.polyline)
         }
         return polylines
+    }
+    
+    // Filtered church annotations
+    var filteredChurchAnnotations: [MKPointAnnotation] {
+        var annotations = [MKPointAnnotation]()
+        for route in filteredRoutes {
+            annotations.append(contentsOf: route.churchAnnotations)
+        }
+        return annotations
     }
     
     // MARK: - Select Route

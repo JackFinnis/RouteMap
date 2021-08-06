@@ -12,10 +12,25 @@ class MapVM: NSObject, ObservableObject {
     // MARK: - Properties
     @Published var trackingMode: MKUserTrackingMode = .none
     @Published var mapType: MKMapType = .standard
+    @Published var showChurchDetails: Bool = false
     
-    private var parent: MapView?
-    private var selectedRoute: Route?
-    private var loading: Bool = true
+    private var locationManager = CLLocationManager()
+    public var parent: MapView?
+    public var selectedRoute: Route?
+    public var selectedChurch: Church?
+    public var loading: Bool = true
+    
+    // MARK: - Initialiser
+    override init() {
+        super.init()
+        setupLocationManager()
+    }
+    
+    // MARK: - CLLocationManager
+    // Set up location manager to show user location
+    func setupLocationManager() {
+        locationManager.requestWhenInUseAuthorization()
+    }
     
     // MARK: - Map Helper Functions
     // Get map region
@@ -93,7 +108,7 @@ class MapVM: NSObject, ObservableObject {
     public var mapTypeImage: String {
         switch mapType {
         case .standard:
-            return "globe"
+            return "globe.europe.africa.fill"
         default:
             return "map"
         }
@@ -119,5 +134,41 @@ extension MapVM: MKMapViewDelegate {
         renderer.strokeColor = colour
         renderer.lineWidth = 2
         return renderer
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isKind(of: MKUserLocation.self) {
+            return nil
+        }
+        
+        let identifier = "Church"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+    
+        if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            annotationView?.image =
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if let annotation = view.annotation as? MKPointAnnotation {
+            if parent != nil {
+                for route in parent!.routesVM.filteredRoutes {
+                    for church in route.churches {
+                        if annotation.title == church.name {
+                            selectedChurch = church
+                            showChurchDetails = true
+                            return
+                        }
+                    }
+                }
+            }
+        }
     }
 }

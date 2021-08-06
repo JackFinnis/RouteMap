@@ -41,6 +41,14 @@ struct Route: Decodable, Identifiable, Equatable {
         MKPolyline(coordinates: coords2D, count: coords2D.count)
     }
     
+    var churchAnnotations: [MKPointAnnotation] {
+        var annotations = [MKPointAnnotation]()
+        for church in churches {
+            annotations.append(church.annotation)
+        }
+        return annotations
+    }
+    
     static func == (lhs: Route, rhs: Route) -> Bool {
         lhs.id == rhs.id
     }

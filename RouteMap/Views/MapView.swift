@@ -39,7 +39,7 @@ struct MapView: UIViewRepresentable {
             if region != nil {
                 mapView.setRegion(region!, animated: true)
             }
-            mapVM.userTrackingMode = .none
+            mapVM.trackingMode = .none
         }
         // Pan to route
         if mapVM.selectedRoute != routesVM.selectedRoute {
@@ -48,19 +48,26 @@ struct MapView: UIViewRepresentable {
             if region != nil {
                 mapView.setRegion(region!, animated: true)
             }
-            mapVM.userTrackingMode = .none
+            mapVM.trackingMode = .none
         }
         
         // Set user tracking mode
-        if mapView.userTrackingMode != mapVM.userTrackingMode {
-            mapView.setUserTrackingMode(mapVM.userTrackingMode, animated: true)
+        if mapView.userTrackingMode != mapVM.trackingMode {
+            mapView.setUserTrackingMode(mapVM.trackingMode, animated: true)
         }
         // Set map type
         if mapView.mapType != mapVM.mapType {
             mapView.mapType = mapVM.mapType
         }
         
-        // Updated polyline overlays
+        // Update church annotation overlays
+        mapView.removeAnnotations(mapView.annotations)
+        // Add filtered workouts polylines
+        if !routesVM.loading && routesVM.selectedRoute != nil {
+            mapView.addAnnotations(routesVM.selectedRoute!.churchAnnotations)
+        }
+        
+        // Update route polyline overlays
         mapView.removeOverlays(mapView.overlays)
         // Add filtered workouts polylines
         if !routesVM.loading {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct Church: Decodable {
     let name: String
@@ -14,5 +15,12 @@ struct Church: Decodable {
     
     var url: URL {
         URL(string: urlString)!
+    }
+    
+    var annotation: MKPointAnnotation {
+        let annotation = MKPointAnnotation()
+        annotation.title = name
+        annotation.coordinate = coord.coord2D
+        return annotation
     }
 }

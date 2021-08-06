@@ -13,11 +13,15 @@ struct RootView: View {
     @StateObject var mapVM = MapVM()
     
     var body: some View {
-        ZStack {
-            MapView()
-                .ignoresSafeArea()
-            MapSettings()
-            RouteBar()
+        NavigationView {
+            ZStack {
+                MapView()
+                    .ignoresSafeArea()
+                MapSettings()
+                RouteBar()
+            }
+            .navigationTitle("Route Map")
+            .navigationBarHidden(true)
         }
         .environmentObject(routesVM)
         .environmentObject(mapVM)

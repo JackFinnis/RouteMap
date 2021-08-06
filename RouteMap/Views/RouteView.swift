@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RouteView: View {
-    var route: Route
+    let route: Route
     
     var body: some View {
         Text(route.start)

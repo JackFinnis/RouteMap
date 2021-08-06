@@ -11,6 +11,7 @@
 		BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0A426BC383600702BB5 /* Blur.swift */; };
 		BEB8F0B026BC7CB800702BB5 /* RouteBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */; };
 		BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0B126BC7DB500702BB5 /* RouteView.swift */; };
+		BEB8F0B526BDD98600702BB5 /* ChurchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0B426BDD98600702BB5 /* ChurchView.swift */; };
 		BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */; };
 		BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BECFC09626BAC4AA005CC3AE /* Assets.xcassets */; };
 		BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */; };
@@ -27,6 +28,8 @@
 		BEB8F0A426BC383600702BB5 /* Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
 		BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteBar.swift; sourceTree = "<group>"; };
 		BEB8F0B126BC7DB500702BB5 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
+		BEB8F0B326BDC49600702BB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BEB8F0B426BDD98600702BB5 /* ChurchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChurchView.swift; sourceTree = "<group>"; };
 		BECFC08F26BAC4A7005CC3AE /* RouteMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapApp.swift; sourceTree = "<group>"; };
 		BECFC09626BAC4AA005CC3AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,6 +72,7 @@
 		BECFC09126BAC4A7005CC3AE /* RouteMap */ = {
 			isa = PBXGroup;
 			children = (
+				BEB8F0B326BDC49600702BB5 /* Info.plist */,
 				BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */,
 				BECFC09626BAC4AA005CC3AE /* Assets.xcassets */,
 				BECFC0AB26BBEE57005CC3AE /* Views */,
@@ -86,6 +90,7 @@
 				BEB8F09F26BC370C00702BB5 /* MapSettings.swift */,
 				BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */,
 				BEB8F0B126BC7DB500702BB5 /* RouteView.swift */,
+				BEB8F0B426BDD98600702BB5 /* ChurchView.swift */,
 				BEB8F0A426BC383600702BB5 /* Blur.swift */,
 			);
 			path = Views;
@@ -180,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */,
+				BEB8F0B526BDD98600702BB5 /* ChurchView.swift in Sources */,
 				BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */,
 				BECFC0B826BC0355005CC3AE /* RoutesVM.swift in Sources */,
 				BEB8F0A026BC370D00702BB5 /* MapSettings.swift in Sources */,
@@ -325,6 +331,7 @@
 				DEVELOPMENT_TEAM = 4CQW4CFFYT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RouteMap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -356,6 +363,7 @@
 				DEVELOPMENT_TEAM = 4CQW4CFFYT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RouteMap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
