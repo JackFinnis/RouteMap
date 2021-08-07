@@ -8,19 +8,22 @@
 import Foundation
 import MapKit
 
-struct Church: Decodable {
+class Church: NSObject, MKAnnotation, Codable {
     let name: String
     let urlString: String
-    let coord: Coordinate
+    public let coordinate: CLLocationCoordinate2D
+    
+    public var title: String? {
+        return name
+    }
     
     var url: URL {
         URL(string: urlString)!
     }
     
-    var annotation: MKPointAnnotation {
-        let annotation = MKPointAnnotation()
-        annotation.title = name
-        annotation.coordinate = coord.coord2D
-        return annotation
+    public init(name: String, url: String, coordinate: CLLocationCoordinate2D) {
+        self.name = name
+        self.urlString = url
+        self.coordinate = coordinate
     }
 }

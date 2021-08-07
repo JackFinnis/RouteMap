@@ -46,17 +46,17 @@ class MapVM: NSObject, ObservableObject {
         
         for route in routes {
             for coord in route.coords {
-                if coord.lat < minLat {
-                    minLat = coord.lat
+                if coord.latitude < minLat {
+                    minLat = coord.latitude
                 }
-                if coord.lat > maxLat {
-                    maxLat = coord.lat
+                if coord.latitude > maxLat {
+                    maxLat = coord.latitude
                 }
-                if coord.long < minLong {
-                    minLong = coord.long
+                if coord.longitude < minLong {
+                    minLong = coord.longitude
                 }
-                if coord.long > maxLong {
-                    maxLong = coord.long
+                if coord.longitude > maxLong {
+                    maxLong = coord.longitude
                 }
             }
         }
@@ -137,23 +137,12 @@ extension MapVM: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation.isKind(of: MKUserLocation.self) {
+        switch annotation {
+        case is Church:
+            return mapView.dequeueReusableAnnotationView(withIdentifier: "Church", for: annotation)
+        default:
             return nil
         }
-        
-        let identifier = "Church"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-    
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//            annotationView?.image =
-        } else {
-            annotationView?.annotation = annotation
-        }
-        
-        return annotationView
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {

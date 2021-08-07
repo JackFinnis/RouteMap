@@ -32,8 +32,8 @@ class RoutesVM: NSObject, ObservableObject {
                     DispatchQueue.main.async {
                         self.routes = response
                         self.loading = false
-                        return
                     }
+                    return
                 }
             }
             print("\(error?.localizedDescription ?? "Unknown error")")
@@ -65,15 +65,6 @@ class RoutesVM: NSObject, ObservableObject {
             polylines.append(route.polyline)
         }
         return polylines
-    }
-    
-    // Filtered church annotations
-    var filteredChurchAnnotations: [MKPointAnnotation] {
-        var annotations = [MKPointAnnotation]()
-        for route in filteredRoutes {
-            annotations.append(contentsOf: route.churchAnnotations)
-        }
-        return annotations
     }
     
     // MARK: - Select Route

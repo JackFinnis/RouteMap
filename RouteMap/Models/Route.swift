@@ -9,46 +9,24 @@ import Foundation
 import MapKit
 import UIKit
 
-struct Route: Decodable, Identifiable, Equatable {
+struct Route: Decodable, Identifiable {
     let id: Int
     let start: String
     let end: String
     let metres: Int
     let churches: [Church]
-    let coords: [Coordinate]
+    let coords: [CLLocationCoordinate2D]
     
     var name: String {
         "\(id): " + start + " to " + end
     }
     
-    var coords2D: [CLLocationCoordinate2D] {
-        var coords2D = [CLLocationCoordinate2D]()
-        for coord in coords {
-            coords2D.append(coord.coord2D)
-        }
-        return coords2D
-    }
-    
-    var coordsCLL: [CLLocation] {
-        var coordsCLL = [CLLocation]()
-        for coord in coords {
-            coordsCLL.append(coord.coordCLL)
-        }
-        return coordsCLL
-    }
-    
     var polyline: MKPolyline {
-        MKPolyline(coordinates: coords2D, count: coords2D.count)
+        return MKPolyline(coordinates: coords, count: coords.count)
     }
-    
-    var churchAnnotations: [MKPointAnnotation] {
-        var annotations = [MKPointAnnotation]()
-        for church in churches {
-            annotations.append(church.annotation)
-        }
-        return annotations
-    }
-    
+}
+
+extension Route: Equatable {
     static func == (lhs: Route, rhs: Route) -> Bool {
         lhs.id == rhs.id
     }

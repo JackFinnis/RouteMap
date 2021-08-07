@@ -28,6 +28,9 @@ struct MapView: UIViewRepresentable {
         mapView.showsScale = true
         mapView.showsCompass = true
         
+        // Register annotations
+        mapView.register(ChurchMarkerView.self, forAnnotationViewWithReuseIdentifier: "Church")
+        
         return mapView
     }
     
@@ -64,7 +67,7 @@ struct MapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
         // Add filtered workouts polylines
         if !routesVM.loading && routesVM.selectedRoute != nil {
-            mapView.addAnnotations(routesVM.selectedRoute!.churchAnnotations)
+            mapView.addAnnotations(routesVM.selectedRoute!.churches)
         }
         
         // Update route polyline overlays
