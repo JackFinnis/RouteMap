@@ -15,6 +15,8 @@ class RoutesVM: NSObject, ObservableObject {
     @Published var selectedRoute: Route?
     @Published var searchText: String = ""
     
+    public var parent: MapView?
+    
     // MARK: - Initialiser
     override init() {
         super.init()
@@ -107,5 +109,98 @@ class RoutesVM: NSObject, ObservableObject {
             }
         }
         return nil
+    }
+    
+    // MARK: - Map Helper Functions
+    // Get map region
+    public func getRoutesRegion(all: Bool) -> MKCoordinateRegion? {
+        var routes = [Route]()
+        if all {
+            routes = filteredRoutes
+        } else {
+            routes = [selectedRoute!]
+        }
+        
+        guard !routes.isEmpty else {
+            return nil
+        }
+        
+        var minLat: Double = 90
+        var maxLat: Double = -90
+        var minLong: Double = 180
+        var maxLong: Double = -180
+        
+        for route in routes {
+            for coord in route.coords {
+                if coord.latitude < minLat {
+                    minLat = coord.latitude
+                }
+                if coord.latitude > maxLat {
+                    maxLat = coord.latitude
+                }
+                if coord.longitude < minLong {
+                    minLong = coord.longitude
+                }
+                if coord.longitude > maxLong {
+                    maxLong = coord.longitude
+                }
+            }
+        }
+        
+        let latDelta: Double = maxLat - minLat
+        let longDelta: Double = maxLong - minLong
+        let span = MKCoordinateSpan(latitudeDelta: latDelta * 1.4, longitudeDelta: longDelta * 1.4)
+        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat)/2, longitude: (minLong + maxLong)/2)
+        let region = MKCoordinateRegion(center: centre, span: span)
+        return region
+    }
+}
+
+// MARK: - MKMapView Delegate
+extension RoutesVM: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        guard let polyline = overlay as? MKPolyline else {
+            return MKOverlayRenderer(overlay: overlay)
+        }
+        
+        var colour: UIColor {
+            if selectedRoute?.polyline.pointCount == polyline.pointCount {
+                return .systemOrange
+            } else {
+                return .systemBlue
+            }
+        }
+        
+        let renderer = MKPolylineRenderer(polyline: polyline)
+        renderer.strokeColor = colour
+        renderer.lineWidth = 2
+        return renderer
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        switch annotation {
+        case is Church:
+            return mapView.dequeueReusableAnnotationView(withIdentifier: "Church", for: annotation)
+        default:
+            return nil
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if let annotation = view.annotation as? MKPointAnnotation {
+            if parent != nil {
+                for route in parent!.routesVM.filteredRoutes {
+                    for church in route.churches {
+                        if annotation.title == church.name {
+                            return
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        self.objectWillChange.send()
     }
 }

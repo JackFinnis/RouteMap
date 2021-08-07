@@ -14,9 +14,9 @@ struct MapView: UIViewRepresentable {
     
     var mapView = MKMapView()
 
-    func makeCoordinator() -> MapVM {
-        mapVM.parent = self
-        return mapVM
+    func makeCoordinator() -> RoutesVM {
+        routesVM.parent = self
+        return routesVM
     }
 
     func makeUIView(context: Context) -> MKMapView {
@@ -38,7 +38,7 @@ struct MapView: UIViewRepresentable {
         // Pan to all routes
         if mapVM.loading != routesVM.loading {
             mapVM.loading = routesVM.loading
-            let region = mapVM.getRegion(routes: routesVM.filteredRoutes)
+            let region = routesVM.getRoutesRegion(all: true)
             if region != nil {
                 mapView.setRegion(region!, animated: true)
             }
@@ -47,7 +47,7 @@ struct MapView: UIViewRepresentable {
         // Pan to route
         if mapVM.selectedRoute != routesVM.selectedRoute {
             mapVM.selectedRoute = routesVM.selectedRoute
-            let region = mapVM.getRegion(routes: [routesVM.selectedRoute!])
+            let region = routesVM.getRoutesRegion(all: false)
             if region != nil {
                 mapView.setRegion(region!, animated: true)
             }
@@ -55,9 +55,16 @@ struct MapView: UIViewRepresentable {
         }
         
         // Set user tracking mode
-        if mapView.userTrackingMode != mapVM.trackingMode {
+        if mapVM.userTrackingMode != mapVM.trackingMode {
+            mapVM.userTrackingMode = mapVM.trackingMode
             mapView.setUserTrackingMode(mapVM.trackingMode, animated: true)
+        } else if mapView.userTrackingMode.rawValue != mapVM.userTrackingMode.rawValue {
+            if let userTrackingMode = MKUserTrackingMode(rawValue: mapView.userTrackingMode.rawValue) {
+                mapVM.userTrackingMode = userTrackingMode
+                mapVM.trackingMode = userTrackingMode
+            }
         }
+        
         // Set map type
         if mapView.mapType != mapVM.mapType {
             mapView.mapType = mapVM.mapType
