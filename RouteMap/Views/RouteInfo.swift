@@ -13,21 +13,23 @@ struct RouteInfo: View {
     var route: Route
     
     var body: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                Text(route.name)
-                    .font(.headline)
-                Text(route.stage)
-                    .foregroundColor(.secondary)
-            }
-            Spacer()
-            VStack(alignment: .trailing) {
-                Text(String(Int(route.metres / 1_000)) + " km")
-                Text(String(route.churches.count) + " Churches")
-                Text(String(format: "%.1f", route.density) + " km/Church")
+        VStack(alignment: .leading) {
+            Text(route.name)
+                .font(.headline)
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
+                    Text(route.stage)
+                    Text(String(Int(route.metres / 1_000)) + " km")
+                }
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text(String(route.churches.count) + " Churches")
+                    Text(String(format: "%.1f", route.density) + " km/Church")
+                }
             }
             .font(.subheadline)
             .foregroundColor(.secondary)
         }
+        .padding(.vertical, 10)
     }
 }

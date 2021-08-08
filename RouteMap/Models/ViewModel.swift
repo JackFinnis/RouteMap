@@ -49,8 +49,8 @@ class ViewModel: NSObject, ObservableObject {
     // Map settings
     @Published var mapType: MKMapType = .standard
     @Published var trackingMode: MKUserTrackingMode = .none
-    @Published var userLocation = CLLocationCoordinate2D()
-    @Published var locationManager = CLLocationManager()
+    var userLocation = CLLocationCoordinate2D()
+    var locationManager = CLLocationManager()
     
     // Map history variables
     var mapLoading: Bool = true

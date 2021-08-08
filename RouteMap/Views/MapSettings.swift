@@ -17,20 +17,20 @@ struct MapSettings: View {
                 vm.updateMapType()
             } label: {
                 Image(systemName: vm.mapTypeImage)
-                    .frame(width: 46, height: 46)
+                    .frame(width: 48, height: 48)
             }
             
             Divider()
-                .frame(width: 46)
+                .frame(width: 48)
             
             Button {
                 vm.updateTrackingMode()
             } label: {
                 Image(systemName: vm.trackingModeImage)
-                    .frame(width: 46, height: 46)
+                    .frame(width: 48, height: 48)
             }
         }
-        .font(.system(size: 23))
+        .font(.system(size: 24))
         .background(Blur())
         .cornerRadius(10)
         .compositingGroup()

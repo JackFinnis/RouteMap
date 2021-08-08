@@ -10,44 +10,42 @@ import SwiftUI
 struct RouteBar: View {
     @EnvironmentObject var vm: ViewModel
     
+    var route: Route
+    var index: Int
+    
     var body: some View {
         HStack(spacing: 0) {
-            VStack(spacing: 0) {
-                Button {
-                    vm.previousRoute()
-                } label: {
-                    Image(systemName: "chevron.up")
-                        .font(.system(size: 23))
-                        .frame(width: 46, height: 46)
-                }
-                
-                Button {
-                    vm.nextRoute()
-                } label: {
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 23))
-                        .frame(width: 46, height: 46)
-                }
-            }
-            
-            if vm.selectedRoute != nil && vm.showRouteBar {
-                ZStack {
-                    NavigationLink(destination: RouteView(route: vm.selectedRoute!)) {
-                        Spacer().frame(height: 92)
+            ZStack {
+                Text(String(index + 1))
+                    .bold()
+                VStack(spacing: 0) {
+                    Button {
+                        vm.previousRoute()
+                    } label: {
+                        Image(systemName: "chevron.up")
+                            .font(.system(size: 24))
+                            .frame(width: 48, height: 48)
                     }
-                    RouteInfo(route: vm.selectedRoute!)
-                        .animation(.none)
+                    Button {
+                        vm.nextRoute()
+                    } label: {
+                        Image(systemName: "chevron.down")
+                            .font(.system(size: 24))
+                            .frame(width: 48, height: 48)
+                    }
                 }
             }
             
-            Spacer()
+            RouteInfo(route: route)
+                .frame(idealHeight: 96)
+            
             VStack(spacing: 0) {
                 Button {
                     vm.focusOnSelected.toggle()
                 } label: {
                     Image(systemName: vm.focusOnSelectedImage)
-                        .font(.system(size: 23))
-                        .frame(width: 46, height: 46)
+                        .font(.system(size: 24))
+                        .frame(width: 48, height: 48)
                 }
                 
                 Button {
@@ -55,8 +53,8 @@ struct RouteBar: View {
                     vm.showRouteBar = false
                 } label: {
                     Image(systemName: "xmark")
-                        .font(.system(size: 23))
-                        .frame(width: 46, height: 46)
+                        .font(.system(size: 24))
+                        .frame(width: 48, height: 48)
                 }
             }
         }

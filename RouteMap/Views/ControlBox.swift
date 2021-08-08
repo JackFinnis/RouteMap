@@ -17,18 +17,19 @@ struct ControlBox: View {
             
             if vm.showSearchBar {
                 SearchBar(text: $vm.searchText)
-                    .placeholder("Churches, Destinations and Locations")
-                    .animation(.none)
+                    .placeholder("Churches and Destinations")
             }
             
-            if vm.showRouteBar && vm.selectedRoute != nil {
-                RouteBar()
+            if vm.showRouteBar && vm.selectedRoute != nil && vm.filteredRoutes.firstIndex(of: vm.selectedRoute!) != nil {
+                RouteBar(route: vm.selectedRoute!, index: vm.filteredRoutes.firstIndex(of: vm.selectedRoute!)!)
+                    .animation(.none)
             }
         }
         .background(Blur())
         .cornerRadius(10)
         .compositingGroup()
         .shadow(color: Color(UIColor.systemFill), radius: 5)
-        .padding(10)
+        .padding(.trailing, 10)
+        .padding(.vertical, 10)
     }
 }

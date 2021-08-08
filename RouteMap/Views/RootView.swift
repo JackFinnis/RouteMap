@@ -12,22 +12,22 @@ struct RootView: View {
     @StateObject var vm = ViewModel()
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                MapView()
-                    .ignoresSafeArea()
-                VStack {
+        ZStack {
+            MapView()
+                .ignoresSafeArea()
+            VStack {
+                Spacer()
+                HStack {
                     Spacer()
-                    HStack {
-                        Spacer()
-                        MapSettings()
-                    }
-                    ControlBox()
+                    MapSettings()
                 }
-                .animation(vm.animation)
+                HStack(spacing: 0) {
+                    Spacer(minLength: 10)
+                    ControlBox()
+                        .frame(maxWidth: 450)
+                }
             }
-            .navigationTitle("See on Map")
-            .navigationBarHidden(true)
+            .animation(vm.animation)
         }
         .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
         .environmentObject(vm)
