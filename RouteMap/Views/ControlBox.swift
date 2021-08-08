@@ -13,6 +13,7 @@ struct ControlBox: View {
     var body: some View {
         VStack(spacing: 0) {
             ActionBar()
+                .frame(maxHeight: 48)
             Divider()
             
             if vm.showSearchBar {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct RouteInfo: View {
     @EnvironmentObject var vm: ViewModel
@@ -31,5 +32,8 @@ struct RouteInfo: View {
             .foregroundColor(.secondary)
         }
         .padding(.vertical, 10)
+        .onTapGesture {
+            route.mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault])
+        }
     }
 }

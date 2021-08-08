@@ -50,14 +50,14 @@ struct FilterView: View {
                 
                 Section {
                     DisclosureGroup(isExpanded: $expandDistance) {
-                        Slider(value: $vm.minimumDistance, in: 0...100, step: 5, label: {
+                        Slider(value: $vm.minimumDistance, in: 0...115, step: 5, label: {
                             Text("Minimum Distance")
                         }, minimumValueLabel: {
                             Text("Minimum")
                         }, maximumValueLabel: {
                             Text("")
                         })
-                        Slider(value: $vm.maximumDistance, in: 0...100, step: 5, label: {
+                        Slider(value: $vm.maximumDistance, in: 0...115, step: 5, label: {
                             Text("Maximum Distance")
                         }, minimumValueLabel: {
                             Text("Maximum")
@@ -76,7 +76,7 @@ struct FilterView: View {
                 
                 Section {
                     DisclosureGroup(isExpanded: $expandProximity) {
-                        Slider(value: $vm.maximumProximity, in: 0...100, step: 5, label: {
+                        Slider(value: $vm.maximumProximity, in: 0...115, step: 5, label: {
                             Text("Maximum Proximity")
                         }, minimumValueLabel: {
                             Text("Maximum")

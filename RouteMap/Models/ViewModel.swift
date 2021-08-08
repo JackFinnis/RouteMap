@@ -14,8 +14,7 @@ class ViewModel: NSObject, ObservableObject {
     // Routes
     @Published var routes = [Route]()
     @Published var loading: Bool = true
-    @Published var selectedRoute: Route? {
-        didSet {
+    @Published var selectedRoute: Route? { didSet {
             if selectedRoute == nil {
                 showRouteBar = false
             }
@@ -23,22 +22,18 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     // Route filters
-    @Published var searchText: String = ""
-    @Published var sortBy: SortBy = .id {
-        didSet {
-            selectFirstRoute()
-        }
-    }
+    @Published var searchText: String = "" { didSet { updateSelectedRoute() } }
+    @Published var sortBy: SortBy = .id { didSet { selectFirstRoute() } }
     
     // Advanced filters
-    @Published var filter: Bool = false
-    @Published var showRoutes: Bool = true
-    @Published var showChurches: Bool = true
-    @Published var showVisited: Bool = true
-    @Published var showUnvisited: Bool = true
-    @Published var minimumDistance: Double = 0
-    @Published var maximumDistance: Double = 0
-    @Published var maximumProximity: Double = 0
+    @Published var filter: Bool = false { didSet { updateSelectedRoute() } }
+    @Published var showRoutes: Bool = true { didSet { updateSelectedRoute() } }
+    @Published var showChurches: Bool = true { didSet { updateSelectedRoute() } }
+    @Published var showVisited: Bool = true { didSet { updateSelectedRoute() } }
+    @Published var showUnvisited: Bool = true { didSet { updateSelectedRoute() } }
+    @Published var minimumDistance: Double = 0 { didSet { updateSelectedRoute() } }
+    @Published var maximumDistance: Double = 0 { didSet { updateSelectedRoute() } }
+    @Published var maximumProximity: Double = 0 { didSet { updateSelectedRoute() } }
     
     // View state
     @Published var showSearchBar: Bool = false
@@ -49,7 +44,7 @@ class ViewModel: NSObject, ObservableObject {
     // Map settings
     @Published var mapType: MKMapType = .standard
     @Published var trackingMode: MKUserTrackingMode = .none
-    var userLocation = CLLocationCoordinate2D()
+    var userLocation = CLLocationCoordinate2D() { didSet { updateSelectedRoute() } }
     var locationManager = CLLocationManager()
     
     // Map history variables
@@ -90,18 +85,11 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Filter Routes
     // Filtered Routes
     public var filteredRoutes: [Route] {
-//        var routes = [Route]()
-//        if selectedRoute != nil && focusOnSelected {
-//            routes = [selectedRoute!]
-//        } else {
-//            routes = self.routes
-//        }
-//
         let filteredRoutes = routes.filter { route in
             if filter {
                 if !showRoutes { return false }
-                if route.metres < Int(minimumDistance) * 1_000 { return false }
-                if minimumDistance < maximumDistance && route.metres > Int(maximumDistance) * 1_000 { return false }
+                if minimumDistance > maximumDistance && route.metres < Int(minimumDistance) * 1_000 { return false }
+                if minimumDistance < maximumDistance && (route.metres > Int(maximumDistance) * 1_000 || route.metres < Int(minimumDistance) * 1_000) { return false }
                 if maximumProximity != 0 && distanceTo(route: route) > maximumProximity { return false }
             }
             if searchText.isEmpty { return true }
@@ -141,6 +129,12 @@ class ViewModel: NSObject, ObservableObject {
     public var filteredChurches: [Church] {
         if filter && !showChurches {
             return []
+        } else if filter && !showRoutes {
+            return churches.filter { church in
+                if searchText.isEmpty { return true }
+                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
+                return false
+            }
         } else if selectedRoute != nil {
             return selectedRoute!.churches.filter { church in
                 if searchText.isEmpty { return true }
@@ -181,6 +175,7 @@ class ViewModel: NSObject, ObservableObject {
             if minimum > delta { minimum = delta }
         }
         
+        print(minimum)
         return minimum
     }
     
@@ -212,24 +207,34 @@ class ViewModel: NSObject, ObservableObject {
             } else {
                 selectedRoute = filteredRoutes[index!-1]
             }
+        } else if filteredRoutes.isEmpty {
+            selectedRoute = nil
+        } else {
+            selectedRoute = filteredRoutes.first
         }
     }
     
     // Get the index of the current selected route
     private func getSelectedRouteIndex() -> Int? {
         if filteredRoutes.isEmpty {
-            selectedRoute = nil
+            return nil
         } else if selectedRoute == nil {
-            selectedRoute = filteredRoutes.first
+            return nil
         } else {
             let index = filteredRoutes.firstIndex(of: selectedRoute!)
             if index == nil {
-                selectedRoute = filteredRoutes.first
+                return nil
             } else {
                 return index
             }
         }
-        return nil
+    }
+    
+    // Update selected route when new filter imposed
+    public func updateSelectedRoute() {
+        if getSelectedRouteIndex() == nil {
+            selectedRoute = nil
+        }
     }
     
     // MARK: - Map Helper Functions
@@ -419,7 +424,6 @@ extension ViewModel: MKMapViewDelegate {
             return MKOverlayRenderer(overlay: overlay)
         }
         
-        // equatable?
         var colour: UIColor {
             if selectedRoute?.polyline.pointCount == polyline.pointCount {
                 return .systemOrange
@@ -465,6 +469,8 @@ extension ViewModel: MKMapViewDelegate {
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        animation = .default
+        if animation != .default {
+            animation = .default
+        }
     }
 }
