@@ -1,54 +1,50 @@
 //
 //  RouteBar.swift
-//  MyMap
+//  RouteBar
 //
-//  Created by Finnis on 13/06/2021.
+//  Created by William Finnis on 08/08/2021.
 //
 
 import SwiftUI
 
 struct RouteBar: View {
-    @EnvironmentObject var routesVM: RoutesVM
-    
-    @State var showWorkoutDetailSheet: Bool = false
+    @EnvironmentObject var vm: ViewModel
     
     var body: some View {
-        VStack {
+        HStack {
+            Button {
+                vm.previousRoute()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 23))
+                    .frame(width: 46, height: 46)
+            }
+            
+            if vm.selectedRoute != nil {
+                Text(String(vm.filteredRoutes.firstIndex(of: vm.selectedRoute!)!))
+                    .frame(width: 46, height: 46)
+                NavigationLink(destination: RouteView(route: vm.selectedRoute!)) {
+                    Text(vm.selectedRoute == nil ? "" : vm.selectedRoute!.name)
+                        .font(.headline)
+                        .lineLimit(1)
+                }
+                .buttonStyle(.plain)
+            } else {
+                Button {
+                    vm.selectFirstRoute()
+                } label: {
+                    Text("Sort Routes")
+                }
+            }
+            
             Spacer()
-            HStack(spacing: 0) {
-                Button {
-                    routesVM.previousRoute()
-                } label: {
-                    Image(systemName: "chevron.backward")
-                        .frame(width: 46, height: 46)
-                }
-                
-                Text(routesVM.selectedRoute == nil ? "" : routesVM.selectedRoute!.name)
-                    .font(.headline)
-                    .lineLimit(1)
-                Spacer()
-                
-                Button {
-                    routesVM.nextRoute()
-                } label: {
-                    Image(systemName: "chevron.forward")
-                        .frame(width: 46, height: 46)
-                }
+            Button {
+                vm.nextRoute()
+            } label: {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 23))
+                    .frame(width: 46, height: 46)
             }
-            .font(.system(size: 23))
-            .background(Blur())
-            .cornerRadius(10)
-            .compositingGroup()
-            .shadow(color: Color(UIColor.systemFill), radius: 5)
-            .padding(10)
-            .onTapGesture {
-                if routesVM.selectedRoute != nil {
-                    showWorkoutDetailSheet = true
-                }
-            }
-        }
-        .sheet(isPresented: $showWorkoutDetailSheet) {
-            RouteView(route: routesVM.selectedRoute!)
         }
     }
 }

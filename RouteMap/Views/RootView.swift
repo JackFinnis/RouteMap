@@ -9,22 +9,26 @@ import SwiftUI
 import CoreLocation
 
 struct RootView: View {
-    @StateObject var routesVM = RoutesVM()
-    @StateObject var mapVM = MapVM()
+    @StateObject var vm = ViewModel()
     
     var body: some View {
         NavigationView {
             ZStack {
                 MapView()
                     .ignoresSafeArea()
-                MapSettings()
-                RouteBar()
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        MapSettings()
+                    }
+                    ControlBox()
+                }
             }
-            .navigationTitle("Route Map")
+            .navigationTitle("Map")
             .navigationBarHidden(true)
         }
-        .environmentObject(routesVM)
-        .environmentObject(mapVM)
-        .preferredColorScheme(mapVM.mapType == .standard ? .none : .dark)
+        .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
+        .environmentObject(vm)
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 import UIKit
 
-struct Route: Decodable, Identifiable {
+class Route: NSObject, MKAnnotation, Decodable, Identifiable {
     let id: Int
     let start: String
     let end: String
@@ -17,17 +17,25 @@ struct Route: Decodable, Identifiable {
     let churches: [Church]
     let coords: [CLLocationCoordinate2D]
     
+    var title: String? { name }
+    var subtitle: String? { stage }
+    var coordinate: CLLocationCoordinate2D {
+        coords[coords.count / 2]
+    }
+    
+    var stage: String {
+        "Stage \(id)"
+    }
+    
     var name: String {
-        "\(id): " + start + " to " + end
+        start + " to " + end
+    }
+    
+    var density: Double {
+        Double(churches.count) / Double(metres)
     }
     
     var polyline: MKPolyline {
-        return MKPolyline(coordinates: coords, count: coords.count)
-    }
-}
-
-extension Route: Equatable {
-    static func == (lhs: Route, rhs: Route) -> Bool {
-        lhs.id == rhs.id
+        MKPolyline(coordinates: coords, count: coords.count)
     }
 }

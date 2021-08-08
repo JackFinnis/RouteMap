@@ -9,39 +9,51 @@
 /* Begin PBXBuildFile section */
 		BEB8F0A026BC370D00702BB5 /* MapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F09F26BC370C00702BB5 /* MapSettings.swift */; };
 		BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0A426BC383600702BB5 /* Blur.swift */; };
-		BEB8F0B026BC7CB800702BB5 /* RouteBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */; };
+		BEB8F0B026BC7CB800702BB5 /* FilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0AF26BC7CB800702BB5 /* FilterBar.swift */; };
 		BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0B126BC7DB500702BB5 /* RouteView.swift */; };
 		BEB8F0BC26BE892800702BB5 /* CLLC2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0BB26BE892800702BB5 /* CLLC2D.swift */; };
-		BEB8F0BE26BE8ADC00702BB5 /* ChurchMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0BD26BE8ADB00702BB5 /* ChurchMarkerView.swift */; };
+		BEB8F0BE26BE8ADC00702BB5 /* ChurchMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0BD26BE8ADB00702BB5 /* ChurchMarker.swift */; };
+		BEB8F0C026BEAD7700702BB5 /* Cluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0BF26BEAD7700702BB5 /* Cluster.swift */; };
+		BEB8F0CE26BEE88600702BB5 /* SortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0CD26BEE88600702BB5 /* SortBy.swift */; };
+		BEB8F0D226BEFD8F00702BB5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0D126BEFD8F00702BB5 /* SearchBar.swift */; };
+		BEB8F0D426BF32E800702BB5 /* RouteMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0D326BF32E800702BB5 /* RouteMarker.swift */; };
+		BEB8F0D926BFCD5F00702BB5 /* RouteBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0D826BFCD5F00702BB5 /* RouteBar.swift */; };
+		BEB8F0DB26BFCE4F00702BB5 /* ControlBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0DA26BFCE4F00702BB5 /* ControlBox.swift */; };
+		BEB8F0DF26BFE2F400702BB5 /* VisitedFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0DE26BFE2F400702BB5 /* VisitedFilter.swift */; };
+		BEB8F0E126BFE91500702BB5 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0E026BFE91500702BB5 /* FilterView.swift */; };
 		BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */; };
 		BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BECFC09626BAC4AA005CC3AE /* Assets.xcassets */; };
-		BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */; };
 		BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B026BBEF43005CC3AE /* Church.swift */; };
 		BECFC0B626BC0175005CC3AE /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B526BC0175005CC3AE /* Route.swift */; };
-		BECFC0B826BC0355005CC3AE /* RoutesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B726BC0355005CC3AE /* RoutesVM.swift */; };
+		BECFC0B826BC0355005CC3AE /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B726BC0355005CC3AE /* ViewModel.swift */; };
 		BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0BD26BC1A7A005CC3AE /* RootView.swift */; };
 		BECFC0C226BC1D22005CC3AE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C126BC1D22005CC3AE /* MapView.swift */; };
-		BECFC0C426BC1DBC005CC3AE /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C326BC1DBC005CC3AE /* MapVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BEB8F09F26BC370C00702BB5 /* MapSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSettings.swift; sourceTree = "<group>"; };
 		BEB8F0A426BC383600702BB5 /* Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
-		BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteBar.swift; sourceTree = "<group>"; };
+		BEB8F0AF26BC7CB800702BB5 /* FilterBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBar.swift; sourceTree = "<group>"; };
 		BEB8F0B126BC7DB500702BB5 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		BEB8F0B326BDC49600702BB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BEB8F0BB26BE892800702BB5 /* CLLC2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLC2D.swift; sourceTree = "<group>"; };
-		BEB8F0BD26BE8ADB00702BB5 /* ChurchMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChurchMarkerView.swift; sourceTree = "<group>"; };
+		BEB8F0BD26BE8ADB00702BB5 /* ChurchMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChurchMarker.swift; sourceTree = "<group>"; };
+		BEB8F0BF26BEAD7700702BB5 /* Cluster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
+		BEB8F0CD26BEE88600702BB5 /* SortBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortBy.swift; sourceTree = "<group>"; };
+		BEB8F0D126BEFD8F00702BB5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		BEB8F0D326BF32E800702BB5 /* RouteMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMarker.swift; sourceTree = "<group>"; };
+		BEB8F0D826BFCD5F00702BB5 /* RouteBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteBar.swift; sourceTree = "<group>"; };
+		BEB8F0DA26BFCE4F00702BB5 /* ControlBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBox.swift; sourceTree = "<group>"; };
+		BEB8F0DE26BFE2F400702BB5 /* VisitedFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitedFilter.swift; sourceTree = "<group>"; };
+		BEB8F0E026BFE91500702BB5 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		BECFC08F26BAC4A7005CC3AE /* RouteMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapApp.swift; sourceTree = "<group>"; };
 		BECFC09626BAC4AA005CC3AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		BECFC0B026BBEF43005CC3AE /* Church.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Church.swift; sourceTree = "<group>"; };
 		BECFC0B526BC0175005CC3AE /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
-		BECFC0B726BC0355005CC3AE /* RoutesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesVM.swift; sourceTree = "<group>"; };
+		BECFC0B726BC0355005CC3AE /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		BECFC0BD26BC1A7A005CC3AE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BECFC0C126BC1D22005CC3AE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		BECFC0C326BC1DBC005CC3AE /* MapVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +73,16 @@
 				BEB8F0BB26BE892800702BB5 /* CLLC2D.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BEB8F0D726BF333300702BB5 /* Annotation Views */ = {
+			isa = PBXGroup;
+			children = (
+				BEB8F0D326BF32E800702BB5 /* RouteMarker.swift */,
+				BEB8F0BD26BE8ADB00702BB5 /* ChurchMarker.swift */,
+				BEB8F0BF26BEAD7700702BB5 /* Cluster.swift */,
+			);
+			path = "Annotation Views";
 			sourceTree = "<group>";
 		};
 		BECFC08626BAC4A7005CC3AE = {
@@ -86,8 +108,8 @@
 				BEB8F0B326BDC49600702BB5 /* Info.plist */,
 				BECFC09626BAC4AA005CC3AE /* Assets.xcassets */,
 				BECFC0AB26BBEE57005CC3AE /* Views */,
-				BECFC0AC26BBEE5D005CC3AE /* View Models */,
 				BECFC0AD26BBEE6E005CC3AE /* Models */,
+				BEB8F0D726BF333300702BB5 /* Annotation Views */,
 				BEB8F0BA26BE88C600702BB5 /* Extensions */,
 			);
 			path = RouteMap;
@@ -99,29 +121,25 @@
 				BECFC0BD26BC1A7A005CC3AE /* RootView.swift */,
 				BECFC0C126BC1D22005CC3AE /* MapView.swift */,
 				BEB8F09F26BC370C00702BB5 /* MapSettings.swift */,
-				BEB8F0AF26BC7CB800702BB5 /* RouteBar.swift */,
+				BEB8F0DA26BFCE4F00702BB5 /* ControlBox.swift */,
+				BEB8F0AF26BC7CB800702BB5 /* FilterBar.swift */,
+				BEB8F0E026BFE91500702BB5 /* FilterView.swift */,
+				BEB8F0D826BFCD5F00702BB5 /* RouteBar.swift */,
+				BEB8F0D126BEFD8F00702BB5 /* SearchBar.swift */,
 				BEB8F0B126BC7DB500702BB5 /* RouteView.swift */,
 				BEB8F0A426BC383600702BB5 /* Blur.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		BECFC0AC26BBEE5D005CC3AE /* View Models */ = {
-			isa = PBXGroup;
-			children = (
-				BECFC0B726BC0355005CC3AE /* RoutesVM.swift */,
-				BECFC0C326BC1DBC005CC3AE /* MapVM.swift */,
-			);
-			path = "View Models";
-			sourceTree = "<group>";
-		};
 		BECFC0AD26BBEE6E005CC3AE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BECFC0B726BC0355005CC3AE /* ViewModel.swift */,
+				BEB8F0CD26BEE88600702BB5 /* SortBy.swift */,
+				BEB8F0DE26BFE2F400702BB5 /* VisitedFilter.swift */,
 				BECFC0B526BC0175005CC3AE /* Route.swift */,
 				BECFC0B026BBEF43005CC3AE /* Church.swift */,
-				BEB8F0BD26BE8ADB00702BB5 /* ChurchMarkerView.swift */,
-				BECFC0AE26BBEEAC005CC3AE /* Coordinate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -197,17 +215,23 @@
 			files = (
 				BEB8F0B226BC7DB500702BB5 /* RouteView.swift in Sources */,
 				BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */,
-				BECFC0B826BC0355005CC3AE /* RoutesVM.swift in Sources */,
+				BEB8F0D226BEFD8F00702BB5 /* SearchBar.swift in Sources */,
+				BECFC0B826BC0355005CC3AE /* ViewModel.swift in Sources */,
 				BEB8F0A026BC370D00702BB5 /* MapSettings.swift in Sources */,
-				BEB8F0BE26BE8ADC00702BB5 /* ChurchMarkerView.swift in Sources */,
+				BEB8F0D926BFCD5F00702BB5 /* RouteBar.swift in Sources */,
+				BEB8F0DF26BFE2F400702BB5 /* VisitedFilter.swift in Sources */,
+				BEB8F0E126BFE91500702BB5 /* FilterView.swift in Sources */,
+				BEB8F0BE26BE8ADC00702BB5 /* ChurchMarker.swift in Sources */,
+				BEB8F0DB26BFCE4F00702BB5 /* ControlBox.swift in Sources */,
 				BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */,
 				BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */,
 				BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */,
-				BEB8F0B026BC7CB800702BB5 /* RouteBar.swift in Sources */,
-				BECFC0C426BC1DBC005CC3AE /* MapVM.swift in Sources */,
+				BEB8F0B026BC7CB800702BB5 /* FilterBar.swift in Sources */,
 				BECFC0B626BC0175005CC3AE /* Route.swift in Sources */,
+				BEB8F0C026BEAD7700702BB5 /* Cluster.swift in Sources */,
 				BEB8F0BC26BE892800702BB5 /* CLLC2D.swift in Sources */,
-				BECFC0AF26BBEEAC005CC3AE /* Coordinate.swift in Sources */,
+				BEB8F0D426BF32E800702BB5 /* RouteMarker.swift in Sources */,
+				BEB8F0CE26BEE88600702BB5 /* SortBy.swift in Sources */,
 				BECFC0C226BC1D22005CC3AE /* MapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

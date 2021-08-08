@@ -9,17 +9,16 @@ import SwiftUI
 import MapKit
 
 struct MapView: UIViewRepresentable {
-    @EnvironmentObject var routesVM: RoutesVM
-    @EnvironmentObject var mapVM: MapVM
+    @EnvironmentObject var vm: ViewModel
     
-    var mapView = MKMapView()
-
-    func makeCoordinator() -> RoutesVM {
-        routesVM.parent = self
-        return routesVM
+    func makeCoordinator() -> ViewModel {
+        vm.parent = self
+        return vm
     }
 
     func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView()
+        
         // Set delegate
         mapView.delegate = context.coordinator
         
@@ -27,64 +26,61 @@ struct MapView: UIViewRepresentable {
         mapView.showsUserLocation = true
         mapView.showsScale = true
         mapView.showsCompass = true
+        mapView.isPitchEnabled = false
         
         // Register annotations
-        mapView.register(ChurchMarkerView.self, forAnnotationViewWithReuseIdentifier: "Church")
+        mapView.register(ChurchMarker.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(RouteMarker.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(Cluster.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         
         return mapView
     }
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
         // Pan to all routes
-        if mapVM.loading != routesVM.loading {
-            mapVM.loading = routesVM.loading
-            let region = routesVM.getRoutesRegion(all: true)
+        if vm.mapLoading != vm.loading {
+            vm.mapLoading = vm.loading
+            let region = vm.getRoutesRegion(all: true)
             if region != nil {
                 mapView.setRegion(region!, animated: true)
             }
-            mapVM.trackingMode = .none
+            vm.trackingMode = .none
         }
+        
         // Pan to route
-        if mapVM.selectedRoute != routesVM.selectedRoute {
-            mapVM.selectedRoute = routesVM.selectedRoute
-            let region = routesVM.getRoutesRegion(all: false)
+        if vm.mapSelectedRoute != vm.selectedRoute {
+            vm.mapSelectedRoute = vm.selectedRoute
+            let region = vm.getRoutesRegion(all: false)
             if region != nil {
                 mapView.setRegion(region!, animated: true)
             }
-            mapVM.trackingMode = .none
+            vm.trackingMode = .none
         }
         
         // Set user tracking mode
-        if mapVM.userTrackingMode != mapVM.trackingMode {
-            mapVM.userTrackingMode = mapVM.trackingMode
-            mapView.setUserTrackingMode(mapVM.trackingMode, animated: true)
-        } else if mapView.userTrackingMode.rawValue != mapVM.userTrackingMode.rawValue {
-            if let userTrackingMode = MKUserTrackingMode(rawValue: mapView.userTrackingMode.rawValue) {
-                mapVM.userTrackingMode = userTrackingMode
-                mapVM.trackingMode = userTrackingMode
-            }
+        if mapView.userTrackingMode != vm.trackingMode {
+            mapView.setUserTrackingMode(vm.trackingMode, animated: true)
         }
         
         // Set map type
-        if mapView.mapType != mapVM.mapType {
-            mapView.mapType = mapVM.mapType
+        if mapView.mapType != vm.mapType {
+            mapView.mapType = vm.mapType
         }
         
-        // Update church annotation overlays
+        // Update annotations and overlays
         mapView.removeAnnotations(mapView.annotations)
-        // Add filtered workouts polylines
-        if !routesVM.loading && routesVM.selectedRoute != nil {
-            mapView.addAnnotations(routesVM.selectedRoute!.churches)
-        }
-        
-        // Update route polyline overlays
         mapView.removeOverlays(mapView.overlays)
-        // Add filtered workouts polylines
-        if !routesVM.loading {
-            if routesVM.selectedRoute != nil {
-                mapView.addOverlay(routesVM.selectedRoute!.polyline)
+        if !vm.loading {
+            if !vm.searchText.isEmpty {
+                mapView.addAnnotations(vm.filteredChurches)
+                mapView.addAnnotations(vm.filteredRoutes)
+                mapView.addOverlays(vm.filteredPolylines)
+            } else if vm.selectedRoute != nil {
+                mapView.addAnnotations(vm.selectedRoute!.churches)
+                mapView.addOverlay(vm.selectedRoute!.polyline)
             } else {
-                mapView.addOverlays(routesVM.filteredPolylines)
+                mapView.addAnnotations(vm.filteredRoutes)
+                mapView.addOverlays(vm.filteredPolylines)
             }
         }
     }

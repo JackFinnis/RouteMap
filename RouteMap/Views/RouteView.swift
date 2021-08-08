@@ -11,6 +11,7 @@ struct RouteView: View {
     let route: Route
     
     var body: some View {
-        Text(route.start)
+        Text(route.name)
+            .navigationTitle("Stage \(route.id)")
     }
 }

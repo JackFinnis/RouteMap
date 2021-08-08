@@ -10,16 +10,10 @@ import MapKit
 
 class Church: NSObject, MKAnnotation, Decodable {
     let name: String
-    let url: URL?
+    let urlString: String
     let coordinate: CLLocationCoordinate2D
     
-    var title: String? {
-        return name
-    }
-    
-    init(name: String, url: URL, coordinate: CLLocationCoordinate2D) {
-        self.name = name
-        self.url = url
-        self.coordinate = coordinate
-    }
+    var url: URL { URL(string: urlString)! }
+    var title: String? { name }
+    var subtitle: String? { "Church" }
 }
