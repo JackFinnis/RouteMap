@@ -27,16 +27,11 @@ struct AboutView: View {
                     Text("Each route starts and ends at a town with a car park and train station for ease of access.")
                 }
                 Section(header: Text("Acknowledgments")) {
-                    Text("With thanks to Simon Knott for supplying a detailed analysis of all of Norfolk's medieval churches. See his work at norfolkchurches.co.uk")
-                    HStack {
-                        Text("See his work ")
-                        Button {
-                            let url = URL(string: "http://norfolkchurches.co.uk/mainpage.htm")!
-                            UIApplication.shared.open(url)
-                        } label: {
-                            Text("Here")
-                        }
-                    }
+                    Text("With thanks to Simon Knott for supplying a detailed analysis of all of Norfolk's medieval churches. See his work ") + Text("here").foregroundColor(.accentColor)
+                }
+                .onTapGesture {
+                    let url = URL(string: "http://norfolkchurches.co.uk/mainpage.htm")!
+                    UIApplication.shared.open(url)
                 }
             }
             .navigationTitle("About")
