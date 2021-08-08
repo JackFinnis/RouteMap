@@ -23,8 +23,8 @@ struct RootView: View {
                         MapSettings()
                     }
                     ControlBox()
-                        .animation(.default)
                 }
+                .animation(vm.animation)
             }
             .navigationTitle("See on Map")
             .navigationBarHidden(true)

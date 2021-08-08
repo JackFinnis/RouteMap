@@ -31,11 +31,13 @@ struct RouteBar: View {
             }
             
             if vm.selectedRoute != nil && vm.showRouteBar {
-                NavigationLink(destination: RouteView(route: vm.selectedRoute!)) {
+                ZStack {
+                    NavigationLink(destination: RouteView(route: vm.selectedRoute!)) {
+                        Spacer().frame(height: 92)
+                    }
                     RouteInfo(route: vm.selectedRoute!)
+                        .animation(.none)
                 }
-                .buttonStyle(.plain)
-                .animation(.none)
             }
             
             Spacer()

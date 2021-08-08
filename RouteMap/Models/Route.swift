@@ -23,7 +23,7 @@ class Route: NSObject, MKAnnotation, Decodable, Identifiable {
     
     var startCLL: CLLocation { CLLocation(latitude: coords.first!.latitude, longitude: coords.first!.longitude) }
     var endCLL: CLLocation { CLLocation(latitude: coords.last!.latitude, longitude: coords.last!.longitude) }
-    var density: Double { Double(churches.count) / Double(metres) }
+    var density: Double { Double(metres) / Double(churches.count) / 1_000 }
     
     var stage: String { "Route \(id)" }
     var name: String { start + " to " + end }

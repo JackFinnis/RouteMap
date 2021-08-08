@@ -7,6 +7,7 @@
 
 import Foundation
 import MapKit
+import SwiftUI
 
 class ViewModel: NSObject, ObservableObject {
     // MARK: - Properties
@@ -31,10 +32,10 @@ class ViewModel: NSObject, ObservableObject {
     
     // Advanced filters
     @Published var filter: Bool = false
-    @Published var hideRoutes: Bool = false
-    @Published var hideChurches: Bool = false
-    @Published var hideVisited: Bool = false
-    @Published var hideUnvisited: Bool = false
+    @Published var showRoutes: Bool = true
+    @Published var showChurches: Bool = true
+    @Published var showVisited: Bool = true
+    @Published var showUnvisited: Bool = true
     @Published var minimumDistance: Double = 0
     @Published var maximumDistance: Double = 0
     @Published var maximumProximity: Double = 0
@@ -43,6 +44,7 @@ class ViewModel: NSObject, ObservableObject {
     @Published var showSearchBar: Bool = false
     @Published var showRouteBar: Bool = false
     @Published var focusOnSelected: Bool = false
+    @Published var animation: Animation? = .none
     
     // Map settings
     @Published var mapType: MKMapType = .standard
@@ -97,7 +99,7 @@ class ViewModel: NSObject, ObservableObject {
 //
         let filteredRoutes = routes.filter { route in
             if filter {
-                if hideRoutes { return false }
+                if !showRoutes { return false }
                 if route.metres < Int(minimumDistance) * 1_000 { return false }
                 if minimumDistance < maximumDistance && route.metres > Int(maximumDistance) * 1_000 { return false }
                 if maximumProximity != 0 && distanceTo(route: route) > maximumProximity { return false }
@@ -121,7 +123,7 @@ class ViewModel: NSObject, ObservableObject {
             case .longest:
                 return route1.metres > route2.metres
             case .churchDensity:
-                return route1.density > route2.density
+                return route1.density < route2.density
             }
         }
     }
@@ -137,7 +139,7 @@ class ViewModel: NSObject, ObservableObject {
     
     // Filtered churches
     public var filteredChurches: [Church] {
-        if hideChurches {
+        if filter && !showChurches {
             return []
         } else if selectedRoute != nil {
             return selectedRoute!.churches.filter { church in
@@ -279,14 +281,27 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Filter Summaries
     // Annotation summary
     public var filterAnnotationsSummary: String {
-        if hideRoutes && hideChurches {
-            return "No Annotations"
-        } else if hideRoutes {
-            return "Churches"
-        } else if hideChurches {
-            return "Routes"
-        } else {
+        if showRoutes && showChurches {
             return "No Filter"
+        } else if showRoutes {
+            return "Routes"
+        } else if showChurches {
+            return "Churches"
+        } else {
+            return "No Features"
+        }
+    }
+    
+    // Visited summary
+    public var filterVisitedSummary: String {
+        if showVisited && showUnvisited {
+            return "No Filter"
+        } else if showVisited {
+            return "Visited"
+        } else if showUnvisited {
+            return "Unvisited"
+        } else {
+            return "No Features"
         }
     }
     
@@ -447,5 +462,9 @@ extension ViewModel: MKMapViewDelegate {
         if !animated {
             trackingMode = .none
         }
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        animation = .default
     }
 }

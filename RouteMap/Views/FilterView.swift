@@ -22,11 +22,11 @@ struct FilterView: View {
             Form {
                 Section {
                     DisclosureGroup(isExpanded: $expandAnnotations) {
-                        Toggle("Hide Routes", isOn: $vm.hideRoutes)
-                        Toggle("Hide Churches", isOn: $vm.hideChurches)
+                        Toggle("Show Routes", isOn: $vm.showRoutes)
+                        Toggle("Show Churches", isOn: $vm.showChurches)
                     } label: {
                         HStack {
-                            Text("Annotations Showing")
+                            Text("Features Shown")
                             Spacer()
                             Text(vm.filterAnnotationsSummary)
                                 .foregroundColor(.secondary)
@@ -36,13 +36,13 @@ struct FilterView: View {
                 
                 Section {
                     DisclosureGroup(isExpanded: $expandVisited) {
-                        Toggle("Hide Visited", isOn: $vm.hideVisited)
-                        Toggle("Hide Unvisited", isOn: $vm.hideUnvisited)
+                        Toggle("Show Visited", isOn: $vm.showVisited)
+                        Toggle("Show Unvisited", isOn: $vm.showUnvisited)
                     } label: {
                         HStack {
-                            Text("Visited Routes")
+                            Text("Visited Features Shown")
                             Spacer()
-                            Text(vm.filterAnnotationsSummary)
+                            Text(vm.filterVisitedSummary)
                                 .foregroundColor(.secondary)
                         }
                     }

@@ -18,6 +18,7 @@ struct ControlBox: View {
             if vm.showSearchBar {
                 SearchBar(text: $vm.searchText)
                     .placeholder("Churches, Destinations and Locations")
+                    .animation(.none)
             }
             
             if vm.showRouteBar && vm.selectedRoute != nil {

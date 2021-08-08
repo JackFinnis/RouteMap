@@ -14,26 +14,20 @@ struct RouteInfo: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            VStack {
+            VStack(alignment: .leading) {
                 Text(route.name)
                     .font(.headline)
                 Text(route.stage)
-                    .font(.subheadline)
                     .foregroundColor(.secondary)
             }
             Spacer()
-            VStack {
-                Label {
-                    Text(String(route.churches.count))
-                } icon: {
-                    Image("cross")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(11.5)
-                        .frame(width: 46, height: 46)
-                }
+            VStack(alignment: .trailing) {
                 Text(String(Int(route.metres / 1_000)) + " km")
+                Text(String(route.churches.count) + " Churches")
+                Text(String(format: "%.1f", route.density) + " km/Church")
             }
+            .font(.subheadline)
+            .foregroundColor(.secondary)
         }
     }
 }

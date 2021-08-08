@@ -11,7 +11,16 @@ struct RouteView: View {
     let route: Route
     
     var body: some View {
-        Text(route.name)
-            .navigationTitle("Stage \(route.id)")
+        Form {
+            Section(header: Text("Details")) {
+                HStack {
+                    Text("Route Number")
+                    Spacer()
+                    Text(route.stage)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        .navigationTitle(route.name)
     }
 }
