@@ -23,6 +23,7 @@ struct RootView: View {
                         MapSettings()
                     }
                     ControlBox()
+                        .animation(.default)
                 }
             }
             .navigationTitle("See on Map")

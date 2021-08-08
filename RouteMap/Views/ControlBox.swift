@@ -20,7 +20,7 @@ struct ControlBox: View {
                     .placeholder("Churches, Destinations and Locations")
             }
             
-            if vm.showRouteBar {
+            if vm.showRouteBar && vm.selectedRoute != nil {
                 RouteBar()
             }
         }

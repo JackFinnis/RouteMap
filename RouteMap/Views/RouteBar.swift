@@ -11,39 +11,51 @@ struct RouteBar: View {
     @EnvironmentObject var vm: ViewModel
     
     var body: some View {
-        HStack {
-            Button {
-                vm.previousRoute()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 23))
-                    .frame(width: 46, height: 46)
+        HStack(spacing: 0) {
+            VStack(spacing: 0) {
+                Button {
+                    vm.previousRoute()
+                } label: {
+                    Image(systemName: "chevron.up")
+                        .font(.system(size: 23))
+                        .frame(width: 46, height: 46)
+                }
+                
+                Button {
+                    vm.nextRoute()
+                } label: {
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 23))
+                        .frame(width: 46, height: 46)
+                }
             }
             
-            if vm.selectedRoute != nil {
-                Text(String(vm.filteredRoutes.firstIndex(of: vm.selectedRoute!)!))
-                    .frame(width: 46, height: 46)
+            if vm.selectedRoute != nil && vm.showRouteBar {
                 NavigationLink(destination: RouteView(route: vm.selectedRoute!)) {
-                    Text(vm.selectedRoute == nil ? "" : vm.selectedRoute!.name)
-                        .font(.headline)
-                        .lineLimit(1)
+                    RouteInfo(route: vm.selectedRoute!)
                 }
                 .buttonStyle(.plain)
-            } else {
-                Button {
-                    vm.selectFirstRoute()
-                } label: {
-                    Text("Sort Routes")
-                }
+                .animation(.none)
             }
             
             Spacer()
-            Button {
-                vm.nextRoute()
-            } label: {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 23))
-                    .frame(width: 46, height: 46)
+            VStack(spacing: 0) {
+                Button {
+                    vm.focusOnSelected.toggle()
+                } label: {
+                    Image(systemName: vm.focusOnSelectedImage)
+                        .font(.system(size: 23))
+                        .frame(width: 46, height: 46)
+                }
+                
+                Button {
+                    vm.selectedRoute = nil
+                    vm.showRouteBar = false
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 23))
+                        .frame(width: 46, height: 46)
+                }
             }
         }
     }

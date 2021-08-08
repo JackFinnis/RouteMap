@@ -70,9 +70,14 @@ struct MapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         if !vm.loading {
-            mapView.addAnnotations(vm.filteredChurches)
-            mapView.addAnnotations(vm.filteredRoutes)
-            mapView.addOverlays(vm.filteredPolylines)
+            if vm.focusOnSelected && vm.selectedRoute != nil {
+                mapView.addAnnotations(vm.filteredChurches)
+                mapView.addOverlay(vm.selectedRoute!.polyline)
+            } else {
+                mapView.addAnnotations(vm.filteredChurches)
+                mapView.addAnnotations(vm.filteredRoutes)
+                mapView.addOverlays(vm.filteredPolylines)
+            }
         }
     }
 }

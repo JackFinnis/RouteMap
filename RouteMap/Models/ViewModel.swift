@@ -13,7 +13,13 @@ class ViewModel: NSObject, ObservableObject {
     // Routes
     @Published var routes = [Route]()
     @Published var loading: Bool = true
-    @Published var selectedRoute: Route?
+    @Published var selectedRoute: Route? {
+        didSet {
+            if selectedRoute == nil {
+                showRouteBar = false
+            }
+        }
+    }
     
     // Route filters
     @Published var searchText: String = ""
@@ -82,13 +88,13 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Filter Routes
     // Filtered Routes
     public var filteredRoutes: [Route] {
-        var routes = [Route]()
-        if selectedRoute != nil && focusOnSelected {
-            routes = [selectedRoute!]
-        } else {
-            routes = self.routes
-        }
-        
+//        var routes = [Route]()
+//        if selectedRoute != nil && focusOnSelected {
+//            routes = [selectedRoute!]
+//        } else {
+//            routes = self.routes
+//        }
+//
         let filteredRoutes = routes.filter { route in
             if filter {
                 if hideRoutes { return false }
@@ -230,8 +236,10 @@ class ViewModel: NSObject, ObservableObject {
         var routes = [Route]()
         if all {
             routes = filteredRoutes
-        } else {
+        } else if selectedRoute != nil {
             routes = [selectedRoute!]
+        } else {
+            return nil
         }
         
         guard !routes.isEmpty else {
@@ -320,7 +328,7 @@ class ViewModel: NSObject, ObservableObject {
     public var mapTypeImage: String {
         switch mapType {
         case .standard:
-            return "globe.europe.africa.fill"
+            return "globe"
         default:
             return "map"
         }
@@ -344,9 +352,9 @@ class ViewModel: NSObject, ObservableObject {
     
     public var filterImage: String {
         if filter {
-            return "line.3.horizontal.decrease.circle.fill"
+            return "line.horizontal.3.decrease.circle.fill"
         } else {
-            return "line.3.horizontal.decrease.circle"
+            return "line.horizontal.3.decrease.circle"
         }
     }
     
@@ -430,6 +438,7 @@ extension ViewModel: MKMapViewDelegate {
         } else if let view = view as? RouteMarker {
             if let annotation = view.annotation as? Route {
                 selectedRoute = annotation
+                showRouteBar = true
             }
         }
     }

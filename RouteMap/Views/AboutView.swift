@@ -1,13 +1,15 @@
 //
-//  InfoView.swift
-//  InfoView
+//  AboutView.swift
+//  AboutView
 //
 //  Created by William Finnis on 08/08/2021.
 //
 
 import SwiftUI
 
-struct InfoView: View {
+struct AboutView: View {
+    @EnvironmentObject var vm: ViewModel
+    
     @State var showShareView: Bool = false
     
     @Binding var showInfoView: Bool
@@ -48,6 +50,7 @@ struct InfoView: View {
         }
         .sheet(isPresented: $showShareView) {
             ShareView()
+                .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
         }
     }
 }

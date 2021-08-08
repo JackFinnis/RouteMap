@@ -10,70 +10,87 @@ import SwiftUI
 struct FilterView: View {
     @EnvironmentObject var vm: ViewModel
     
+    @State var expandAnnotations: Bool = false
+    @State var expandVisited: Bool = false
+    @State var expandDistance: Bool = false
+    @State var expandProximity: Bool = false
+    
     @Binding var showFilterView: Bool
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Annotations")) {
-                    HStack {
-                        Text("Annotations Showing")
-                        Spacer()
-                        Text(vm.filterAnnotationsSummary)
-                            .foregroundColor(.secondary)
+                Section {
+                    DisclosureGroup(isExpanded: $expandAnnotations) {
+                        Toggle("Hide Routes", isOn: $vm.hideRoutes)
+                        Toggle("Hide Churches", isOn: $vm.hideChurches)
+                    } label: {
+                        HStack {
+                            Text("Annotations Showing")
+                            Spacer()
+                            Text(vm.filterAnnotationsSummary)
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    Toggle("Hide Routes", isOn: $vm.hideRoutes)
-                    Toggle("Hide Churches", isOn: $vm.hideChurches)
                 }
                 
-                Section(header: Text("Visited")) {
-                    HStack {
-                        Text("Visited Routes")
-                        Spacer()
-                        Text(vm.filterAnnotationsSummary)
-                            .foregroundColor(.secondary)
+                Section {
+                    DisclosureGroup(isExpanded: $expandVisited) {
+                        Toggle("Hide Visited", isOn: $vm.hideVisited)
+                        Toggle("Hide Unvisited", isOn: $vm.hideUnvisited)
+                    } label: {
+                        HStack {
+                            Text("Visited Routes")
+                            Spacer()
+                            Text(vm.filterAnnotationsSummary)
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    Toggle("Hide Visited", isOn: $vm.hideVisited)
-                    Toggle("Hide Unvisited", isOn: $vm.hideUnvisited)
                 }
                 
-                Section(header: Text("Distance")) {
-                    HStack {
-                        Text("Route Distance")
-                        Spacer()
-                        Text(vm.filterDistanceSummary)
-                            .foregroundColor(.secondary)
+                Section {
+                    DisclosureGroup(isExpanded: $expandDistance) {
+                        Slider(value: $vm.minimumDistance, in: 0...100, step: 5, label: {
+                            Text("Minimum Distance")
+                        }, minimumValueLabel: {
+                            Text("Minimum")
+                        }, maximumValueLabel: {
+                            Text("")
+                        })
+                        Slider(value: $vm.maximumDistance, in: 0...100, step: 5, label: {
+                            Text("Maximum Distance")
+                        }, minimumValueLabel: {
+                            Text("Maximum")
+                        }, maximumValueLabel: {
+                            Text("")
+                        })
+                    } label: {
+                        HStack {
+                            Text("Route Distance")
+                            Spacer()
+                            Text(vm.filterDistanceSummary)
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    Slider(value: $vm.minimumDistance, in: 0...100, step: 5, label: {
-                        Text("Minimum Distance")
-                    }, minimumValueLabel: {
-                        Text("Minimum")
-                    }, maximumValueLabel: {
-                        Text("")
-                    })
-                    Slider(value: $vm.maximumDistance, in: 0...100, step: 5, label: {
-                        Text("Maximum Distance")
-                    }, minimumValueLabel: {
-                        Text("Maximum")
-                    }, maximumValueLabel: {
-                        Text("")
-                    })
                 }
                 
-                Section(header: Text("Proximity")) {
-                    HStack {
-                        Text("Route Proximity")
-                        Spacer()
-                        Text(vm.filterProximitySummary)
-                            .foregroundColor(.secondary)
+                Section {
+                    DisclosureGroup(isExpanded: $expandProximity) {
+                        Slider(value: $vm.maximumProximity, in: 0...100, step: 5, label: {
+                            Text("Maximum Proximity")
+                        }, minimumValueLabel: {
+                            Text("Maximum")
+                        }, maximumValueLabel: {
+                            Text("")
+                        })
+                    } label: {
+                        HStack {
+                            Text("Route Proximity")
+                            Spacer()
+                            Text(vm.filterProximitySummary)
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    Slider(value: $vm.maximumProximity, in: 0...100, step: 5, label: {
-                        Text("Maximum Proximity")
-                    }, minimumValueLabel: {
-                        Text("Maximum")
-                    }, maximumValueLabel: {
-                        Text("")
-                    })
                 }
             }
             .navigationTitle("Advanced Filters")

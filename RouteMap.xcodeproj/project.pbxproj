@@ -20,8 +20,9 @@
 		BEB8F0D926BFCD5F00702BB5 /* RouteBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0D826BFCD5F00702BB5 /* RouteBar.swift */; };
 		BEB8F0DB26BFCE4F00702BB5 /* ControlBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0DA26BFCE4F00702BB5 /* ControlBox.swift */; };
 		BEB8F0E126BFE91500702BB5 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0E026BFE91500702BB5 /* FilterView.swift */; };
-		BEB8F0E326C008C900702BB5 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0E226C008C900702BB5 /* InfoView.swift */; };
+		BEB8F0E326C008C900702BB5 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0E226C008C900702BB5 /* AboutView.swift */; };
 		BEB8F0E526C0170300702BB5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0E426C0170300702BB5 /* ShareView.swift */; };
+		BEB8F0E726C0230200702BB5 /* RouteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB8F0E626C0230200702BB5 /* RouteInfo.swift */; };
 		BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */; };
 		BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BECFC09626BAC4AA005CC3AE /* Assets.xcassets */; };
 		BECFC0B126BBEF43005CC3AE /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B026BBEF43005CC3AE /* Church.swift */; };
@@ -46,8 +47,9 @@
 		BEB8F0D826BFCD5F00702BB5 /* RouteBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteBar.swift; sourceTree = "<group>"; };
 		BEB8F0DA26BFCE4F00702BB5 /* ControlBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBox.swift; sourceTree = "<group>"; };
 		BEB8F0E026BFE91500702BB5 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
-		BEB8F0E226C008C900702BB5 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		BEB8F0E226C008C900702BB5 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		BEB8F0E426C0170300702BB5 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		BEB8F0E626C0230200702BB5 /* RouteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfo.swift; sourceTree = "<group>"; };
 		BECFC08F26BAC4A7005CC3AE /* RouteMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouteMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMapApp.swift; sourceTree = "<group>"; };
 		BECFC09626BAC4AA005CC3AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,10 +128,11 @@
 				BEB8F0DA26BFCE4F00702BB5 /* ControlBox.swift */,
 				BEB8F0AF26BC7CB800702BB5 /* ActionBar.swift */,
 				BEB8F0E026BFE91500702BB5 /* FilterView.swift */,
-				BEB8F0E226C008C900702BB5 /* InfoView.swift */,
+				BEB8F0E226C008C900702BB5 /* AboutView.swift */,
 				BEB8F0E426C0170300702BB5 /* ShareView.swift */,
-				BEB8F0D826BFCD5F00702BB5 /* RouteBar.swift */,
 				BEB8F0D126BEFD8F00702BB5 /* SearchBar.swift */,
+				BEB8F0D826BFCD5F00702BB5 /* RouteBar.swift */,
+				BEB8F0E626C0230200702BB5 /* RouteInfo.swift */,
 				BEB8F0B126BC7DB500702BB5 /* RouteView.swift */,
 				BEB8F0A426BC383600702BB5 /* Blur.swift */,
 			);
@@ -229,7 +232,8 @@
 				BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */,
 				BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */,
 				BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */,
-				BEB8F0E326C008C900702BB5 /* InfoView.swift in Sources */,
+				BEB8F0E726C0230200702BB5 /* RouteInfo.swift in Sources */,
+				BEB8F0E326C008C900702BB5 /* AboutView.swift in Sources */,
 				BEB8F0B026BC7CB800702BB5 /* ActionBar.swift in Sources */,
 				BECFC0B626BC0175005CC3AE /* Route.swift in Sources */,
 				BEB8F0C026BEAD7700702BB5 /* Cluster.swift in Sources */,

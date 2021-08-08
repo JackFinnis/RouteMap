@@ -25,7 +25,7 @@ class Route: NSObject, MKAnnotation, Decodable, Identifiable {
     var endCLL: CLLocation { CLLocation(latitude: coords.last!.latitude, longitude: coords.last!.longitude) }
     var density: Double { Double(churches.count) / Double(metres) }
     
-    var stage: String { "Stage \(id)" }
+    var stage: String { "Route \(id)" }
     var name: String { start + " to " + end }
     
     var polyline: MKPolyline { MKPolyline(coordinates: coords, count: coords.count) }

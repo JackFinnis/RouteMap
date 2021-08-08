@@ -30,8 +30,10 @@ struct ActionBar: View {
                     .frame(width: 46, height: 46)
             }
             Menu {
-                Picker("Sort routes by: ", selection: $vm.sortBy) {
-                    ForEach(SortBy.allCases, id: \.self) { sortBy in
+                ForEach(SortBy.allCases, id: \.self) { sortBy in
+                    Button {
+                        vm.sortBy = sortBy
+                    } label: {
                         Text(sortBy.rawValue)
                     }
                 }
@@ -42,14 +44,12 @@ struct ActionBar: View {
             }
             
             Spacer()
-            
-            Button {
-                vm.focusOnSelected.toggle()
-            } label: {
-                Image(systemName: vm.focusOnSelectedImage)
+            if vm.loading {
+                ProgressView()
                     .font(.system(size: 23))
                     .frame(width: 46, height: 46)
             }
+            
             Button {
                 withAnimation {
                     vm.showRouteBar.toggle()
@@ -70,8 +70,9 @@ struct ActionBar: View {
             }
         }
         .sheet(isPresented: $showInfoView) {
-            InfoView(showInfoView: $showInfoView)
+            AboutView(showInfoView: $showInfoView)
                 .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
+                .environmentObject(vm)
         }
         .sheet(isPresented: $showFilterView) {
             FilterView(showFilterView: $showFilterView)
