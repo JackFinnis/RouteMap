@@ -1,5 +1,5 @@
 //
-//  FilterBar.swift
+//  ActionBar.swift
 //  MyMap
 //
 //  Created by Finnis on 13/06/2021.
@@ -7,17 +7,18 @@
 
 import SwiftUI
 
-struct FilterBar: View {
+struct ActionBar: View {
     @EnvironmentObject var vm: ViewModel
     
     @State var showFilterView: Bool = false
+    @State var showInfoView: Bool = false
     
     var body: some View {
         HStack(spacing: 0) {
             Button {
-                vm.updateVisitedFilter()
+                showInfoView = true
             } label: {
-                Image(systemName: vm.visitedFilterImage)
+                Image(systemName: "info.circle")
                     .font(.system(size: 23))
                     .frame(width: 46, height: 46)
             }
@@ -41,6 +42,14 @@ struct FilterBar: View {
             }
             
             Spacer()
+            
+            Button {
+                vm.focusOnSelected.toggle()
+            } label: {
+                Image(systemName: vm.focusOnSelectedImage)
+                    .font(.system(size: 23))
+                    .frame(width: 46, height: 46)
+            }
             Button {
                 withAnimation {
                     vm.showRouteBar.toggle()
@@ -59,6 +68,10 @@ struct FilterBar: View {
                     .font(.system(size: 23))
                     .frame(width: 46, height: 46)
             }
+        }
+        .sheet(isPresented: $showInfoView) {
+            InfoView(showInfoView: $showInfoView)
+                .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
         }
         .sheet(isPresented: $showFilterView) {
             FilterView(showFilterView: $showFilterView)

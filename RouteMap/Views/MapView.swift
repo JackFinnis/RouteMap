@@ -12,7 +12,6 @@ struct MapView: UIViewRepresentable {
     @EnvironmentObject var vm: ViewModel
     
     func makeCoordinator() -> ViewModel {
-        vm.parent = self
         return vm
     }
 
@@ -71,17 +70,9 @@ struct MapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         if !vm.loading {
-            if !vm.searchText.isEmpty {
-                mapView.addAnnotations(vm.filteredChurches)
-                mapView.addAnnotations(vm.filteredRoutes)
-                mapView.addOverlays(vm.filteredPolylines)
-            } else if vm.selectedRoute != nil {
-                mapView.addAnnotations(vm.selectedRoute!.churches)
-                mapView.addOverlay(vm.selectedRoute!.polyline)
-            } else {
-                mapView.addAnnotations(vm.filteredRoutes)
-                mapView.addOverlays(vm.filteredPolylines)
-            }
+            mapView.addAnnotations(vm.filteredChurches)
+            mapView.addAnnotations(vm.filteredRoutes)
+            mapView.addOverlays(vm.filteredPolylines)
         }
     }
 }

@@ -15,55 +15,78 @@ struct FilterView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section {
+                Section(header: Text("Annotations")) {
                     HStack {
                         Text("Annotations Showing")
                         Spacer()
                         Text(vm.filterAnnotationsSummary)
+                            .foregroundColor(.secondary)
                     }
-                    Toggle("Show Routes", isOn: $vm.showRoutes)
-                    Toggle("Show Churches", isOn: $vm.showChurches)
+                    Toggle("Hide Routes", isOn: $vm.hideRoutes)
+                    Toggle("Hide Churches", isOn: $vm.hideChurches)
                 }
                 
-                Section {
+                Section(header: Text("Visited")) {
+                    HStack {
+                        Text("Visited Routes")
+                        Spacer()
+                        Text(vm.filterAnnotationsSummary)
+                            .foregroundColor(.secondary)
+                    }
+                    Toggle("Hide Visited", isOn: $vm.hideVisited)
+                    Toggle("Hide Unvisited", isOn: $vm.hideUnvisited)
+                }
+                
+                Section(header: Text("Distance")) {
                     HStack {
                         Text("Route Distance")
                         Spacer()
                         Text(vm.filterDistanceSummary)
+                            .foregroundColor(.secondary)
                     }
-                    
-                    HStack {
+                    Slider(value: $vm.minimumDistance, in: 0...100, step: 5, label: {
                         Text("Minimum Distance")
-                        Spacer()
-                        Text("\(Int(vm.minimumDistance / 1_000)) km")
-                    }
-                    Slider(value: $vm.minimumDistance, in: 0...100_000, step: 1_000)
-                    
-                    HStack {
+                    }, minimumValueLabel: {
+                        Text("Minimum")
+                    }, maximumValueLabel: {
+                        Text("")
+                    })
+                    Slider(value: $vm.maximumDistance, in: 0...100, step: 5, label: {
                         Text("Maximum Distance")
-                        Spacer()
-                        Text("\(Int(vm.maximumDistance / 1_000)) km")
-                    }
-                    Slider(value: $vm.maximumDistance, in: 0...100_000, step: 1_000)
+                    }, minimumValueLabel: {
+                        Text("Maximum")
+                    }, maximumValueLabel: {
+                        Text("")
+                    })
                 }
                 
-                Section {
+                Section(header: Text("Proximity")) {
                     HStack {
                         Text("Route Proximity")
                         Spacer()
                         Text(vm.filterProximitySummary)
+                            .foregroundColor(.secondary)
                     }
-                    Slider(value: $vm.maximumDistance, in: 0...100_000, step: 1_000)
+                    Slider(value: $vm.maximumProximity, in: 0...100, step: 5, label: {
+                        Text("Maximum Proximity")
+                    }, minimumValueLabel: {
+                        Text("Maximum")
+                    }, maximumValueLabel: {
+                        Text("")
+                    })
                 }
             }
             .navigationTitle("Advanced Filters")
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         showFilterView = false
                     } label: {
                         Text("Done")
                     }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Toggle("Filter", isOn: $vm.filter)
                 }
             }
         }

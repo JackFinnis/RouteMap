@@ -16,4 +16,6 @@ class Church: NSObject, MKAnnotation, Decodable {
     var url: URL { URL(string: urlString)! }
     var title: String? { name }
     var subtitle: String? { "Church" }
+    
+    var coordCLL: CLLocation { CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
 }

@@ -19,23 +19,14 @@ class Route: NSObject, MKAnnotation, Decodable, Identifiable {
     
     var title: String? { name }
     var subtitle: String? { stage }
-    var coordinate: CLLocationCoordinate2D {
-        coords[coords.count / 2]
-    }
+    var coordinate: CLLocationCoordinate2D { coords[coords.count / 2] }
     
-    var stage: String {
-        "Stage \(id)"
-    }
+    var startCLL: CLLocation { CLLocation(latitude: coords.first!.latitude, longitude: coords.first!.longitude) }
+    var endCLL: CLLocation { CLLocation(latitude: coords.last!.latitude, longitude: coords.last!.longitude) }
+    var density: Double { Double(churches.count) / Double(metres) }
     
-    var name: String {
-        start + " to " + end
-    }
+    var stage: String { "Stage \(id)" }
+    var name: String { start + " to " + end }
     
-    var density: Double {
-        Double(churches.count) / Double(metres)
-    }
-    
-    var polyline: MKPolyline {
-        MKPolyline(coordinates: coords, count: coords.count)
-    }
+    var polyline: MKPolyline { MKPolyline(coordinates: coords, count: coords.count) }
 }

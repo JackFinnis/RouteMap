@@ -12,7 +12,7 @@ struct ControlBox: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            FilterBar()
+            ActionBar()
             Divider()
             
             if vm.showSearchBar {

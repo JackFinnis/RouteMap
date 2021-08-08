@@ -25,7 +25,7 @@ struct RootView: View {
                     ControlBox()
                 }
             }
-            .navigationTitle("Map")
+            .navigationTitle("See on Map")
             .navigationBarHidden(true)
         }
         .preferredColorScheme(vm.mapType == .standard ? .none : .dark)

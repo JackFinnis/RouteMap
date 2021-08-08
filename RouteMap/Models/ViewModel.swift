@@ -16,14 +16,19 @@ class ViewModel: NSObject, ObservableObject {
     @Published var selectedRoute: Route?
     
     // Route filters
-    @Published var sortBy: SortBy = .id
     @Published var searchText: String = ""
-    @Published var visitedFilter: VisitedFilter = .none
+    @Published var sortBy: SortBy = .id {
+        didSet {
+            selectFirstRoute()
+        }
+    }
     
     // Advanced filters
     @Published var filter: Bool = false
-    @Published var showRoutes: Bool = true
-    @Published var showChurches: Bool = true
+    @Published var hideRoutes: Bool = false
+    @Published var hideChurches: Bool = false
+    @Published var hideVisited: Bool = false
+    @Published var hideUnvisited: Bool = false
     @Published var minimumDistance: Double = 0
     @Published var maximumDistance: Double = 0
     @Published var maximumProximity: Double = 0
@@ -31,26 +36,31 @@ class ViewModel: NSObject, ObservableObject {
     // View state
     @Published var showSearchBar: Bool = false
     @Published var showRouteBar: Bool = false
+    @Published var focusOnSelected: Bool = false
     
     // Map settings
     @Published var mapType: MKMapType = .standard
     @Published var trackingMode: MKUserTrackingMode = .none
+    @Published var userLocation = CLLocationCoordinate2D()
+    @Published var locationManager = CLLocationManager()
     
     // Map history variables
-    var parent: MapView?
     var mapLoading: Bool = true
     var mapSelectedRoute: Route?
     
     // MARK: - Initialiser
     override init() {
         super.init()
-        // Setup location manager
-        CLLocationManager().requestWhenInUseAuthorization()
-        // Load routes
+        setupLocationManager()
         loadRoutes()
     }
     
-    // MARK: - Load Routes
+    // Setup location manager
+    private func setupLocationManager() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+    }
+    
     // Load routes from the api
     private func loadRoutes() {
         let url = URL(string: "https://ncct.finnisjack.repl.co/routes")!
@@ -72,7 +82,20 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Filter Routes
     // Filtered Routes
     public var filteredRoutes: [Route] {
+        var routes = [Route]()
+        if selectedRoute != nil && focusOnSelected {
+            routes = [selectedRoute!]
+        } else {
+            routes = self.routes
+        }
+        
         let filteredRoutes = routes.filter { route in
+            if filter {
+                if hideRoutes { return false }
+                if route.metres < Int(minimumDistance) * 1_000 { return false }
+                if minimumDistance < maximumDistance && route.metres > Int(maximumDistance) * 1_000 { return false }
+                if maximumProximity != 0 && distanceTo(route: route) > maximumProximity { return false }
+            }
             if searchText.isEmpty { return true }
             if route.start.localizedCaseInsensitiveContains(searchText) { return true }
             if route.end.localizedCaseInsensitiveContains(searchText) { return true }
@@ -82,6 +105,7 @@ class ViewModel: NSObject, ObservableObject {
             }
             return false
         }
+        
         return filteredRoutes.sorted { (route1, route2) in
             switch sortBy {
             case .id:
@@ -96,16 +120,31 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    public var filteredChurches: [Church] {
+    // All unfiltered churches
+    public var churches: [Church] {
         var churches = [Church]()
         for route in routes {
-            for church in route.churches {
-                if church.name.localizedCaseInsensitiveContains(searchText) {
-                    churches.append(church)
-                }
-            }
+            churches.append(contentsOf: route.churches)
         }
         return churches
+    }
+    
+    // Filtered churches
+    public var filteredChurches: [Church] {
+        if hideChurches {
+            return []
+        } else if selectedRoute != nil {
+            return selectedRoute!.churches.filter { church in
+                if searchText.isEmpty { return true }
+                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
+                return false
+            }
+        } else {
+            return churches.filter { church in
+                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
+                return false
+            }
+        }
     }
     
     // Filtered route polylines
@@ -115,6 +154,26 @@ class ViewModel: NSObject, ObservableObject {
             polylines.append(route.polyline)
         }
         return polylines
+    }
+    
+    // Get the distance between the user and route
+    private func distanceTo(route: Route) -> Double {
+        var minimum: Double = .greatestFiniteMagnitude
+        var delta: Double = 0
+        let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+        
+        delta = userCLLocation.distance(from: route.startCLL)
+        if minimum > delta { minimum = delta }
+        
+        delta = userCLLocation.distance(from: route.endCLL)
+        if minimum > delta { minimum = delta }
+        
+        for church in route.churches {
+            delta = userCLLocation.distance(from: church.coordCLL)
+            if minimum > delta { minimum = delta }
+        }
+        
+        return minimum
     }
     
     // MARK: - Select Route
@@ -212,30 +271,30 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Filter Summaries
     // Annotation summary
     public var filterAnnotationsSummary: String {
-        if showRoutes && showChurches {
-            return ""
-        } else if showRoutes {
-            return "Routes"
-        } else if showChurches {
-            return "Churches"
-        } else {
+        if hideRoutes && hideChurches {
             return "No Annotations"
+        } else if hideRoutes {
+            return "Churches"
+        } else if hideChurches {
+            return "Routes"
+        } else {
+            return "No Filter"
         }
     }
     
     // Separation summary
     public var filterProximitySummary: String {
         if maximumProximity == 0 {
-            return ""
+            return "No Filter"
         } else {
-            return "< \(Int(maximumDistance)) km away"
+            return "< \(Int(maximumProximity)) km away"
         }
     }
     
     // Distance summary
     public var filterDistanceSummary: String {
         if minimumDistance == 0 && maximumDistance == 0 {
-            return ""
+            return "No Filter"
         } else if minimumDistance >= maximumDistance {
             return "> \(Int(minimumDistance)) km"
         } else if minimumDistance == 0 {
@@ -275,6 +334,14 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
+    public var focusOnSelectedImage: String {
+        if focusOnSelected {
+            return "eye.fill"
+        } else {
+            return "eye"
+        }
+    }
+    
     public var filterImage: String {
         if filter {
             return "line.3.horizontal.decrease.circle.fill"
@@ -288,17 +355,6 @@ class ViewModel: NSObject, ObservableObject {
             return "menubar.rectangle"
         } else {
             return "menubar.dock.rectangle"
-        }
-    }
-    
-    public var visitedFilterImage: String {
-        switch visitedFilter {
-        case .none:
-            return "star"
-        case .visited:
-            return "star.fill"
-        case .unvisited:
-            return "star.slash.fill"
         }
     }
     
@@ -324,17 +380,12 @@ class ViewModel: NSObject, ObservableObject {
             mapType = .standard
         }
     }
-    
-    // Visited filter pressed
-    public func updateVisitedFilter() {
-        switch visitedFilter {
-        case .none:
-            visitedFilter = .visited
-        case .visited:
-            visitedFilter = .unvisited
-        case .unvisited:
-            visitedFilter = .none
-        }
+}
+
+// MARK: - CLLocationManager Delegate
+extension ViewModel: CLLocationManagerDelegate {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        self.userLocation = userLocation.coordinate
     }
 }
 
