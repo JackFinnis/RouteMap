@@ -11,45 +11,50 @@ import SwiftUI
 
 class ViewModel: NSObject, ObservableObject {
     // MARK: - Properties
-    // Routes
-    @Published var routes = [Route]()
-    @Published var loading: Bool = true
-    @Published var selectedRoute: Route? { didSet {
-            if selectedRoute == nil {
-                showRouteBar = false
-            }
-        }
-    }
+    // Routes and churches
+    var routes = [Route]()
+    var churches = [Church]()
     
-    // Route filters
-    @Published var searchText: String = "" { didSet { updateSelectedRoute() } }
+    // Filtered features
+    @Published var filteredRoutes = [Route]()
+    @Published var filteredChurches = [Church]()
+    @Published var filteredPolylines = [MKPolyline]()
+    @Published var selectedRoute: Route?
+    
+    // Filters
     @Published var sortBy: SortBy = .id { didSet { selectFirstRoute() } }
-    
-    // Advanced filters
-    @Published var filter: Bool = false { didSet { updateSelectedRoute() } }
-    @Published var showRoutes: Bool = true { didSet { updateSelectedRoute() } }
-    @Published var showChurches: Bool = true { didSet { updateSelectedRoute() } }
-    @Published var showVisited: Bool = true { didSet { updateSelectedRoute() } }
-    @Published var showUnvisited: Bool = true { didSet { updateSelectedRoute() } }
-    @Published var minimumDistance: Double = 0 { didSet { updateSelectedRoute() } }
-    @Published var maximumDistance: Double = 0 { didSet { updateSelectedRoute() } }
-    @Published var maximumProximity: Double = 0 { didSet { updateSelectedRoute() } }
+    @Published var searchText: String = "" { didSet { filterFeatures() } }
+    @Published var filter: Bool = false { didSet { filterFeatures() } }
+    @Published var showRoutes: Bool = true { didSet { filterFeatures() } }
+    @Published var showChurches: Bool = true { didSet { filterFeatures() } }
+    @Published var showVisited: Bool = true { didSet { filterFeatures() } }
+    @Published var showUnvisited: Bool = true { didSet { filterFeatures() } }
+    @Published var minimumDistance: Double = 0 { didSet { filterFeatures() } }
+    @Published var maximumDistance: Double = 0 { didSet { filterFeatures() } }
+    @Published var maximumProximity: Double = 0 { didSet { filterFeatures() } }
     
     // View state
-    @Published var showSearchBar: Bool = false
-    @Published var showRouteBar: Bool = false
-    @Published var focusOnSelected: Bool = false
+    @Published var loading: Bool = true
+    @Published var zoomOut: Bool = false
     @Published var animation: Animation? = .none
+    @Published var showSearchBar: Bool = false
+    @Published var expandAnnotations: Bool = false
+    @Published var expandVisited: Bool = false
+    @Published var expandDistance: Bool = false
+    @Published var expandProximity: Bool = false
+    @Published var showFilterView: Bool = false
+    @Published var showShareView: Bool = false
+    @Published var showInfoView: Bool = false
     
     // Map settings
     @Published var mapType: MKMapType = .standard
     @Published var trackingMode: MKUserTrackingMode = .none
-    var userLocation = CLLocationCoordinate2D() { didSet { updateSelectedRoute() } }
+    var userLocation = CLLocationCoordinate2D()
     var locationManager = CLLocationManager()
     
     // Map history variables
-    var mapLoading: Bool = true
     var mapSelectedRoute: Route?
+    var mapZoomOut: Bool = false
     
     // MARK: - Initialiser
     override init() {
@@ -73,7 +78,10 @@ class ViewModel: NSObject, ObservableObject {
                 if let response = try? JSONDecoder().decode([Route].self, from: data) {
                     DispatchQueue.main.async {
                         self.routes = response
+                        self.extractAllChurches()
+                        self.filterFeatures()
                         self.loading = false
+                        self.zoomOut.toggle()
                     }
                     return
                 }
@@ -82,10 +90,53 @@ class ViewModel: NSObject, ObservableObject {
         }.resume()
     }
     
+    // Get array of all churches
+    private func extractAllChurches() {
+        var allChurches = [Church]()
+        for route in routes {
+            allChurches.append(contentsOf: route.churches)
+        }
+        churches = allChurches
+    }
+    
     // MARK: - Filter Routes
-    // Filtered Routes
-    public var filteredRoutes: [Route] {
-        let filteredRoutes = routes.filter { route in
+    // Filter map features
+    private func filterFeatures() {
+        print("about to filter")
+        filterChurches()
+        filterRoutes()
+        filterPolylines()
+        updateSelectedRoute()
+        print("filtered")
+    }
+    
+    // Filter churches
+    private func filterChurches() {
+        if filter && !showChurches {
+            filteredChurches = []
+        } else if filter && !showRoutes {
+            filteredChurches = churches.filter { church in
+                if searchText.isEmpty { return true }
+                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
+                return false
+            }
+        } else if selectedRoute != nil {
+            filteredChurches = selectedRoute!.churches.filter { church in
+                if searchText.isEmpty { return true }
+                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
+                return false
+            }
+        } else {
+            filteredChurches = churches.filter { church in
+                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
+                return false
+            }
+        }
+    }
+    
+    // Filter routes
+    private func filterRoutes() {
+        filteredRoutes = routes.filter { route in
             if filter {
                 if !showRoutes { return false }
                 if minimumDistance > maximumDistance && route.metres < Int(minimumDistance) * 1_000 { return false }
@@ -95,20 +146,16 @@ class ViewModel: NSObject, ObservableObject {
             if searchText.isEmpty { return true }
             if route.start.localizedCaseInsensitiveContains(searchText) { return true }
             if route.end.localizedCaseInsensitiveContains(searchText) { return true }
-            if String(route.id).localizedCaseInsensitiveContains(searchText) { return true }
             for church in route.churches {
                 if filteredChurches.contains(church) { return true }
             }
             return false
         }
-        
-        return filteredRoutes.sorted { (route1, route2) in
+        .sorted { (route1, route2) in
             switch sortBy {
             case .id:
                 return route1.id < route2.id
-            case .shortest:
-                return route1.metres < route2.metres
-            case .longest:
+            case .distance:
                 return route1.metres > route2.metres
             case .churchDensity:
                 return route1.density < route2.density
@@ -116,74 +163,26 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    // All unfiltered churches
-    public var churches: [Church] {
-        var churches = [Church]()
-        for route in routes {
-            churches.append(contentsOf: route.churches)
-        }
-        return churches
-    }
-    
-    // Filtered churches
-    public var filteredChurches: [Church] {
-        if filter && !showChurches {
-            return []
-        } else if filter && !showRoutes {
-            return churches.filter { church in
-                if searchText.isEmpty { return true }
-                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
-                return false
-            }
-        } else if selectedRoute != nil {
-            return selectedRoute!.churches.filter { church in
-                if searchText.isEmpty { return true }
-                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
-                return false
-            }
-        } else {
-            return churches.filter { church in
-                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
-                return false
-            }
-        }
-    }
-    
-    // Filtered route polylines
-    public var filteredPolylines: [MKPolyline] {
+    // Filter polylines
+    private func filterPolylines() {
         var polylines = [MKPolyline]()
         for route in filteredRoutes {
             polylines.append(route.polyline)
         }
-        return polylines
+        filteredPolylines = polylines
     }
     
-    // Get the distance between the user and route
-    private func distanceTo(route: Route) -> Double {
-        var minimum: Double = .greatestFiniteMagnitude
-        var delta: Double = 0
-        let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-        
-        delta = userCLLocation.distance(from: route.startCLL)
-        if minimum > delta { minimum = delta }
-        
-        delta = userCLLocation.distance(from: route.endCLL)
-        if minimum > delta { minimum = delta }
-        
-        for church in route.churches {
-            delta = userCLLocation.distance(from: church.coordCLL)
-            if minimum > delta { minimum = delta }
+    // MARK: - Selected Route
+    // Update selected route when new filter imposed
+    public func updateSelectedRoute() {
+        if getSelectedRouteIndex() == nil {
+            selectedRoute = nil
         }
-        
-        print(minimum)
-        return minimum
     }
     
-    // MARK: - Select Route
     // Select first route
     public func selectFirstRoute() {
         selectedRoute = filteredRoutes.first
-        showRouteBar = true
     }
     
     // Select next route
@@ -230,13 +229,6 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    // Update selected route when new filter imposed
-    public func updateSelectedRoute() {
-        if getSelectedRouteIndex() == nil {
-            selectedRoute = nil
-        }
-    }
-    
     // MARK: - Map Helper Functions
     // Get map region
     public func getRoutesRegion(all: Bool) -> MKCoordinateRegion? {
@@ -278,9 +270,29 @@ class ViewModel: NSObject, ObservableObject {
         let latDelta: Double = maxLat - minLat
         let longDelta: Double = maxLong - minLong
         let span = MKCoordinateSpan(latitudeDelta: latDelta * 1.4, longitudeDelta: longDelta * 1.4)
-        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat)/2, longitude: (minLong + maxLong)/2)
+        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat) * 0.49963, longitude: (minLong + maxLong) * 0.5)
         let region = MKCoordinateRegion(center: centre, span: span)
         return region
+    }
+    
+    // Get the distance between the user and route
+    private func distanceTo(route: Route) -> Double {
+        var minimum: Double = .greatestFiniteMagnitude
+        var delta: Double = 0
+        let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+        
+        delta = userCLLocation.distance(from: route.startCLL)
+        if minimum > delta { minimum = delta }
+        
+        delta = userCLLocation.distance(from: route.endCLL)
+        if minimum > delta { minimum = delta }
+        
+        for church in route.churches {
+            delta = userCLLocation.distance(from: church.coordCLL)
+            if minimum > delta { minimum = delta }
+        }
+        
+        return minimum
     }
     
     // MARK: - Filter Summaries
@@ -362,14 +374,6 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    public var focusOnSelectedImage: String {
-        if focusOnSelected {
-            return "eye.fill"
-        } else {
-            return "eye"
-        }
-    }
-    
     public var filterImage: String {
         if filter {
             return "line.horizontal.3.decrease.circle.fill"
@@ -378,11 +382,11 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    public var showRouteBarImage: String {
-        if showRouteBar {
-            return "menubar.rectangle"
+    public var showInfoImage: String {
+        if showInfoView {
+            return "info.circle.fill"
         } else {
-            return "menubar.dock.rectangle"
+            return "info.circle"
         }
     }
     
@@ -441,25 +445,28 @@ extension ViewModel: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         switch annotation {
         case is Church:
-            return ChurchMarker(annotation: annotation, reuseIdentifier: "Church")
+            return ChurchMarker(vm: self, annotation: annotation, reuseIdentifier: "Church")
         case is Route:
-            return RouteMarker(annotation: annotation, reuseIdentifier: "Route")
+            return RouteMarker(vm: self, annotation: annotation, reuseIdentifier: "Route")
         default:
             return nil
         }
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if let view = view as? ChurchMarker {
-            if let annotation = view.annotation as? Church {
-                UIApplication.shared.open(annotation.url)
-            }
-        } else if let view = view as? RouteMarker {
-            if let annotation = view.annotation as? Route {
-                selectedRoute = annotation
-                showRouteBar = true
-            }
-        }
+    func toggleVisitedRoute(route: Route) {
+        // todo
+    }
+    
+    func selectRoute(route: Route) {
+        selectedRoute = route
+    }
+    
+    func toggleVisitedChurch(church: Church) {
+        // todo
+    }
+    
+    func openChurchUrl(church: Church) {
+        UIApplication.shared.open(church.url)
     }
     
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {

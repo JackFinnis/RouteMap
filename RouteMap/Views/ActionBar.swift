@@ -10,20 +10,11 @@ import SwiftUI
 struct ActionBar: View {
     @EnvironmentObject var vm: ViewModel
     
-    @State var showFilterView: Bool = false
-    @State var showInfoView: Bool = false
-    
     var body: some View {
         HStack(spacing: 0) {
             Button {
-                showInfoView = true
-            } label: {
-                Image(systemName: "info.circle")
-                    .font(.system(size: 24))
-                    .frame(width: 48, height: 48)
-            }
-            Button {
-                showFilterView.toggle()
+                vm.showFilterView = true
+                vm.filter = true
             } label: {
                 Image(systemName: vm.filterImage)
                     .font(.system(size: 24))
@@ -48,34 +39,36 @@ struct ActionBar: View {
                 ProgressView()
                     .font(.system(size: 24))
                     .frame(width: 48, height: 48)
+                Spacer()
             }
             
             Button {
-                withAnimation {
-                    vm.showRouteBar.toggle()
-                }
-            } label: {
-                Image(systemName: vm.showRouteBarImage)
-                    .font(.system(size: 24))
-                    .frame(width: 48, height: 48)
-            }
-            Button {
-                withAnimation {
-                    vm.showSearchBar.toggle()
+                if vm.showSearchBar == false {
+                    vm.showSearchBar = true
+                } else {
+                    vm.showSearchBar = false
+                    vm.searchText = ""
                 }
             } label: {
                 Image(systemName: vm.showSearchBarImage)
                     .font(.system(size: 24))
                     .frame(width: 48, height: 48)
             }
+            Button {
+                vm.showInfoView = true
+            } label: {
+                Image(systemName: vm.showInfoImage)
+                    .font(.system(size: 24))
+                    .frame(width: 48, height: 48)
+            }
         }
-        .sheet(isPresented: $showInfoView) {
-            AboutView(showInfoView: $showInfoView)
+        .sheet(isPresented: $vm.showInfoView) {
+            AboutView()
                 .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
                 .environmentObject(vm)
         }
-        .sheet(isPresented: $showFilterView) {
-            FilterView(showFilterView: $showFilterView)
+        .sheet(isPresented: $vm.showFilterView) {
+            FilterView()
                 .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
                 .environmentObject(vm)
         }

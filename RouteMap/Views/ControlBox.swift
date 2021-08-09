@@ -21,7 +21,7 @@ struct ControlBox: View {
                     .placeholder("Churches and Destinations")
             }
             
-            if vm.showRouteBar && vm.selectedRoute != nil && vm.filteredRoutes.firstIndex(of: vm.selectedRoute!) != nil {
+            if vm.selectedRoute != nil && vm.filteredRoutes.firstIndex(of: vm.selectedRoute!) != nil {
                 RouteBar(route: vm.selectedRoute!, index: vm.filteredRoutes.firstIndex(of: vm.selectedRoute!)!)
                     .animation(.none)
             }

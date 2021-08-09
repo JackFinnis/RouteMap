@@ -37,8 +37,8 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
         // Pan to all routes
-        if vm.mapLoading != vm.loading {
-            vm.mapLoading = vm.loading
+        if vm.mapZoomOut != vm.zoomOut {
+            vm.mapZoomOut = vm.zoomOut
             let region = vm.getRoutesRegion(all: true)
             if region != nil {
                 mapView.setRegion(region!, animated: true)
@@ -70,7 +70,7 @@ struct MapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         if !vm.loading {
-            if vm.focusOnSelected && vm.selectedRoute != nil {
+            if vm.selectedRoute != nil {
                 mapView.addAnnotations(vm.filteredChurches)
                 mapView.addOverlay(vm.selectedRoute!.polyline)
             } else {

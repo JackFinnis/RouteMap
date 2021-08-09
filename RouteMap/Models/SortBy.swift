@@ -9,7 +9,6 @@ import Foundation
 
 enum SortBy: String, CaseIterable {
     case id = "Stage Number"
-    case shortest = "Shortest Distance"
-    case longest = "Longest Distance"
+    case distance = "Distance"
     case churchDensity = "Church Density"
 }

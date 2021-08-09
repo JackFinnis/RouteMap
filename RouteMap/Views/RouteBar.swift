@@ -18,6 +18,7 @@ struct RouteBar: View {
             ZStack {
                 Text(String(index + 1))
                     .bold()
+                
                 VStack(spacing: 0) {
                     Button {
                         vm.previousRoute()
@@ -41,16 +42,15 @@ struct RouteBar: View {
             
             VStack(spacing: 0) {
                 Button {
-                    vm.focusOnSelected.toggle()
+                    vm.toggleVisitedRoute(route: route)
                 } label: {
-                    Image(systemName: vm.focusOnSelectedImage)
+                    Image(systemName: "checkmark.circle")
                         .font(.system(size: 24))
                         .frame(width: 48, height: 48)
                 }
-                
                 Button {
                     vm.selectedRoute = nil
-                    vm.showRouteBar = false
+                    vm.zoomOut.toggle()
                 } label: {
                     Image(systemName: "xmark")
                         .font(.system(size: 24))
