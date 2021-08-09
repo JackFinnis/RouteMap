@@ -19,10 +19,9 @@ class ViewModel: NSObject, ObservableObject {
     @Published var filteredRoutes = [Route]()
     @Published var filteredChurches = [Church]()
     @Published var filteredPolylines = [MKPolyline]()
-    @Published var selectedRoute: Route?
+    @Published var selectedRoute: Route? { didSet { filterFeatures() } }
     
     // Filters
-    @Published var sortBy: SortBy = .id { didSet { selectFirstRoute() } }
     @Published var searchText: String = "" { didSet { filterFeatures() } }
     @Published var filter: Bool = false { didSet { filterFeatures() } }
     @Published var showRoutes: Bool = true { didSet { filterFeatures() } }
@@ -32,6 +31,11 @@ class ViewModel: NSObject, ObservableObject {
     @Published var minimumDistance: Double = 0 { didSet { filterFeatures() } }
     @Published var maximumDistance: Double = 0 { didSet { filterFeatures() } }
     @Published var maximumProximity: Double = 0 { didSet { filterFeatures() } }
+    @Published var sortBy: SortBy = .id { didSet {
+            filterFeatures()
+            selectFirstRoute()
+        }
+    }
     
     // View state
     @Published var loading: Bool = true
@@ -102,12 +106,10 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Filter Routes
     // Filter map features
     private func filterFeatures() {
-        print("about to filter")
         filterChurches()
         filterRoutes()
         filterPolylines()
         updateSelectedRoute()
-        print("filtered")
     }
     
     // Filter churches
@@ -175,7 +177,7 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Selected Route
     // Update selected route when new filter imposed
     public func updateSelectedRoute() {
-        if getSelectedRouteIndex() == nil {
+        if getSelectedRouteIndex() == nil && selectedRoute != nil {
             selectedRoute = nil
         }
     }
@@ -270,7 +272,7 @@ class ViewModel: NSObject, ObservableObject {
         let latDelta: Double = maxLat - minLat
         let longDelta: Double = maxLong - minLong
         let span = MKCoordinateSpan(latitudeDelta: latDelta * 1.4, longitudeDelta: longDelta * 1.4)
-        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat) * 0.49963, longitude: (minLong + maxLong) * 0.5)
+        let centre = CLLocationCoordinate2D(latitude: (minLat + maxLat) * 0.5/*0.49963*/, longitude: (minLong + maxLong) * 0.5)
         let region = MKCoordinateRegion(center: centre, span: span)
         return region
     }

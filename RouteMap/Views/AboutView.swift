@@ -17,7 +17,7 @@ struct AboutView: View {
                     Text("The Norfolk Churches Cycling Routes (NCCR) are a series of cycling routes around Norfolk which visit all of its medieval churches.")
                 }
                 Section(header: Text("The Churches")) {
-                    Text("Norfolk has the highest density of medieval churches in the world. The routes visit over 600 churches and each church is over 500 years old.")
+                    Text("Norfolk has the highest density of medieval churches in the world. The routes visit 632 churches and each church is over 500 years old.")
                 }
                 Section(header: Text("The Routes")) {
                     Text("There are 26 routes covering over 2,100 km of beautiful Norfolk countryside. Each route starts and ends at a town with a car park and train station for ease of access.")
