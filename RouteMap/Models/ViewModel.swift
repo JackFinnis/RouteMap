@@ -491,10 +491,8 @@ extension ViewModel: MKMapViewDelegate {
         }
         
         var colour: UIColor {
-            if selectedRoute == polyline.route {
-                return .systemOrange
-            } else if visited(route: polyline.route!) {
-                return .systemTeal
+            if visited(route: polyline.route!) {
+                return .systemIndigo
             } else {
                 return .systemBlue
             }

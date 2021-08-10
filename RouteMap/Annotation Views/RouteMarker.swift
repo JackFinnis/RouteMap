@@ -14,13 +14,15 @@ class RouteMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
             if let route = newValue as? Route {
-                let visited = vm.visited(route: route)
-                if visited {
-                    markerTintColor = .systemTeal
-                } else {
-                    markerTintColor = .systemBlue
+                var colour: UIColor {
+                    if vm.visited(route: route) {
+                        return .systemIndigo
+                    } else {
+                        return .systemBlue
+                    }
                 }
                 
+                markerTintColor = colour
                 glyphText = String(route.id)
                 displayPriority = .defaultHigh
                 animatesWhenAdded = true
@@ -33,6 +35,7 @@ class RouteMarker: MKMarkerAnnotationView {
                 let visitedBtn = UIButton(type: .custom)
                 let visitedImg = UIImage(systemName: vm.visitedRouteImage(route: route), withConfiguration: config)
                 visitedBtn.setImage(visitedImg, for: .normal)
+                visitedBtn.tintColor = colour
                 visitedBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 visitedBtn.addTarget(self, action: #selector(toggleVisitedRoute), for: .touchUpInside)
                 leftCalloutAccessoryView = visitedBtn
@@ -40,6 +43,7 @@ class RouteMarker: MKMarkerAnnotationView {
                 let infoBtn = UIButton(type: .custom)
                 let infoImg = UIImage(systemName: "info.circle", withConfiguration: config)
                 infoBtn.setImage(infoImg, for: .normal)
+                infoBtn.tintColor = colour
                 infoBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 infoBtn.addTarget(self, action: #selector(selectRoute), for: .touchUpInside)
                 rightCalloutAccessoryView = infoBtn

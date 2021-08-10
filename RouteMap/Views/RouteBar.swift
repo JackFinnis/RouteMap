@@ -47,6 +47,7 @@ struct RouteBar: View {
                     Image(systemName: vm.visitedRouteImage(route: route))
                         .font(.system(size: 24))
                         .frame(width: 48, height: 48)
+                        .foregroundColor(vm.visited(route: route) ? Color(UIColor.systemIndigo) : .accentColor)
                 }
                 Button {
                     vm.selectedRoute = nil

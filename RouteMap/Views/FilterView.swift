@@ -34,7 +34,7 @@ struct FilterView: View {
                     Section {
                         DisclosureGroup(isExpanded: $vm.expandVisited) {
                             Toggle("Show Visited", isOn: $vm.showVisited)
-                                .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.systemTeal)))
+                                .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.systemIndigo)))
                             Toggle("Show Unvisited", isOn: $vm.showUnvisited)
                         } label: {
                             HStack {
