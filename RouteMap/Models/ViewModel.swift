@@ -38,8 +38,8 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     // Visited features
-    @Published var visitedRoutes = [Route]()
-    @Published var visitedChurches = [Church]()
+    @Published var visitedRoutes = [Int]()
+    @Published var visitedChurches = [Int]()
     
     // View state
     @Published var loading: Bool = true
@@ -145,7 +145,7 @@ class ViewModel: NSObject, ObservableObject {
         filteredRoutes = routes.filter { route in
             if filter {
                 if !showRoutes { return false }
-                if visited(route: route) != showVisited { return false }
+                if visitedRoute(id: route.id) != showVisited { return false }
                 if minimumDistance > maximumDistance && route.metres < Int(minimumDistance) * 1_000 { return false }
                 if minimumDistance < maximumDistance && (route.metres > Int(maximumDistance) * 1_000 || route.metres < Int(minimumDistance) * 1_000) { return false }
                 if maximumProximity != 0 && distanceTo(route: route) > maximumProximity { return false }
@@ -181,26 +181,26 @@ class ViewModel: NSObject, ObservableObject {
     
     // MARK: - Visited Features
     // Toggle whether given route has been visited
-    func toggleVisitedRoute(route: Route) {
-        if let index = visitedRoutes.firstIndex(of: route) {
+    func toggleVisitedRoute(id: Int) {
+        if let index = visitedRoutes.firstIndex(of: id) {
             visitedRoutes.remove(at: index)
         } else {
-            visitedRoutes.append(route)
+            visitedRoutes.append(id)
         }
     }
     
     // Toggle whether given church has been visited
-    func toggleVisitedChurch(church: Church) {
-        if let index = visitedChurches.firstIndex(of: church) {
+    func toggleVisitedChurch(id: Int) {
+        if let index = visitedChurches.firstIndex(of: id) {
             visitedChurches.remove(at: index)
         } else {
-            visitedChurches.append(church)
+            visitedChurches.append(id)
         }
     }
     
     // Check whether given church has been visited
-    func visited(route: Route) -> Bool {
-        if visitedRoutes.contains(route) {
+    func visitedRoute(id: Int) -> Bool {
+        if visitedRoutes.contains(id) {
             return true
         } else {
             return false
@@ -208,8 +208,8 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     // Check whether given church has been visited
-    func visited(church: Church) -> Bool {
-        if visitedChurches.contains(church) {
+    func visitedChurch(id: Int) -> Bool {
+        if visitedChurches.contains(id) {
             return true
         } else {
             return false
@@ -217,8 +217,8 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     // Check whether given church has been visited and return appropriate image
-    func visitedRouteImage(route: Route) -> String {
-        if visited(route: route) {
+    func visitedRouteImage(id: Int) -> String {
+        if visitedRoute(id: id) {
             return "checkmark.circle.fill"
         } else {
             return "checkmark.circle"
@@ -226,11 +226,31 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     // Check whether given church has been visited and return appropriate image
-    func visitedChurchImage(church: Church) -> String {
-        if visited(church: church) {
+    func visitedChurchImage(id: Int) -> String {
+        if visitedChurch(id: id) {
             return "checkmark.circle.fill"
         } else {
             return "checkmark.circle"
+        }
+    }
+    
+    // Get the total distance the user has cycled
+    func getDistanceCycled() -> String {
+        var metres: Int = 0
+        for route in routes {
+            if visitedRoutes.contains(route.id) {
+                metres += route.metres
+            }
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = ","
+        let string = formatter.string(from: NSNumber(value: metres / 1000))
+        
+        if string == nil {
+            return "0km"
+        } else {
+            return string! + "km"
         }
     }
     
@@ -491,7 +511,7 @@ extension ViewModel: MKMapViewDelegate {
         }
         
         var colour: UIColor {
-            if visited(route: polyline.route!) {
+            if visitedRoute(id: polyline.route!.id) {
                 return .systemIndigo
             } else {
                 return .systemBlue

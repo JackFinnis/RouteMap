@@ -15,7 +15,7 @@ class RouteMarker: MKMarkerAnnotationView {
         willSet {
             if let route = newValue as? Route {
                 var colour: UIColor {
-                    if vm.visited(route: route) {
+                    if vm.visitedRoute(id: route.id) {
                         return .systemIndigo
                     } else {
                         return .systemBlue
@@ -33,7 +33,7 @@ class RouteMarker: MKMarkerAnnotationView {
                 let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24))
                 
                 let visitedBtn = UIButton(type: .custom)
-                let visitedImg = UIImage(systemName: vm.visitedRouteImage(route: route), withConfiguration: config)
+                let visitedImg = UIImage(systemName: vm.visitedRouteImage(id: route.id), withConfiguration: config)
                 visitedBtn.setImage(visitedImg, for: .normal)
                 visitedBtn.tintColor = colour
                 visitedBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
@@ -62,7 +62,7 @@ class RouteMarker: MKMarkerAnnotationView {
     
     @objc func toggleVisitedRoute() {
         if let route = annotation as? Route {
-            vm.toggleVisitedRoute(route: route)
+            vm.toggleVisitedRoute(id: route.id)
         }
     }
     

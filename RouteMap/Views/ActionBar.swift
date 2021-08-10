@@ -63,7 +63,7 @@ struct ActionBar: View {
             }
         }
         .sheet(isPresented: $vm.showInfoView) {
-            AboutView()
+            InfoView()
                 .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
                 .environmentObject(vm)
         }

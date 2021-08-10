@@ -42,12 +42,12 @@ struct RouteBar: View {
             
             VStack(spacing: 0) {
                 Button {
-                    vm.toggleVisitedRoute(route: route)
+                    vm.toggleVisitedRoute(id: route.id)
                 } label: {
-                    Image(systemName: vm.visitedRouteImage(route: route))
+                    Image(systemName: vm.visitedRouteImage(id: route.id))
                         .font(.system(size: 24))
                         .frame(width: 48, height: 48)
-                        .foregroundColor(vm.visited(route: route) ? Color(UIColor.systemIndigo) : .accentColor)
+                        .foregroundColor(vm.visitedRoute(id: route.id) ? Color(UIColor.systemIndigo) : .accentColor)
                 }
                 Button {
                     vm.selectedRoute = nil

@@ -33,6 +33,10 @@
 		BECFC0B826BC0355005CC3AE /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0B726BC0355005CC3AE /* ViewModel.swift */; };
 		BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0BD26BC1A7A005CC3AE /* RootView.swift */; };
 		BECFC0C226BC1D22005CC3AE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECFC0C126BC1D22005CC3AE /* MapView.swift */; };
+		BEE7A0EE26C2B1CD000A25C4 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0ED26C2B1CD000A25C4 /* FeedbackView.swift */; };
+		BEE7A0F226C2B230000A25C4 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F126C2B230000A25C4 /* InfoView.swift */; };
+		BEE7A0F426C2BF5B000A25C4 /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F326C2BF5B000A25C4 /* Tip.swift */; };
+		BEE7A0F626C2C044000A25C4 /* TipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F526C2C044000A25C4 /* TipViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +68,10 @@
 		BECFC0B726BC0355005CC3AE /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		BECFC0BD26BC1A7A005CC3AE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BECFC0C126BC1D22005CC3AE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		BEE7A0ED26C2B1CD000A25C4 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		BEE7A0F126C2B230000A25C4 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		BEE7A0F326C2BF5B000A25C4 /* Tip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
+		BEE7A0F526C2C044000A25C4 /* TipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,7 +143,9 @@
 				BEB8F0DA26BFCE4F00702BB5 /* ControlBox.swift */,
 				BEB8F0AF26BC7CB800702BB5 /* ActionBar.swift */,
 				BEB8F0E026BFE91500702BB5 /* FilterView.swift */,
+				BEE7A0F126C2B230000A25C4 /* InfoView.swift */,
 				BEB8F0E226C008C900702BB5 /* AboutView.swift */,
+				BEE7A0ED26C2B1CD000A25C4 /* FeedbackView.swift */,
 				BE94B5B726C270FF004985AC /* TipView.swift */,
 				BEB8F0E426C0170300702BB5 /* ShareView.swift */,
 				BEB8F0D126BEFD8F00702BB5 /* SearchBar.swift */,
@@ -150,11 +160,13 @@
 			isa = PBXGroup;
 			children = (
 				BECFC0B726BC0355005CC3AE /* ViewModel.swift */,
-				BEB8F0CD26BEE88600702BB5 /* SortBy.swift */,
 				BECFC0B526BC0175005CC3AE /* Route.swift */,
 				BECFC0B026BBEF43005CC3AE /* Church.swift */,
 				BE94B5BB26C283D7004985AC /* Location.swift */,
 				BE94B5C826C29D50004985AC /* Polyline.swift */,
+				BEB8F0CD26BEE88600702BB5 /* SortBy.swift */,
+				BEE7A0F526C2C044000A25C4 /* TipViewModel.swift */,
+				BEE7A0F326C2BF5B000A25C4 /* Tip.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,17 +245,21 @@
 				BEB8F0D226BEFD8F00702BB5 /* SearchBar.swift in Sources */,
 				BEB8F0E526C0170300702BB5 /* ShareView.swift in Sources */,
 				BECFC0B826BC0355005CC3AE /* ViewModel.swift in Sources */,
+				BEE7A0F626C2C044000A25C4 /* TipViewModel.swift in Sources */,
 				BEB8F0A026BC370D00702BB5 /* MapSettings.swift in Sources */,
 				BEB8F0D926BFCD5F00702BB5 /* RouteBar.swift in Sources */,
 				BEB8F0E126BFE91500702BB5 /* FilterView.swift in Sources */,
 				BEB8F0BE26BE8ADC00702BB5 /* ChurchMarker.swift in Sources */,
 				BEB8F0DB26BFCE4F00702BB5 /* ControlBox.swift in Sources */,
 				BE94B5BC26C283D7004985AC /* Location.swift in Sources */,
+				BEE7A0EE26C2B1CD000A25C4 /* FeedbackView.swift in Sources */,
 				BEB8F0A526BC383600702BB5 /* Blur.swift in Sources */,
 				BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */,
 				BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */,
 				BEB8F0E726C0230200702BB5 /* RouteInfo.swift in Sources */,
 				BEB8F0E326C008C900702BB5 /* AboutView.swift in Sources */,
+				BEE7A0F426C2BF5B000A25C4 /* Tip.swift in Sources */,
+				BEE7A0F226C2B230000A25C4 /* InfoView.swift in Sources */,
 				BE94B5B826C270FF004985AC /* TipView.swift in Sources */,
 				BEB8F0B026BC7CB800702BB5 /* ActionBar.swift in Sources */,
 				BECFC0B626BC0175005CC3AE /* Route.swift in Sources */,

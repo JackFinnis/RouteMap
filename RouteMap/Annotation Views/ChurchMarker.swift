@@ -14,9 +14,9 @@ class ChurchMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
             if let church = annotation as? Church {
-                let visited = vm.visited(church: church)
+                let visited = vm.visitedChurch(id: church.id)
                 var colour: UIColor {
-                    if vm.visited(church: church) {
+                    if visited {
                         return .systemIndigo
                     } else {
                         return .systemGreen
@@ -33,7 +33,7 @@ class ChurchMarker: MKMarkerAnnotationView {
                 let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24))
                 
                 let visitedBtn = UIButton(type: .custom)
-                let visitedImg = UIImage(systemName: vm.visitedChurchImage(church: church), withConfiguration: config)
+                let visitedImg = UIImage(systemName: vm.visitedChurchImage(id: church.id), withConfiguration: config)
                 visitedBtn.setImage(visitedImg, for: .normal)
                 if visited { visitedBtn.tintColor = colour }
                 visitedBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
@@ -62,7 +62,7 @@ class ChurchMarker: MKMarkerAnnotationView {
     
     @objc func toggleVisitedChurch() {
         if let church = annotation as? Church {
-            vm.toggleVisitedChurch(church: church)
+            vm.toggleVisitedChurch(id: church.id)
         }
     }
     
