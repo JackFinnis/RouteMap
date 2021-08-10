@@ -19,7 +19,12 @@ struct InfoView: View {
                         if vm.visitedRoutes.count == 26 {
                             Text("You have cycled every route!")
                         } else {
-                            Text(String(vm.visitedRoutes.count) + " of 26 routes: " + vm.getDistanceCycled() + " of 2,116km")
+                            HStack {
+                                Text(String(vm.visitedRoutes.count) + "/26 Routes ")
+                                Spacer()
+                                Text(vm.getDistanceCycled() + "/2,116km")
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     } icon: {
                         Image(systemName: "bicycle")
@@ -29,7 +34,7 @@ struct InfoView: View {
                         if vm.visitedChurches.count == 632 {
                             Text("You have visited every medieval church in Norfolk!")
                         } else {
-                            Text(String(vm.visitedChurches.count) + " of 632 churches visited")
+                            Text(String(vm.visitedChurches.count) + "/632 Churches")
                         }
                     } icon: {
                         Image("cross")
@@ -37,7 +42,7 @@ struct InfoView: View {
                             .renderingMode(.template)
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(.accentColor)
-                            .frame(height: 17)
+                            .frame(height: 24)
                     }
                 }
                 

@@ -37,6 +37,8 @@
 		BEE7A0F226C2B230000A25C4 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F126C2B230000A25C4 /* InfoView.swift */; };
 		BEE7A0F426C2BF5B000A25C4 /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F326C2BF5B000A25C4 /* Tip.swift */; };
 		BEE7A0F626C2C044000A25C4 /* TipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F526C2C044000A25C4 /* TipViewModel.swift */; };
+		BEE7A0F926C2DDA3000A25C4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F726C2DDA3000A25C4 /* DataModel.xcdatamodeld */; };
+		BEE7A0FC26C2DEC1000A25C4 /* VisitedFeatures+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0FA26C2DEC1000A25C4 /* VisitedFeatures+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		BEE7A0F126C2B230000A25C4 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		BEE7A0F326C2BF5B000A25C4 /* Tip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
 		BEE7A0F526C2C044000A25C4 /* TipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipViewModel.swift; sourceTree = "<group>"; };
+		BEE7A0F826C2DDA3000A25C4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		BEE7A0FA26C2DEC1000A25C4 /* VisitedFeatures+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VisitedFeatures+CoreDataClass.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +130,10 @@
 				BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */,
 				BEB8F0B326BDC49600702BB5 /* Info.plist */,
 				BECFC09626BAC4AA005CC3AE /* Assets.xcassets */,
+				BEE7A0F726C2DDA3000A25C4 /* DataModel.xcdatamodeld */,
+				BEE7A0FE26C2DECF000A25C4 /* Data Models */,
 				BECFC0AB26BBEE57005CC3AE /* Views */,
+				BEE7A0FF26C2DEDF000A25C4 /* View Models */,
 				BECFC0AD26BBEE6E005CC3AE /* Models */,
 				BEB8F0D726BF333300702BB5 /* Annotation Views */,
 				BEB8F0BA26BE88C600702BB5 /* Extensions */,
@@ -159,16 +166,31 @@
 		BECFC0AD26BBEE6E005CC3AE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BECFC0B726BC0355005CC3AE /* ViewModel.swift */,
 				BECFC0B526BC0175005CC3AE /* Route.swift */,
 				BECFC0B026BBEF43005CC3AE /* Church.swift */,
 				BE94B5BB26C283D7004985AC /* Location.swift */,
 				BE94B5C826C29D50004985AC /* Polyline.swift */,
 				BEB8F0CD26BEE88600702BB5 /* SortBy.swift */,
-				BEE7A0F526C2C044000A25C4 /* TipViewModel.swift */,
 				BEE7A0F326C2BF5B000A25C4 /* Tip.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BEE7A0FE26C2DECF000A25C4 /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				BEE7A0FA26C2DEC1000A25C4 /* VisitedFeatures+CoreDataClass.swift */,
+			);
+			path = "Data Models";
+			sourceTree = "<group>";
+		};
+		BEE7A0FF26C2DEDF000A25C4 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				BECFC0B726BC0355005CC3AE /* ViewModel.swift */,
+				BEE7A0F526C2C044000A25C4 /* TipViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,10 +279,12 @@
 				BECFC09326BAC4A7005CC3AE /* RouteMapApp.swift in Sources */,
 				BECFC0BE26BC1A7A005CC3AE /* RootView.swift in Sources */,
 				BEB8F0E726C0230200702BB5 /* RouteInfo.swift in Sources */,
+				BEE7A0FC26C2DEC1000A25C4 /* VisitedFeatures+CoreDataClass.swift in Sources */,
 				BEB8F0E326C008C900702BB5 /* AboutView.swift in Sources */,
 				BEE7A0F426C2BF5B000A25C4 /* Tip.swift in Sources */,
 				BEE7A0F226C2B230000A25C4 /* InfoView.swift in Sources */,
 				BE94B5B826C270FF004985AC /* TipView.swift in Sources */,
+				BEE7A0F926C2DDA3000A25C4 /* DataModel.xcdatamodeld in Sources */,
 				BEB8F0B026BC7CB800702BB5 /* ActionBar.swift in Sources */,
 				BECFC0B626BC0175005CC3AE /* Route.swift in Sources */,
 				BEB8F0C026BEAD7700702BB5 /* Cluster.swift in Sources */,
@@ -479,6 +503,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BEE7A0F726C2DDA3000A25C4 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BEE7A0F826C2DDA3000A25C4 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = BEE7A0F826C2DDA3000A25C4 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BECFC08726BAC4A7005CC3AE /* Project object */;
 }

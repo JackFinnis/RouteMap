@@ -11,7 +11,7 @@ import MapKit
 class LocationMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
-            markerTintColor = .systemPurple
+            markerTintColor = .systemBrown
             glyphImage = UIImage(systemName: "tram.fill")
             displayPriority = .defaultHigh
             animatesWhenAdded = true

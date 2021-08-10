@@ -16,7 +16,7 @@ class RouteMarker: MKMarkerAnnotationView {
             if let route = newValue as? Route {
                 var colour: UIColor {
                     if vm.visitedRoute(id: route.id) {
-                        return .systemIndigo
+                        return .systemPink
                     } else {
                         return .systemBlue
                     }
@@ -62,7 +62,7 @@ class RouteMarker: MKMarkerAnnotationView {
     
     @objc func toggleVisitedRoute() {
         if let route = annotation as? Route {
-            vm.toggleVisitedRoute(id: route.id)
+            vm.toggleVisitedRoute(route: route)
         }
     }
     

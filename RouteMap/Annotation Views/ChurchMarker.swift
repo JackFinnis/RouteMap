@@ -17,7 +17,7 @@ class ChurchMarker: MKMarkerAnnotationView {
                 let visited = vm.visitedChurch(id: church.id)
                 var colour: UIColor {
                     if visited {
-                        return .systemIndigo
+                        return .systemPink
                     } else {
                         return .systemGreen
                     }

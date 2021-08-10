@@ -181,11 +181,16 @@ class ViewModel: NSObject, ObservableObject {
     
     // MARK: - Visited Features
     // Toggle whether given route has been visited
-    func toggleVisitedRoute(id: Int) {
-        if let index = visitedRoutes.firstIndex(of: id) {
+    func toggleVisitedRoute(route: Route) {
+        if let index = visitedRoutes.firstIndex(of: route.id) {
             visitedRoutes.remove(at: index)
         } else {
-            visitedRoutes.append(id)
+            visitedRoutes.append(route.id)
+            for church in route.churches {
+                if !visitedChurches.contains(church.id) {
+                    visitedChurches.append(church.id)
+                }
+            }
         }
     }
     
@@ -512,7 +517,7 @@ extension ViewModel: MKMapViewDelegate {
         
         var colour: UIColor {
             if visitedRoute(id: polyline.route!.id) {
-                return .systemIndigo
+                return .systemPink
             } else {
                 return .systemBlue
             }
