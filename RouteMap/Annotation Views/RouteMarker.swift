@@ -14,7 +14,13 @@ class RouteMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
             if let route = newValue as? Route {
-                markerTintColor = .systemBlue
+                let visited = vm.visited(route: route)
+                if visited {
+                    markerTintColor = .systemTeal
+                } else {
+                    markerTintColor = .systemBlue
+                }
+                
                 glyphText = String(route.id)
                 displayPriority = .defaultHigh
                 animatesWhenAdded = true
@@ -25,7 +31,7 @@ class RouteMarker: MKMarkerAnnotationView {
                 let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24))
                 
                 let visitedBtn = UIButton(type: .custom)
-                let visitedImg = UIImage(systemName: "checkmark.circle", withConfiguration: config)
+                let visitedImg = UIImage(systemName: vm.visitedRouteImage(route: route), withConfiguration: config)
                 visitedBtn.setImage(visitedImg, for: .normal)
                 visitedBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 visitedBtn.addTarget(self, action: #selector(toggleVisitedRoute), for: .touchUpInside)
@@ -58,7 +64,7 @@ class RouteMarker: MKMarkerAnnotationView {
     
     @objc func selectRoute() {
         if let route = annotation as? Route {
-            vm.selectRoute(route: route)
+            vm.selectedRoute = route
         }
     }
 }

@@ -19,7 +19,7 @@ struct FilterView: View {
                     Section(header: Text("Advanced Filters")) {
                         DisclosureGroup(isExpanded: $vm.expandAnnotations) {
                             Toggle("Show Routes", isOn: $vm.showRoutes)
-                                .toggleStyle(SwitchToggleStyle(tint: .blue))
+                                .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.systemBlue)))
                             Toggle("Show Churches", isOn: $vm.showChurches)
                         } label: {
                             HStack {
@@ -34,6 +34,7 @@ struct FilterView: View {
                     Section {
                         DisclosureGroup(isExpanded: $vm.expandVisited) {
                             Toggle("Show Visited", isOn: $vm.showVisited)
+                                .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.systemTeal)))
                             Toggle("Show Unvisited", isOn: $vm.showUnvisited)
                         } label: {
                             HStack {

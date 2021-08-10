@@ -72,6 +72,7 @@ struct MapView: UIViewRepresentable {
         if !vm.loading {
             if vm.selectedRoute != nil {
                 mapView.addAnnotations(vm.filteredChurches)
+                mapView.addAnnotations(vm.selectedRoute!.locations)
                 mapView.addOverlay(vm.selectedRoute!.polyline)
             } else {
                 mapView.addAnnotations(vm.filteredChurches)

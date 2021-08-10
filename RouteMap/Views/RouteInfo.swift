@@ -32,8 +32,5 @@ struct RouteInfo: View {
             .foregroundColor(.secondary)
         }
         .padding(.vertical, 10)
-        .onTapGesture {
-            route.mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDefault])
-        }
     }
 }

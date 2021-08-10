@@ -18,7 +18,7 @@ class ViewModel: NSObject, ObservableObject {
     // Filtered features
     @Published var filteredRoutes = [Route]()
     @Published var filteredChurches = [Church]()
-    @Published var filteredPolylines = [MKPolyline]()
+    @Published var filteredPolylines = [Polyline]()
     @Published var selectedRoute: Route? { didSet { filterFeatures() } }
     
     // Filters
@@ -36,6 +36,10 @@ class ViewModel: NSObject, ObservableObject {
             selectFirstRoute()
         }
     }
+    
+    // Visited features
+    @Published var visitedRoutes = [Route]()
+    @Published var visitedChurches = [Church]()
     
     // View state
     @Published var loading: Bool = true
@@ -141,6 +145,7 @@ class ViewModel: NSObject, ObservableObject {
         filteredRoutes = routes.filter { route in
             if filter {
                 if !showRoutes { return false }
+                if visited(route: route) != showVisited { return false }
                 if minimumDistance > maximumDistance && route.metres < Int(minimumDistance) * 1_000 { return false }
                 if minimumDistance < maximumDistance && (route.metres > Int(maximumDistance) * 1_000 || route.metres < Int(minimumDistance) * 1_000) { return false }
                 if maximumProximity != 0 && distanceTo(route: route) > maximumProximity { return false }
@@ -167,11 +172,66 @@ class ViewModel: NSObject, ObservableObject {
     
     // Filter polylines
     private func filterPolylines() {
-        var polylines = [MKPolyline]()
+        var polylines = [Polyline]()
         for route in filteredRoutes {
             polylines.append(route.polyline)
         }
         filteredPolylines = polylines
+    }
+    
+    // MARK: - Visited Features
+    // Toggle whether given route has been visited
+    func toggleVisitedRoute(route: Route) {
+        if let index = visitedRoutes.firstIndex(of: route) {
+            visitedRoutes.remove(at: index)
+        } else {
+            visitedRoutes.append(route)
+        }
+    }
+    
+    // Toggle whether given church has been visited
+    func toggleVisitedChurch(church: Church) {
+        if let index = visitedChurches.firstIndex(of: church) {
+            visitedChurches.remove(at: index)
+        } else {
+            visitedChurches.append(church)
+        }
+    }
+    
+    // Check whether given church has been visited
+    func visited(route: Route) -> Bool {
+        if visitedRoutes.contains(route) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // Check whether given church has been visited
+    func visited(church: Church) -> Bool {
+        if visitedChurches.contains(church) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // Check whether given church has been visited and return appropriate image
+    func visitedRouteImage(route: Route) -> String {
+        if visited(route: route) {
+            return "checkmark.circle.fill"
+        } else {
+            return "checkmark.circle"
+        }
+    }
+    
+    // Check whether given church has been visited and return appropriate image
+    func visitedChurchImage(church: Church) -> String {
+        if visited(church: church) {
+            return "checkmark.circle.fill"
+        } else {
+            return "checkmark.circle"
+        }
     }
     
     // MARK: - Selected Route
@@ -426,13 +486,15 @@ extension ViewModel: CLLocationManagerDelegate {
 // MARK: - MKMapView Delegate
 extension ViewModel: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        guard let polyline = overlay as? MKPolyline else {
+        guard let polyline = overlay as? Polyline else {
             return MKOverlayRenderer(overlay: overlay)
         }
         
         var colour: UIColor {
-            if selectedRoute?.polyline.pointCount == polyline.pointCount {
+            if selectedRoute == polyline.route {
                 return .systemOrange
+            } else if visited(route: polyline.route!) {
+                return .systemTeal
             } else {
                 return .systemBlue
             }
@@ -450,25 +512,11 @@ extension ViewModel: MKMapViewDelegate {
             return ChurchMarker(vm: self, annotation: annotation, reuseIdentifier: "Church")
         case is Route:
             return RouteMarker(vm: self, annotation: annotation, reuseIdentifier: "Route")
+        case is Location:
+            return LocationMarker(annotation: annotation, reuseIdentifier: "Location")
         default:
             return nil
         }
-    }
-    
-    func toggleVisitedRoute(route: Route) {
-        // todo
-    }
-    
-    func selectRoute(route: Route) {
-        selectedRoute = route
-    }
-    
-    func toggleVisitedChurch(church: Church) {
-        // todo
-    }
-    
-    func openChurchUrl(church: Church) {
-        UIApplication.shared.open(church.url)
     }
     
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {

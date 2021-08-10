@@ -44,7 +44,7 @@ struct RouteBar: View {
                 Button {
                     vm.toggleVisitedRoute(route: route)
                 } label: {
-                    Image(systemName: "checkmark.circle")
+                    Image(systemName: vm.visitedRouteImage(route: route))
                         .font(.system(size: 24))
                         .frame(width: 48, height: 48)
                 }
