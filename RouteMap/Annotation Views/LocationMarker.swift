@@ -11,18 +11,20 @@ import MapKit
 class LocationMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
-            markerTintColor = .systemBrown
+            let colour: UIColor = .systemBrown
+            let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24))
+            
+            markerTintColor = colour
             glyphImage = UIImage(systemName: "tram.fill")
             displayPriority = .defaultHigh
             animatesWhenAdded = true
             canShowCallout = true
             clusteringIdentifier = "Cluster"
             
-            let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24))
-            
             let routeBtn = UIButton(type: .custom)
             let routeImg = UIImage(systemName: "location.circle", withConfiguration: config)
             routeBtn.setImage(routeImg, for: .normal)
+            routeBtn.tintColor = colour
             routeBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
             routeBtn.addTarget(self, action: #selector(routeTo), for: .touchUpInside)
             rightCalloutAccessoryView = routeBtn

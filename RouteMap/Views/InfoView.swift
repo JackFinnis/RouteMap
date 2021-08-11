@@ -16,13 +16,13 @@ struct InfoView: View {
             Form {
                 Section(header: Text("Visited")) {
                     Label {
-                        if vm.visitedRoutes.count == 26 {
+                        if vm.visitedFeatures.routes!.count == 26 {
                             Text("You have cycled every route!")
                         } else {
                             HStack {
-                                Text(String(vm.visitedRoutes.count) + "/26 Routes ")
+                                Text(String(vm.visitedFeatures.routes!.count) + "/26 Routes ")
                                 Spacer()
-                                Text(vm.getDistanceCycled() + "/2,116km")
+                                Text(vm.getDistanceCycled() + "/2,116 km")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -31,10 +31,10 @@ struct InfoView: View {
                     }
                     
                     Label {
-                        if vm.visitedChurches.count == 632 {
+                        if vm.visitedFeatures.churches!.count == 632 {
                             Text("You have visited every medieval church in Norfolk!")
                         } else {
-                            Text(String(vm.visitedChurches.count) + "/632 Churches")
+                            Text(String(vm.visitedFeatures.churches!.count) + "/632 Churches")
                         }
                     } icon: {
                         Image("cross")

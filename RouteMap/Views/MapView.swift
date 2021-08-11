@@ -30,7 +30,8 @@ struct MapView: UIViewRepresentable {
         // Register annotations
         mapView.register(ChurchMarker.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(RouteMarker.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        mapView.register(Cluster.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+        mapView.register(LocationMarker.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(ClusterMarker.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         
         return mapView
     }
@@ -72,8 +73,10 @@ struct MapView: UIViewRepresentable {
         if !vm.loading {
             if vm.selectedRoute != nil {
                 mapView.addAnnotations(vm.filteredChurches)
-                mapView.addAnnotations(vm.selectedRoute!.locations)
                 mapView.addOverlay(vm.selectedRoute!.polyline)
+                if vm.searchText.isEmpty {
+                    mapView.addAnnotations(vm.selectedRoute!.locations)
+                }
             } else {
                 mapView.addAnnotations(vm.filteredChurches)
                 mapView.addAnnotations(vm.filteredRoutes)

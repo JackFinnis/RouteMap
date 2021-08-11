@@ -28,6 +28,9 @@ class ViewModel: NSObject, ObservableObject {
     @Published var showChurches: Bool = true { didSet { filterFeatures() } }
     @Published var showVisited: Bool = true { didSet { filterFeatures() } }
     @Published var showUnvisited: Bool = true { didSet { filterFeatures() } }
+
+    @Published var showTrains: Bool = true { didSet { filterFeatures() } }
+    
     @Published var minimumDistance: Double = 0 { didSet { filterFeatures() } }
     @Published var maximumDistance: Double = 0 { didSet { filterFeatures() } }
     @Published var maximumProximity: Double = 0 { didSet { filterFeatures() } }
@@ -36,10 +39,6 @@ class ViewModel: NSObject, ObservableObject {
             selectFirstRoute()
         }
     }
-    
-    // Visited features
-    @Published var visitedRoutes = [Int]()
-    @Published var visitedChurches = [Int]()
     
     // View state
     @Published var loading: Bool = true
@@ -64,10 +63,15 @@ class ViewModel: NSObject, ObservableObject {
     var mapSelectedRoute: Route?
     var mapZoomOut: Bool = false
     
+    // Core Data
+    var persistenceManager = PersistenceManager()
+    var visitedFeatures: VisitedFeatures!
+    
     // MARK: - Initialiser
     override init() {
         super.init()
         setupLocationManager()
+        fetchVisited()
         loadRoutes()
     }
     
@@ -107,6 +111,27 @@ class ViewModel: NSObject, ObservableObject {
         churches = allChurches
     }
     
+    private func fetchVisited() {
+        do {
+            let context = persistenceManager.container.viewContext
+            let visitedFeaturesArray = try context.fetch(VisitedFeatures.fetchRequest())
+            
+            if visitedFeaturesArray.isEmpty {
+                visitedFeatures = VisitedFeatures(context: context)
+                visitedFeatures.routes = []
+                visitedFeatures.churches = []
+                self.objectWillChange.send()
+                
+                persistenceManager.save()
+            } else {
+                visitedFeatures = visitedFeaturesArray.first!
+                self.objectWillChange.send()
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // MARK: - Filter Routes
     // Filter map features
     private func filterFeatures() {
@@ -118,25 +143,24 @@ class ViewModel: NSObject, ObservableObject {
     
     // Filter churches
     private func filterChurches() {
-        if filter && !showChurches {
+        if filter && !showChurches || (selectedRoute == nil && searchText.isEmpty) {
             filteredChurches = []
-        } else if filter && !showRoutes {
-            filteredChurches = churches.filter { church in
-                if searchText.isEmpty { return true }
-                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
-                return false
-            }
-        } else if selectedRoute != nil {
-            filteredChurches = selectedRoute!.churches.filter { church in
-                if searchText.isEmpty { return true }
-                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
-                return false
-            }
+            return
+        }
+        
+        var churchesToFilter = [Church]()
+        if selectedRoute != nil {
+            churchesToFilter = selectedRoute!.churches
         } else {
-            filteredChurches = churches.filter { church in
-                if church.name.localizedCaseInsensitiveContains(searchText) { return true }
-                return false
-            }
+            churchesToFilter = churches
+        }
+        
+        filteredChurches = churchesToFilter.filter { church in
+            if visitedChurch(id: church.id) && !showVisited { return false }
+            if !visitedChurch(id: church.id) && !showUnvisited { return false }
+            if searchText.isEmpty { return true }
+            if church.name.localizedCaseInsensitiveContains(searchText) { return true }
+            return false
         }
     }
     
@@ -145,7 +169,8 @@ class ViewModel: NSObject, ObservableObject {
         filteredRoutes = routes.filter { route in
             if filter {
                 if !showRoutes { return false }
-                if visitedRoute(id: route.id) != showVisited { return false }
+                if visitedRoute(id: route.id) && !showVisited { return false }
+                if !visitedRoute(id: route.id) && !showUnvisited { return false }
                 if minimumDistance > maximumDistance && route.metres < Int(minimumDistance) * 1_000 { return false }
                 if minimumDistance < maximumDistance && (route.metres > Int(maximumDistance) * 1_000 || route.metres < Int(minimumDistance) * 1_000) { return false }
                 if maximumProximity != 0 && distanceTo(route: route) > maximumProximity { return false }
@@ -166,6 +191,8 @@ class ViewModel: NSObject, ObservableObject {
                 return route1.metres > route2.metres
             case .churchDensity:
                 return route1.density < route2.density
+            case .closest:
+                return distanceTo(route: route1) < distanceTo(route: route2)
             }
         }
     }
@@ -182,30 +209,39 @@ class ViewModel: NSObject, ObservableObject {
     // MARK: - Visited Features
     // Toggle whether given route has been visited
     func toggleVisitedRoute(route: Route) {
-        if let index = visitedRoutes.firstIndex(of: route.id) {
-            visitedRoutes.remove(at: index)
-        } else {
-            visitedRoutes.append(route.id)
+        if let index = visitedFeatures.routes!.firstIndex(of: route.id) {
+            visitedFeatures.routes!.remove(at: index)
             for church in route.churches {
-                if !visitedChurches.contains(church.id) {
-                    visitedChurches.append(church.id)
+                if let index = visitedFeatures.churches!.firstIndex(of: church.id) {
+                    visitedFeatures.churches!.remove(at: index)
+                }
+            }
+        } else {
+            visitedFeatures.routes!.append(route.id)
+            for church in route.churches {
+                if !visitedFeatures.churches!.contains(church.id) {
+                    visitedFeatures.churches!.append(church.id)
                 }
             }
         }
+        self.objectWillChange.send()
+        persistenceManager.save()
     }
     
     // Toggle whether given church has been visited
     func toggleVisitedChurch(id: Int) {
-        if let index = visitedChurches.firstIndex(of: id) {
-            visitedChurches.remove(at: index)
+        if let index = visitedFeatures.churches!.firstIndex(of: id) {
+            visitedFeatures.churches!.remove(at: index)
         } else {
-            visitedChurches.append(id)
+            visitedFeatures.churches!.append(id)
         }
+        self.objectWillChange.send()
+        persistenceManager.save()
     }
     
     // Check whether given church has been visited
     func visitedRoute(id: Int) -> Bool {
-        if visitedRoutes.contains(id) {
+        if visitedFeatures.routes!.contains(id) {
             return true
         } else {
             return false
@@ -214,7 +250,7 @@ class ViewModel: NSObject, ObservableObject {
     
     // Check whether given church has been visited
     func visitedChurch(id: Int) -> Bool {
-        if visitedChurches.contains(id) {
+        if visitedFeatures.churches!.contains(id) {
             return true
         } else {
             return false
@@ -243,19 +279,20 @@ class ViewModel: NSObject, ObservableObject {
     func getDistanceCycled() -> String {
         var metres: Int = 0
         for route in routes {
-            if visitedRoutes.contains(route.id) {
+            if visitedFeatures.routes!.contains(route.id) {
                 metres += route.metres
             }
         }
         
         let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.groupingSeparator = ","
         let string = formatter.string(from: NSNumber(value: metres / 1000))
         
         if string == nil {
-            return "0km"
+            return "0"
         } else {
-            return string! + "km"
+            return string!
         }
     }
     
