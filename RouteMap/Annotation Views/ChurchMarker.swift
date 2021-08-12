@@ -14,8 +14,9 @@ class ChurchMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
             if let church = annotation as? Church {
+                let visited = vm.visitedChurch(id: church.id)
                 var colour: UIColor {
-                    if vm.visitedChurch(id: church.id) {
+                    if visited {
                         return .systemPink
                     } else {
                         return .systemGreen
@@ -34,7 +35,7 @@ class ChurchMarker: MKMarkerAnnotationView {
                 let visitedBtn = UIButton(type: .custom)
                 let visitedImg = UIImage(systemName: vm.visitedChurchImage(id: church.id), withConfiguration: config)
                 visitedBtn.setImage(visitedImg, for: .normal)
-                visitedBtn.tintColor = colour
+                if visited { visitedBtn.tintColor = colour }
                 visitedBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 visitedBtn.addTarget(self, action: #selector(toggleVisitedChurch), for: .touchUpInside)
                 leftCalloutAccessoryView = visitedBtn
@@ -42,7 +43,7 @@ class ChurchMarker: MKMarkerAnnotationView {
                 let infoBtn = UIButton(type: .custom)
                 let infoImg = UIImage(systemName: "info.circle", withConfiguration: config)
                 infoBtn.setImage(infoImg, for: .normal)
-                infoBtn.tintColor = colour
+                if visited { infoBtn.tintColor = colour }
                 infoBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 infoBtn.addTarget(self, action: #selector(openChurchUrl), for: .touchUpInside)
                 rightCalloutAccessoryView = infoBtn

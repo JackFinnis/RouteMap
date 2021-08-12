@@ -35,10 +35,9 @@ class ViewModel: NSObject, ObservableObject {
     @Published var maximumDistance: Double = 0 { didSet { filterFeatures() } }
     @Published var maximumProximity: Double = 0 { didSet { filterFeatures() } }
     @Published var sortBy: SortBy = .id { didSet {
-            filterFeatures()
-            selectFirstRoute()
-        }
-    }
+        filterFeatures()
+        selectFirstRoute()
+    }}
     
     // View state
     @Published var loading: Bool = true
@@ -66,12 +65,20 @@ class ViewModel: NSObject, ObservableObject {
     // Core Data
     var persistenceManager = PersistenceManager()
     var visitedFeatures: VisitedFeatures!
+    var settings: Settings!
+    @Published var distanceUnit: DistanceUnit = .metric { didSet {
+        toggleDistanceUnit()
+    }}
+    
+    // Totals
+    let totalMetres = 2_115_747
     
     // MARK: - Initialiser
     override init() {
         super.init()
         setupLocationManager()
         fetchVisited()
+        fetchSettings()
         loadRoutes()
     }
     
@@ -126,6 +133,29 @@ class ViewModel: NSObject, ObservableObject {
             } else {
                 visitedFeatures = visitedFeaturesArray.first!
                 self.objectWillChange.send()
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    private func fetchSettings() {
+        do {
+            let context = persistenceManager.container.viewContext
+            let settingsArray = try context.fetch(Settings.fetchRequest())
+            
+            if settingsArray.isEmpty {
+                settings = Settings(context: context)
+                settings.metric = true
+                persistenceManager.save()
+            } else {
+                settings = settingsArray.first!
+            }
+            
+            if settings.metric {
+                distanceUnit = .metric
+            } else {
+                distanceUnit = .imperial
             }
         } catch {
             print(error.localizedDescription)
@@ -275,8 +305,10 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    // Get the total distance the user has cycled
-    func getDistanceCycled() -> String {
+    // Get formatted
+    
+    // Get proportion of total distance cycled
+    func getDistanceCycledSummary() -> String {
         var metres: Int = 0
         for route in routes {
             if visitedFeatures.routes!.contains(route.id) {
@@ -284,15 +316,54 @@ class ViewModel: NSObject, ObservableObject {
             }
         }
         
+        let distanceTravelled = getDistance(metres: metres)
+        let formattedDistanceTravelled = getFormattedDistance(distance: distanceTravelled)
+        
+        let totalDistance = getDistance(metres: totalMetres)
+        let formattedTotalDistance = getFormattedDistance(distance: totalDistance)
+        let formattedTotalDistanceWithUnit = addUnit(distance: formattedTotalDistance)
+        
+        return formattedDistanceTravelled + "/" + formattedTotalDistanceWithUnit
+    }
+    
+    // MARK: - Settings
+    // Toggle the distance unit saved in core data
+    func toggleDistanceUnit() {
+        if distanceUnit == .metric {
+            settings.metric = true
+        } else {
+            settings.metric = false
+        }
+        persistenceManager.save()
+    }
+    
+    func getFormattedDistance(distance: Int) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = ","
-        let string = formatter.string(from: NSNumber(value: metres / 1000))
+        let distanceString = formatter.string(from: NSNumber(value: distance))
         
-        if string == nil {
+        if distanceString == nil {
             return "0"
         } else {
-            return string!
+            return distanceString!
+        }
+    }
+    
+    // Convert metres to km or miles appropriately
+    func getDistance(metres: Int) -> Int {
+        if distanceUnit == .metric {
+            return metres / 1_000
+        } else {
+            return Int(Double(metres) / 1_609.34)
+        }
+    }
+    
+    func addUnit(distance: String) -> String {
+        if distanceUnit == .metric {
+            return distance + " km"
+        } else {
+            return distance + " miles"
         }
     }
     

@@ -22,7 +22,7 @@ struct InfoView: View {
                             HStack {
                                 Text(String(vm.visitedFeatures.routes!.count) + "/26 Routes ")
                                 Spacer()
-                                Text(vm.getDistanceCycled() + "/2,116 km")
+                                Text(vm.getDistanceCycledSummary())
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -46,16 +46,35 @@ struct InfoView: View {
                     }
                 }
                 
+                Section(header: Text("Units")) {
+                    Picker("Distance Unit", selection: $vm.distanceUnit) {
+                        ForEach(DistanceUnit.allCases, id: \.self) { unit in
+                            Text(unit.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
                 Section(header: Text("About")) {
                     NavigationLink(destination: AboutView()) {
                         Label("About NCCR", systemImage: "info.circle")
                     }
                 }
                 
-                Section(header: Text("Feedback"), footer: Text("We read and reply to every feedback. Please consider giving us feedback to help us improve the app.")) {
+                Section(header: Text("Contribute"), footer: Text("If you have any pictures from your routes that you would like to share you can submit them here to be included in the app!")) {
                     NavigationLink(destination: TipView()) {
                         Label("Tip Jar", systemImage: "heart")
                     }
+                    
+                    Button {
+                        let url = URL(string: "mailto:jack.finnis@icloud.com")!
+                        UIApplication.shared.open(url)
+                    } label: {
+                        Label("Send us Feedback", systemImage: "envelope")
+                    }
+                }
+                
+                Section(header: Text("Feedback"), footer: Text("If you have any ideas for new features to improve the app you can submit them here.")) {
                     Button {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene {
                             SKStoreReviewController.requestReview(in: windowScene)
@@ -63,12 +82,14 @@ struct InfoView: View {
                     } label: {
                         Label("Rate NCCR", systemImage: "star")
                     }
+                    
                     Button {
-                        let url = URL(string: "mailto:jackfinnis@btinternet.com")!
+                        let url = URL(string: "mailto:jack.finnis@icloud.com")!
                         UIApplication.shared.open(url)
                     } label: {
                         Label("Send us Feedback", systemImage: "envelope")
                     }
+                    
                     Button {
                         let productUrl = URL(string: "https://itunes.apple.com")!
                         var components = URLComponents(url: productUrl, resolvingAgainstBaseURL: false)
@@ -100,6 +121,10 @@ struct InfoView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $vm.showShareView) {
+            ShareView()
+                .preferredColorScheme(vm.mapType == .standard ? .none : .dark)
         }
     }
 }

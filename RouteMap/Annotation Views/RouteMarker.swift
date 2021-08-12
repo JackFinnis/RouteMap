@@ -14,8 +14,9 @@ class RouteMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
             if let route = newValue as? Route {
+                let visited = vm.visitedRoute(id: route.id)
                 var colour: UIColor {
-                    if vm.visitedRoute(id: route.id) {
+                    if visited {
                         return .systemPink
                     } else {
                         return .systemBlue
@@ -35,7 +36,7 @@ class RouteMarker: MKMarkerAnnotationView {
                 let visitedBtn = UIButton(type: .custom)
                 let visitedImg = UIImage(systemName: vm.visitedRouteImage(id: route.id), withConfiguration: config)
                 visitedBtn.setImage(visitedImg, for: .normal)
-                visitedBtn.tintColor = colour
+                if visited { visitedBtn.tintColor = colour }
                 visitedBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 visitedBtn.addTarget(self, action: #selector(toggleVisitedRoute), for: .touchUpInside)
                 leftCalloutAccessoryView = visitedBtn
@@ -43,7 +44,7 @@ class RouteMarker: MKMarkerAnnotationView {
                 let infoBtn = UIButton(type: .custom)
                 let infoImg = UIImage(systemName: "info.circle", withConfiguration: config)
                 infoBtn.setImage(infoImg, for: .normal)
-                infoBtn.tintColor = colour
+                if visited { infoBtn.tintColor = colour }
                 infoBtn.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 infoBtn.addTarget(self, action: #selector(selectRoute), for: .touchUpInside)
                 rightCalloutAccessoryView = infoBtn
