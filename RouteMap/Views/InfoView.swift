@@ -52,7 +52,7 @@ struct InfoView: View {
                             Text(unit.rawValue)
                         }
                     }
-                    .pickerStyle(.segmented)
+                    .pickerStyle(SegmentedPickerStyle())
                 }
                 
                 Section(header: Text("About")) {

@@ -48,20 +48,12 @@ struct FilterView: View {
                     
                     Section {
                         DisclosureGroup(isExpanded: $vm.expandDistance) {
-                            Slider(value: $vm.minimumDistance, in: 0...115, step: 5, label: {
+                            Slider(value: $vm.minimumDistance, in: 0...115, step: 5, minimumValueLabel: Text("Minimum"), maximumValueLabel: Text("")) {
                                 Text("Minimum Distance")
-                            }, minimumValueLabel: {
-                                Text("Minimum")
-                            }, maximumValueLabel: {
-                                Text("")
-                            })
-                            Slider(value: $vm.maximumDistance, in: 0...115, step: 5, label: {
+                            }
+                            Slider(value: $vm.maximumDistance, in: 0...115, step: 5, minimumValueLabel: Text("Maximum"), maximumValueLabel: Text("")) {
                                 Text("Maximum Distance")
-                            }, minimumValueLabel: {
-                                Text("Maximum")
-                            }, maximumValueLabel: {
-                                Text("")
-                            })
+                            }
                         } label: {
                             HStack {
                                 Text("Route Distance")
@@ -74,13 +66,9 @@ struct FilterView: View {
                     
                     Section {
                         DisclosureGroup(isExpanded: $vm.expandProximity) {
-                            Slider(value: $vm.maximumProximity, in: 0...115, step: 5, label: {
+                            Slider(value: $vm.maximumProximity, in: 0...115, step: 5, minimumValueLabel: Text("Maximum"), maximumValueLabel: Text("")) {
                                 Text("Maximum Proximity")
-                            }, minimumValueLabel: {
-                                Text("Maximum")
-                            }, maximumValueLabel: {
-                                Text("")
-                            })
+                            }
                         } label: {
                             HStack {
                                 Text("Route Proximity")

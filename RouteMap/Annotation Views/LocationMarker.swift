@@ -11,7 +11,7 @@ import MapKit
 class LocationMarker: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
-            let colour: UIColor = .systemBrown
+            let colour: UIColor = .brown
             let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24))
             
             markerTintColor = colour

@@ -131,7 +131,7 @@ class ViewModel: NSObject, ObservableObject {
                 
                 persistenceManager.save()
             } else {
-                visitedFeatures = visitedFeaturesArray.first!
+                visitedFeatures = visitedFeaturesArray.first! as? VisitedFeatures
                 self.objectWillChange.send()
             }
         } catch {
@@ -149,7 +149,7 @@ class ViewModel: NSObject, ObservableObject {
                 settings.metric = true
                 persistenceManager.save()
             } else {
-                settings = settingsArray.first!
+                settings = settingsArray.first! as? Settings
             }
             
             if settings.metric {

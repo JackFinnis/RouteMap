@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,6 +39,7 @@
 		BEE7A0F926C2DDA3000A25C4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F726C2DDA3000A25C4 /* DataModel.xcdatamodeld */; };
 		BEE7A10126C2EEFA000A25C4 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A10026C2EEFA000A25C4 /* PersistenceManager.swift */; };
 		BEE7A10926C53925000A25C4 /* DistanceUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A10826C53925000A25C4 /* DistanceUnit.swift */; };
+		F460FCF126C5870E009732E2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F460FCF026C5870E009732E2 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +50,6 @@
 		BEB8F09F26BC370C00702BB5 /* MapSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSettings.swift; sourceTree = "<group>"; };
 		BEB8F0A426BC383600702BB5 /* Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
 		BEB8F0AF26BC7CB800702BB5 /* ActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBar.swift; sourceTree = "<group>"; };
-		BEB8F0B326BDC49600702BB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BEB8F0BB26BE892800702BB5 /* CLLC2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLC2D.swift; sourceTree = "<group>"; };
 		BEB8F0BD26BE8ADB00702BB5 /* ChurchMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChurchMarker.swift; sourceTree = "<group>"; };
 		BEB8F0BF26BEAD7700702BB5 /* ClusterMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterMarker.swift; sourceTree = "<group>"; };
@@ -76,6 +76,7 @@
 		BEE7A0F826C2DDA3000A25C4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		BEE7A10026C2EEFA000A25C4 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		BEE7A10826C53925000A25C4 /* DistanceUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceUnit.swift; sourceTree = "<group>"; };
+		F460FCF026C5870E009732E2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../NCCR/NCCR/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */,
-				BEB8F0B326BDC49600702BB5 /* Info.plist */,
+				F460FCF026C5870E009732E2 /* Info.plist */,
 				BECFC09626BAC4AA005CC3AE /* Assets.xcassets */,
 				BEE7A0F726C2DDA3000A25C4 /* DataModel.xcdatamodeld */,
 				BECFC0AB26BBEE57005CC3AE /* Views */,
@@ -211,7 +212,6 @@
 		BECFC08726BAC4A7005CC3AE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
@@ -221,7 +221,7 @@
 				};
 			};
 			buildConfigurationList = BECFC08A26BAC4A7005CC3AE /* Build configuration list for PBXProject "RouteMap" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -243,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F460FCF126C5870E009732E2 /* Info.plist in Resources */,
 				BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -397,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
