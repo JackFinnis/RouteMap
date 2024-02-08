@@ -39,7 +39,6 @@
 		BEE7A0F926C2DDA3000A25C4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A0F726C2DDA3000A25C4 /* DataModel.xcdatamodeld */; };
 		BEE7A10126C2EEFA000A25C4 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A10026C2EEFA000A25C4 /* PersistenceManager.swift */; };
 		BEE7A10926C53925000A25C4 /* DistanceUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE7A10826C53925000A25C4 /* DistanceUnit.swift */; };
-		F460FCF126C5870E009732E2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F460FCF026C5870E009732E2 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,7 +75,6 @@
 		BEE7A0F826C2DDA3000A25C4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		BEE7A10026C2EEFA000A25C4 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		BEE7A10826C53925000A25C4 /* DistanceUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceUnit.swift; sourceTree = "<group>"; };
-		F460FCF026C5870E009732E2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../NCCR/NCCR/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				BECFC09226BAC4A7005CC3AE /* RouteMapApp.swift */,
-				F460FCF026C5870E009732E2 /* Info.plist */,
 				BECFC09626BAC4AA005CC3AE /* Assets.xcassets */,
 				BEE7A0F726C2DDA3000A25C4 /* DataModel.xcdatamodeld */,
 				BECFC0AB26BBEE57005CC3AE /* Views */,
@@ -243,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F460FCF126C5870E009732E2 /* Info.plist in Resources */,
 				BECFC09726BAC4AA005CC3AE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,7 +416,7 @@
 				DEVELOPMENT_TEAM = T4L8JBB88A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RouteMap/Info.plist;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = NCCR;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -453,7 +449,7 @@
 				DEVELOPMENT_TEAM = T4L8JBB88A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RouteMap/Info.plist;
+				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = NCCR;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
